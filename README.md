@@ -15,3 +15,10 @@
 
 # 4、spring-mvc.xml配置
 ### context:component-scan base-package="com.betterjr.modules.{module name}",多个{module name}用分号";"隔开
+
+# 5、nginx.conf配置
+	location /scf-web/ {
+					proxy_pass http://xxx.qiejf.com:8080;
+					include proxy.conf;
+					#proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+				}
