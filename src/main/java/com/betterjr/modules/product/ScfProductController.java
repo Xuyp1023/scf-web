@@ -21,7 +21,7 @@ public class ScfProductController {
 
     @RequestMapping(value = "/queryProductKeyAndValue", method = RequestMethod.POST)
     public @ResponseBody String queryProductKeyAndValue(Long coreCustNo, Long factorNo) {
-        logger.info("融资产品下拉列表查询,入参：" + " anCoreCustNo " + coreCustNo + ",factorNo " + factorNo);
+        logger.info("融资产品下拉列表查询，入参：" + " anCoreCustNo " + coreCustNo + ",factorNo " + factorNo);
         try {
 
             return scfProductService.webQueryProductKeyAndValue(coreCustNo, factorNo);
