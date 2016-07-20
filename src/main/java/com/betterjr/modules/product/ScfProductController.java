@@ -24,6 +24,20 @@ public class ScfProductController {
     @Reference(interfaceClass = IScfProductService.class)
     private IScfProductService scfProductService;
 
+    @RequestMapping(value = "/queryProduct", method = RequestMethod.POST)
+    public @ResponseBody String queryProduct(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("融资产品信息查询,入参：" + anMap.toString());
+        try {
+
+            return scfProductService.webQueryProduct(anMap, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("融资产品信息查询失败", e);
+            return AjaxObject.newError("融资产品信息查询失败").toJson();
+        }
+    }
+
     @RequestMapping(value = "/queryProductKeyAndValue", method = RequestMethod.POST)
     public @ResponseBody String queryProductKeyAndValue(Long coreCustNo, Long factorNo) {
         logger.info("融资产品下拉列表查询,入参：" + " anCoreCustNo " + coreCustNo + ",factorNo " + factorNo);
