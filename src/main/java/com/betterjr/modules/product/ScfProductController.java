@@ -79,4 +79,17 @@ public class ScfProductController {
         }
     }
 
+    @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST)
+    public @ResponseBody String deleteProduct(Long id) {
+        logger.info("融资产品删除,入参：" + id);
+        try {
+
+            return scfProductService.webSaveDeleteProduct(id);
+        }
+        catch (Exception e) {
+            logger.error("融资产品删除失败", e);
+            return AjaxObject.newError("融资产品删除失败").toJson();
+        }
+    }
+
 }
