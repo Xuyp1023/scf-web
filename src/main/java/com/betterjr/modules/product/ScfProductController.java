@@ -66,12 +66,12 @@ public class ScfProductController {
     }
 
     @RequestMapping(value = "/modifyProduct", method = RequestMethod.POST)
-    public @ResponseBody String modifyProduct(HttpServletRequest request) {
+    public @ResponseBody String modifyProduct(HttpServletRequest request, Long id) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("融资产品修改,入参：" + anMap.toString());
         try {
 
-            return scfProductService.webSaveModifyProduct(anMap);
+            return scfProductService.webSaveModifyProduct(anMap, id);
         }
         catch (Exception e) {
             logger.error("融资产品修改失败", e);
