@@ -22,6 +22,8 @@
 
 	<!-- 扫描dubbo注解 -->
 	<dubbo:annotation
-		package="com.betterjr.modules.account.dubboclient,com.betterjr.dubbo.extend.filter.user" />
+		package="com.betterjr.modules.account.dubboclient,
+		com.betterjr.modules.sys.dubboclient,
+		com.betterjr.dubbo.extend.filter.user" />
 
 </beans>
