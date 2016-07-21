@@ -92,4 +92,17 @@ public class ScfProductController {
         }
     }
 
+    @RequestMapping(value = "/shelvesProduct", method = RequestMethod.POST)
+    public @ResponseBody String shelvesProduct(Long id) {
+        logger.info("融资产品上架,入参：" + id);
+        try {
+
+            return scfProductService.webSaveShelvesProduct(id);
+        }
+        catch (Exception e) {
+            logger.error("融资产品上架失败", e);
+            return AjaxObject.newError("融资产品上架失败").toJson();
+        }
+    }
+
 }
