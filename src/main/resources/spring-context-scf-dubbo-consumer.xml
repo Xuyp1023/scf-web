@@ -44,13 +44,7 @@
 	</bean>
 
 	<bean id="shiroRedisManager" class="com.betterjr.common.security.shiro.cache.RedisManager">
-		<property name="host" value="192.168.2.49" />
-		<property name="port" value="6379" />
-		<property name="password" value="" />
-		<!-- socket connect timeout & so_timeout , millisecond ,A timeout of zero 
-			is interpreted as an infinite timeout -->
-		<property name="timeout" value="0" />
-		<property name="jedisPoolConfig" ref="jedisPoolConfig" />
+		<property name="jedisPool" ref="jedisPool" />
 	</bean>
 
 	<import resource="spring-context-shiro.xml" />
