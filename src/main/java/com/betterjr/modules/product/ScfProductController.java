@@ -105,4 +105,17 @@ public class ScfProductController {
         }
     }
 
+    @RequestMapping(value = "/offlineProduct", method = RequestMethod.POST)
+    public @ResponseBody String offlineProduct(Long id) {
+        logger.info("融资产品下架,入参：" + id);
+        try {
+
+            return scfProductService.webSaveOfflineProduct(id);
+        }
+        catch (Exception e) {
+            logger.error("融资产品下架失败", e);
+            return AjaxObject.newError("融资产品下架失败").toJson();
+        }
+    }
+
 }
