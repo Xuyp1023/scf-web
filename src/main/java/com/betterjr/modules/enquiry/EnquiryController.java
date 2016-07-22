@@ -18,12 +18,12 @@ import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
 @Controller
-@RequestMapping(value = "/scf/Enquiry")
+@RequestMapping(value = "/Scf/Enquiry")
 public class EnquiryController {
     private static final Logger logger = LoggerFactory.getLogger(EnquiryController.class);
     
     @Reference(interfaceClass = IScfEnquiryService.class)
-    private IScfEnquiryService iEnquiryService;
+    private IScfEnquiryService enquiryService;
     
     @RequestMapping(value = "/queryEnquiryList", method = RequestMethod.POST)
     public @ResponseBody String queryEnquiryList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
@@ -31,7 +31,7 @@ public class EnquiryController {
         logger.info("查询询价，入参:"+ map.toString());
         
         try {
-            return iEnquiryService.webQueryEnquiryList(map, flag, pageNum, pageSize);
+            return enquiryService.webQueryEnquiryList(map, flag, pageNum, pageSize);
         }
         catch (RpcException btEx) {
             if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
@@ -52,7 +52,7 @@ public class EnquiryController {
         logger.info("保存询价，入参:"+ map.toString());
         
         try {
-            return iEnquiryService.webAddEnquiry(map);
+            return enquiryService.webAddEnquiry(map);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -67,7 +67,7 @@ public class EnquiryController {
         logger.info("修改询价，入参:"+ map.toString());
         
         try {
-            return iEnquiryService.webSaveModifyEnquiry(map, id);
+            return enquiryService.webSaveModifyEnquiry(map, id);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -81,7 +81,7 @@ public class EnquiryController {
         logger.info("查看询价详情，入参:"+ id);
         
         try {
-            return iEnquiryService.webFindEnquiryDetail(id);
+            return enquiryService.webFindEnquiryDetail(id);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -95,7 +95,7 @@ public class EnquiryController {
         logger.info("查询报价，入参:"+ map.toString());
         
         try {
-            return iEnquiryService.webQueryOfferList(map, flag, pageNum, pageSize);
+            return enquiryService.webQueryOfferList(map, flag, pageNum, pageSize);
         }
         catch (RpcException btEx) {
             if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
@@ -116,7 +116,7 @@ public class EnquiryController {
         logger.info("保存报价，入参:"+ map.toString());
         
         try {
-            return iEnquiryService.webAddOffer(map);
+            return enquiryService.webAddOffer(map);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -131,7 +131,7 @@ public class EnquiryController {
         logger.info("修改报价，入参:"+ map.toString());
         
         try {
-            return iEnquiryService.webSaveModifyOffer(map, id);
+            return enquiryService.webSaveModifyOffer(map, id);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -145,7 +145,7 @@ public class EnquiryController {
         logger.info("查看报价详情，入参:"+ id);
         
         try {
-            return iEnquiryService.webFindOfferDetail(id);
+            return enquiryService.webFindOfferDetail(id);
         }
         catch (Exception ex) {
             ex.printStackTrace();
