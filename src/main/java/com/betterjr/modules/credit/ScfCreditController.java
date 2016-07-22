@@ -52,4 +52,18 @@ public class ScfCreditController {
         }
     }
 
+    @RequestMapping(value = "/modifyCredit", method = RequestMethod.POST)
+    public @ResponseBody String modifyCredit(HttpServletRequest request, Long id) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("授信记录修改,入参：" + anMap.toString());
+        try {
+
+            return scfCreditService.webModifyCredit(anMap, id);
+        }
+        catch (Exception e) {
+            logger.error("授信记录修改失败", e);
+            return AjaxObject.newError("授信记录修改失败").toJson();
+        }
+    }
+
 }
