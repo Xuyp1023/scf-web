@@ -14,7 +14,7 @@
 
 	<import resource="scf-dubbo-consumer-springmvc.xml" />
 
-	<context:component-scan base-package="com.betterjr.modules.test"
+	<context:component-scan base-package="com.betterjr.modules.notice;com.betterjr.modules.enquiry;com.betterjr.modules.test"
 		use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
