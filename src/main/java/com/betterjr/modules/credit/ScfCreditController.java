@@ -66,4 +66,17 @@ public class ScfCreditController {
         }
     }
 
+    @RequestMapping(value = "/activateCredit", method = RequestMethod.POST)
+    public @ResponseBody String activateCredit(Long id) {
+        logger.info("授信额度激活,入参： " + id);
+        try {
+
+            return scfCreditService.webActivateCredit(id);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return AjaxObject.newError("授信额度激活失败").toJson();
+        }
+    }
+
 }
