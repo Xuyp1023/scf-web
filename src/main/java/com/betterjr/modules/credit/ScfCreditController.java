@@ -74,8 +74,21 @@ public class ScfCreditController {
             return scfCreditService.webActivateCredit(id);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error("授信额度激活失败", e);
             return AjaxObject.newError("授信额度激活失败").toJson();
+        }
+    }
+
+    @RequestMapping(value = "/terminatCredit", method = RequestMethod.POST)
+    public @ResponseBody String terminatCredit(Long id) {
+        logger.info("授信终止,入参： " + id);
+        try {
+
+            return scfCreditService.webTerminatCredit(id);
+        }
+        catch (Exception e) {
+            logger.error("授信终止失败", e);
+            return AjaxObject.newError("授信终止失败").toJson();
         }
     }
 
