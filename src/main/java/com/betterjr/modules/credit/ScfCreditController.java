@@ -38,4 +38,18 @@ public class ScfCreditController {
         }
     }
 
+    @RequestMapping(value = "/addCredit", method = RequestMethod.POST)
+    public @ResponseBody String addCredit(HttpServletRequest request) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("授信额度录入,入参：" + anMap.toString());
+        try {
+
+            return scfCreditService.webAddCredit(anMap);
+        }
+        catch (Exception e) {
+            logger.error("授信额度录入失败", e);
+            return AjaxObject.newError("授信额度录入失败").toJson();
+        }
+    }
+
 }
