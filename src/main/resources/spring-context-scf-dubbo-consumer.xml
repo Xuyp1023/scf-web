@@ -14,9 +14,10 @@
 
 	<!-- 扫描spring注解 -->
 	<context:component-scan
-		base-package="com.betterjr.modules.notice;
+		base-package="
 		com.betterjr.modules.product;
 		com.betterjr.modules.credit;
+		com.betterjr.modules.repayment;
 		com.betterjr.modules.enquiry;
 		com.betterjr.modules.test">
 		<context:exclude-filter type="annotation"

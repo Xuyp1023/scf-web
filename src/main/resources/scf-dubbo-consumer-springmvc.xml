@@ -10,10 +10,10 @@
     http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 	<!-- 扫描dubbo注解 -->
-	<dubbo:annotation package="com.betterjr.modules.notice,
+	<dubbo:annotation package="
 	com.betterjr.modules.product,
 	com.betterjr.modules.credit,
 	com.betterjr.modules.enquiry,
+	com.betterjr.modules.repayment,
 	com.betterjr.modules.test" />
-	
 </beans>
