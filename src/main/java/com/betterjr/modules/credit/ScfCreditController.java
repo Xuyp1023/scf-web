@@ -52,8 +52,8 @@ public class ScfCreditController {
         }
     }
 
-    @RequestMapping(value = "/findCoreCreditSum", method = RequestMethod.POST)
-    public @ResponseBody String findCoreCreditSum(Long custNo) {
+    @RequestMapping(value = "/findCreditSum", method = RequestMethod.POST)
+    public @ResponseBody String findCreditSum(Long custNo) {
         logger.info("授信额度信息查询,入参：" + custNo);
         try {
 
