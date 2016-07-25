@@ -38,6 +38,20 @@ public class ScfCreditController {
         }
     }
 
+    @RequestMapping(value = "/queryCustCredit", method = RequestMethod.POST)
+    public @ResponseBody String queryCustCredit(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("授信余额信息查询,入参：" + anMap.toString());
+        try {
+
+            return scfCreditService.webQueryCustCredit(anMap, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("授信余额信息查询失败", e);
+            return AjaxObject.newError("授信余额信息查询失败").toJson();
+        }
+    }
+
     @RequestMapping(value = "/queryCreditDetail", method = RequestMethod.POST)
     public @ResponseBody String queryCreditDetail(HttpServletRequest request, Long creditId, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
