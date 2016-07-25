@@ -34,11 +34,11 @@ public class CustAgreementController {
     private IScfCustAgreementService scfCustAgreemnetService;
     
     @RequestMapping(value = "/queryAgreement", method = RequestMethod.POST)
-    public @ResponseBody String queryCustAgreement(HttpServletRequest request, int anPageNum, int anPageSize) {
+    public @ResponseBody String queryCustAgreement(HttpServletRequest request, String anPageNum, String anPageSize) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询客户合同, 入参:"+anMap.toString());
         try {
-            return scfCustAgreemnetService.webQueryCustAgreementsByPage(anMap, anPageNum, anPageSize);
+            return scfCustAgreemnetService.webQueryCustAgreementsByPage(anMap, Integer.parseInt(anPageNum), Integer.parseInt(anPageSize));
         } catch (RpcException btEx) {
             if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
@@ -50,16 +50,17 @@ public class CustAgreementController {
     }
     
     @RequestMapping(value = "/addAgree", method = RequestMethod.POST)
-    public @ResponseBody String addCustAgreement(HttpServletRequest request, String fileList) {
+    public @ResponseBody String addCustAgreement(HttpServletRequest request, String anFileList) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("新增客户合同, 入参:" + anMap.toString());
         try {
-            return scfCustAgreemnetService.webAddCustAgreement(anMap, fileList);
+            return scfCustAgreemnetService.webAddCustAgreement(anMap, anFileList);
         }
         catch (BytterTradeException btEx) {
             return AjaxObject.newError(btEx.getMessage()).toJson();
         }
         catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             return AjaxObject.newError("新增合同失败，请检查").toJson();
         }
     }
@@ -76,11 +77,11 @@ public class CustAgreementController {
     }
 
     @RequestMapping(value = "/queryAgreeDetail", method = RequestMethod.POST)
-    public @ResponseBody String queryCustAgreeDetail(Long id) {
-        logger.info("查询客户合同明细, 入参:" + id);
+    public @ResponseBody String queryCustAgreeDetail(Long anAgreeId) {
+        logger.info("查询客户合同明细, 入参:" + anAgreeId);
 
         try {
-            return scfCustAgreemnetService.webFindCustAgreementDetail(id);
+            return scfCustAgreemnetService.webFindCustAgreementDetail(anAgreeId);
         }
         catch (BytterTradeException btEx) {
             return AjaxObject.newError(btEx.getMessage()).toJson();
@@ -91,11 +92,11 @@ public class CustAgreementController {
     }
 
     @RequestMapping(value = "/updateAgree", method = RequestMethod.POST)
-    public @ResponseBody String updateCustAgreement(HttpServletRequest request, Long anId, String anFileList) {
+    public @ResponseBody String updateCustAgreement(HttpServletRequest request, Long anAgreeId, String anFileList) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("更新客户合同, 入参:" + anMap.toString() + " fileList:" + anFileList);
         try {
-            return scfCustAgreemnetService.webModifyCustAgreement(anMap, anId, anFileList);
+            return scfCustAgreemnetService.webModifyCustAgreement(anMap, anAgreeId, anFileList);
         }
         catch (BytterTradeException btEx) {
             return AjaxObject.newError(btEx.getMessage()).toJson();
@@ -106,10 +107,10 @@ public class CustAgreementController {
     }
 
     @RequestMapping(value = "/queryAgreeAccess", method = RequestMethod.POST)
-    public @ResponseBody String queryCustAgreeAccess(Long id) {
-        logger.info("查询客户合同附件, 入参:" + id);
+    public @ResponseBody String queryCustAgreeAccess(Long anAgreeId) {
+        logger.info("查询客户合同附件, 入参:" + anAgreeId);
         try {
-            return scfCustAgreemnetService.webFindCustFileItems(id);
+            return scfCustAgreemnetService.webFindCustFileItems(anAgreeId);
         }
         catch (Exception ex) {
             return AjaxObject.newError("查询客户合同附件失败，请检查").toJson();
@@ -145,10 +146,10 @@ public class CustAgreementController {
     }
     
     @RequestMapping(value = "/deleteAgree", method = RequestMethod.POST)
-    public @ResponseBody String deleteCustAgreement(Long anId) {
-        logger.info("删除客户合同, 入参:" + anId);
+    public @ResponseBody String deleteCustAgreement(Long anAgreeId) {
+        logger.info("删除客户合同, 入参:" + anAgreeId);
         try {
-            scfCustAgreemnetService.webSaveCustAgreementStatus(anId, 2);
+            scfCustAgreemnetService.webSaveCustAgreementStatus(anAgreeId, 2);
             return AjaxObject.newOk("删除客户合同成功").toJson();
         }
         catch (BytterTradeException btEx) {
