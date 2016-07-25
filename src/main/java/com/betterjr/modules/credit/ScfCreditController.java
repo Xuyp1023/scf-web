@@ -52,6 +52,19 @@ public class ScfCreditController {
         }
     }
 
+    @RequestMapping(value = "/findCoreCreditSum", method = RequestMethod.POST)
+    public @ResponseBody String findCoreCreditSum(Long custNo) {
+        logger.info("授信额度信息查询,入参：" + custNo);
+        try {
+
+            return scfCreditService.webFindCreditSumByCustNo(custNo);
+        }
+        catch (Exception e) {
+            logger.error("授信额度信息查询失败", e);
+            return AjaxObject.newError("授信额度信息查询失败").toJson();
+        }
+    }
+
     @RequestMapping(value = "/addCredit", method = RequestMethod.POST)
     public @ResponseBody String addCredit(HttpServletRequest request) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
