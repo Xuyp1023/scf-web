@@ -19,6 +19,7 @@
 		com.betterjr.modules.credit;
 		com.betterjr.modules.repayment;
 		com.betterjr.modules.enquiry;
+		com.betterjr.modules.order;
 		com.betterjr.modules.test">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />

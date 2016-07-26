@@ -15,5 +15,6 @@
 	com.betterjr.modules.credit,
 	com.betterjr.modules.enquiry,
 	com.betterjr.modules.repayment,
+	com.betterjr.modules.order,
 	com.betterjr.modules.test" />
 </beans>

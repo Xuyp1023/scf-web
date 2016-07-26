@@ -19,6 +19,7 @@
 	com.betterjr.modules.credit;
 	com.betterjr.modules.repayment;
 	com.betterjr.modules.enquiry;
+	com.betterjr.modules.order;
 	com.betterjr.modules.test"
 		use-default-filters="false">
 		<context:include-filter type="annotation"
