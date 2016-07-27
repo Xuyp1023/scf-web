@@ -39,4 +39,17 @@ public class ScfInvoiceController {
                 
     }
     
+    @RequestMapping(value = "/queryInvoice", method = RequestMethod.POST)
+    public @ResponseBody String queryInvoice(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("查询订单发票信息,入参:" + anMap.toString());
+        try{
+            return scfInvoiceService.webQueryInvoiceList(anMap, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("查询订单发票信息失败", e);
+            return AjaxObject.newError("查询订单发票信息失败").toJson();
+        }
+    }
+    
 }
