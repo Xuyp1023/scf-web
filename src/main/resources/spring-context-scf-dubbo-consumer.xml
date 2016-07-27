@@ -14,7 +14,7 @@
 
 	<!-- 扫描spring注解 -->
 	<context:component-scan
-		base-package="com.betterjr.modules.test;com.betterjr.modules.sys.security">
+		base-package="com.betterjr.modules.test;">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
@@ -35,21 +35,16 @@
 		<property name="testOnBorrow" value="true" />
 	</bean>
 
-	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
-		<constructor-arg index="0" ref="jedisPoolConfig" />
-		<constructor-arg index="1" value="192.168.2.49" type="String" />
-		<constructor-arg index="2" value="6379" type="int" />
-	</bean>
-
-	<bean id="shiroRedisManager" class="com.betterjr.common.security.shiro.cache.RedisManager">
-		<property name="host" value="192.168.2.49" />
-		<property name="port" value="6379" />
-		<property name="password" value="" />
-		<!-- socket connect timeout & so_timeout , millisecond ,A timeout of zero 
-			is interpreted as an infinite timeout -->
-		<property name="timeout" value="0" />
-		<property name="jedisPoolConfig" ref="jedisPoolConfig" />
-	</bean>
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="host" value="192.168.2.49" />
+        <constructor-arg name="port" value="6379" />
+        <constructor-arg name="timeout" value="0" />
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig" />
+    </bean>
+   
+    <bean id="shiroRedisManager" class="com.betterjr.common.security.shiro.cache.RedisManager">
+        <property name="jedisPool" ref="jedisPool" />
+    </bean>
 
 	<import resource="spring-context-shiro.xml" />
 </beans>
