@@ -152,5 +152,19 @@ public class EnquiryController {
             return AjaxObject.newError("findOfferDetail service failed").toJson();
         }
     }
+    
+    @RequestMapping(value = "/queryEnquiryByfactorNo", method = RequestMethod.POST)
+    public @ResponseBody String findEnquiryByfactorNo(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("查看保理公司收到的询价queryEnquiryByfactorNo，入参:"+ map);
+        
+        try {
+            return enquiryService.webQueryEnquiryByfactorNo(map, flag, pageNum, pageSize);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return AjaxObject.newError("findEnquiryByfactorNo service failed").toJson();
+        }
+    }
 
 }

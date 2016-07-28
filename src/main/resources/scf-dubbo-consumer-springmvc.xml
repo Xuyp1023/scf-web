@@ -13,7 +13,8 @@
 	<dubbo:annotation package="
 	com.betterjr.modules.product,
 	com.betterjr.modules.credit,
+	com.betterjr.modules.loan,
 	com.betterjr.modules.enquiry,
-	com.betterjr.modules.repayment,
+	com.betterjr.modules.param,
 	com.betterjr.modules.test" />
 </beans>
