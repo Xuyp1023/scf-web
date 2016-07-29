@@ -141,15 +141,29 @@ public class EnquiryController {
     }
 
     @RequestMapping(value = "/findOfferDetail", method = RequestMethod.POST)
-    public @ResponseBody String findOfferDetail(HttpServletRequest request, Long id) {
-        logger.info("查看报价详情，入参:"+ id);
+    public @ResponseBody String findOfferDetail(HttpServletRequest request, Long factorNo, String enquiryNo) {
+        logger.info("查看报价详情，入参:factorNo:"+ factorNo + " enquiryNo:"+enquiryNo);
         
         try {
-            return enquiryService.webFindOfferDetail(id);
+            return enquiryService.webFindOfferDetail(factorNo, enquiryNo);
         }
         catch (Exception ex) {
             ex.printStackTrace();
             return AjaxObject.newError("findOfferDetail service failed").toJson();
+        }
+    }
+    
+    @RequestMapping(value = "/queryEnquiryByfactorNo", method = RequestMethod.POST)
+    public @ResponseBody String findEnquiryByfactorNo(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("查看保理公司收到的询价queryEnquiryByfactorNo，入参:"+ map);
+        
+        try {
+            return enquiryService.webQueryEnquiryByfactorNo(map, flag, pageNum, pageSize);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return AjaxObject.newError("findEnquiryByfactorNo service failed").toJson();
         }
     }
 

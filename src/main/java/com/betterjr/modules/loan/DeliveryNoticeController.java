@@ -1,4 +1,4 @@
-package com.betterjr.modules.repayment;
+package com.betterjr.modules.loan;
 
 import java.util.Map;
 
@@ -16,7 +16,6 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
-import com.betterjr.modules.repayment.IScfDeliveryNoticeService;
 
 @Controller
 @RequestMapping(value = "/Scf/Delivery")
@@ -72,7 +71,7 @@ public class DeliveryNoticeController {
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            return AjaxObject.newError("webSaveModifyDeliveryNotice service failed").toJson();
+            return AjaxObject.newError("saveModifyEnquiry service failed").toJson();
         }
 
     }
