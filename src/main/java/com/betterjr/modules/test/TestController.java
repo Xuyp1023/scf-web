@@ -1,4 +1,4 @@
-package com.betterjr.modules.test.controller;
+package com.betterjr.modules.test;
 
 import java.util.HashMap;
 import java.util.Map;
