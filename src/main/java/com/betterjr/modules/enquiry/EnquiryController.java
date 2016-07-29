@@ -141,11 +141,11 @@ public class EnquiryController {
     }
 
     @RequestMapping(value = "/findOfferDetail", method = RequestMethod.POST)
-    public @ResponseBody String findOfferDetail(HttpServletRequest request, Long id) {
-        logger.info("查看报价详情，入参:"+ id);
+    public @ResponseBody String findOfferDetail(HttpServletRequest request, Long factorNo, String enquiryNo) {
+        logger.info("查看报价详情，入参:factorNo:"+ factorNo + " enquiryNo:"+enquiryNo);
         
         try {
-            return enquiryService.webFindOfferDetail(id);
+            return enquiryService.webFindOfferDetail(factorNo, enquiryNo);
         }
         catch (Exception ex) {
             ex.printStackTrace();
