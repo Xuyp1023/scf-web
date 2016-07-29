@@ -17,7 +17,6 @@
 	com.betterjr.modules.enquiry,
 	com.betterjr.modules.order,
 	com.betterjr.modules.param,
-	com.betterjr.modules.test,
-	com.betterjr.modules.agreement" />
+	com.betterjr.modules.test" />
 
 </beans>
