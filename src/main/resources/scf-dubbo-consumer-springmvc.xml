@@ -16,5 +16,7 @@
 	com.betterjr.modules.enquiry,
 	com.betterjr.modules.repayment,
 	com.betterjr.modules.order,
+	com.betterjr.modules.receivable,
+	com.betterjr.modules.acceptbill,
 	com.betterjr.modules.test" />
 </beans>
