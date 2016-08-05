@@ -1,5 +1,7 @@
 package com.betterjr.modules.loan;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,45 +24,45 @@ import com.betterjr.modules.loan.IScfRequestService;
 @RequestMapping(value = "/Scf/Request")
 public class RequestController {
     private static final Logger logger = LoggerFactory.getLogger(RequestController.class);
-    
+
     @Reference(interfaceClass = IScfRequestService.class)
     private IScfRequestService scfRequestService;
-    
+
     @RequestMapping(value = "/addRequest", method = RequestMethod.POST)
     public @ResponseBody String addRequest(HttpServletRequest request) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("添加融资申请，入参:"+ map.toString());
-        
+        logger.info("添加融资申请，入参:" + map.toString());
+
         try {
             return scfRequestService.webAddRequest(map);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("添加融资申请:", ex);
             return AjaxObject.newError("addRequest service failed").toJson();
         }
 
     }
-    
+
     @RequestMapping(value = "/saveModifyRequest", method = RequestMethod.POST)
     public @ResponseBody String saveModifyRequest(HttpServletRequest request, String requestNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("修改融资申请，入参:"+ map.toString());
-        
+        logger.info("修改融资申请，入参:" + map.toString());
+
         try {
             return scfRequestService.webSaveModifyRequest(map, requestNo);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("修改融资申请:", ex);
             return AjaxObject.newError("saveModifyRequest service failed").toJson();
         }
 
     }
-    
+
     @RequestMapping(value = "/queryRequestList", method = RequestMethod.POST)
     public @ResponseBody String queryRequestList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("分页查询融资申请，入参:"+ map.toString());
-        
+        logger.info("分页查询融资申请，入参:" + map.toString());
+
         try {
             return scfRequestService.webQueryRequestList(map, flag, pageNum, pageSize);
         }
@@ -71,137 +73,213 @@ public class RequestController {
             return AjaxObject.newError("queryRequestList service failed").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("分页查询融资申请，", ex);
             return AjaxObject.newError("queryRequestList service failed").toJson();
         }
 
     }
-    
+
     @RequestMapping(value = "/findRequestDetail", method = RequestMethod.POST)
     public @ResponseBody String findRequestByNo(HttpServletRequest request, String requestNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("查询融资申请详情，入参:"+ map.toString());
-        
+        logger.info("查询融资申请详情，入参:" + map.toString());
+
         try {
             return scfRequestService.webFindRequestDetail(map, requestNo);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("查询融资申请详情，", ex);
             return AjaxObject.newError("findRequestDetail service failed").toJson();
         }
-        
+
     }
-    
+
     @RequestMapping(value = "/offerScheme", method = RequestMethod.POST)
-    public @ResponseBody String offerScheme(HttpServletRequest request) {
+    public @ResponseBody String offerScheme(HttpServletRequest request, String approvalResult, String returnNode, String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("查询融资申请详情，入参:"+ map.toString());
-        
+        logger.info("保存融资方案，入参:" + map.toString());
+
         try {
-            return scfRequestService.webOfferScheme(map);
+            return scfRequestService.webOfferScheme(map, approvalResult, returnNode, description);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("保存融资方案，", ex);
             return AjaxObject.newError("offerScheme service failed").toJson();
         }
-        
+
     }
-    
-    @RequestMapping(value = "/saveModifyApproved", method = RequestMethod.POST)
-    public @ResponseBody String saveModifyApproved(HttpServletRequest request) {
+
+    @RequestMapping(value = "/saveModifyScheme", method = RequestMethod.POST)
+    public @ResponseBody String saveModifyScheme(HttpServletRequest request) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("查询融资申请详情，入参:"+ map);
-        
+        logger.info("修改融资方案，入参:" + map);
+
         try {
-            return scfRequestService.webSaveModifyApproved(map);
+            return scfRequestService.webSaveModifyScheme(map);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
-            return AjaxObject.newError("saveModifyApproved service failed").toJson();
+            logger.error("修改融资方案：", ex);
+            return AjaxObject.newError("saveModifyScheme service failed").toJson();
         }
-        
+
     }
-    
-    @RequestMapping(value = "/queryApprovedList", method = RequestMethod.POST)
-    public @ResponseBody String queryApprovedList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+
+    @RequestMapping(value = "/querySchemeList", method = RequestMethod.POST)
+    public @ResponseBody String querySchemeList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("分页查询融资申请，入参:"+ map);
-        
+        logger.info("分页查询融资方案申请，入参:" + map);
+
         try {
-            return scfRequestService.webQueryApprovedList(map, flag, pageNum, pageSize);
+            return scfRequestService.webQuerySchemeList(map, flag, pageNum, pageSize);
         }
         catch (RpcException btEx) {
             if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("queryApprovedList service failed").toJson();
+            return AjaxObject.newError("querySchemeList service failed").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
-            return AjaxObject.newError("queryApprovedList service failed").toJson();
+            logger.error("分页查询融资方案申请：", ex);
+            return AjaxObject.newError("querySchemeList service failed").toJson();
         }
 
     }
-    
-    @RequestMapping(value = "/findApprovedDetail", method = RequestMethod.POST)
-    public @ResponseBody String findApprovedDetail(HttpServletRequest request, String requestNo) {
+
+    @RequestMapping(value = "/findSchemeDetail", method = RequestMethod.POST)
+    public @ResponseBody String findSchemeDetail(HttpServletRequest request, String requestNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("查询融资申请详情，入参:"+ map);
-        
+        logger.info("查询融资方案详情，入参:" + map);
+
         try {
-            return scfRequestService.webFindApprovedDetail(requestNo);
+            return scfRequestService.webFindSchemeDetail(requestNo);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
-            return AjaxObject.newError("findApprovedDetail service failed").toJson();
+            logger.error("查询融资方案详情：", ex);
+            return AjaxObject.newError("findSchemeDetail service failed").toJson();
         }
-        
+
     }
-    
+
     @RequestMapping(value = "/confirmScheme", method = RequestMethod.POST)
-    public @ResponseBody String findApprovedDetail(HttpServletRequest request, String requestNo, String businStatus) {
+    public @ResponseBody String findApprovedDetail(HttpServletRequest request, String requestNo, String aduitStatus) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("确认融资方案，入参:"+ map);
-        
+        logger.info("确认融资方案，入参:" + map);
+
         try {
-            return scfRequestService.webConfirmScheme(requestNo, businStatus);
+            return scfRequestService.webConfirmScheme(requestNo, aduitStatus);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
-            return AjaxObject.newError("findApprovedDetail service failed").toJson();
+            logger.error("确认融资方案：", ex);
+            return AjaxObject.newError("confirmScheme service failed").toJson();
         }
-        
+
     }
-    
+
     @RequestMapping(value = "/requestTradingBackgrand", method = RequestMethod.POST)
     public @ResponseBody String requestTradingBackgrand(HttpServletRequest request, String requestNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("发起融资背景确认，入参:"+ map);
-        
+        logger.info("发起融资背景确认，入参:" + map);
+
         try {
             return scfRequestService.webRequestTradingBackgrand(requestNo);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("发起融资背景确认：", ex);
             return AjaxObject.newError("requestTradingBackgrand service failed").toJson();
+        }
+
+    }
+
+    @RequestMapping(value = "/confirmTradingBackgrand", method = RequestMethod.POST)
+    public @ResponseBody String confirmTradingBackgrand(HttpServletRequest request, String requestNo, String aduitStatus) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("确认融资贸易背景，入参:" + map);
+
+        try {
+            return scfRequestService.webConfirmTradingBackgrand(requestNo, aduitStatus);
+        }
+        catch (Exception ex) {
+            logger.error("确认融资贸易背景：", ex);
+            return AjaxObject.newError("confirmTradingBackgrand service failed").toJson();
+        }
+
+    }
+    
+    @RequestMapping(value = "/approveRequest", method = RequestMethod.POST)
+    public @ResponseBody String approveRequest(HttpServletRequest request, String approvalResult, String returnNode, String description) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("审批，入参:" + map);
+        
+        try {
+            return scfRequestService.webApproveRequest(approvalResult, returnNode, description);
+        }
+        catch (Exception ex) {
+            logger.error("审批：", ex);
+            return AjaxObject.newError("approveRequest service failed").toJson();
         }
         
     }
     
-    @RequestMapping(value = "/confirmTradingBackgrand", method = RequestMethod.POST)
-    public @ResponseBody String confirmTradingBackgrand(HttpServletRequest request, String requestNo, String anAduit) {
+    @RequestMapping(value = "/confirmLoan", method = RequestMethod.POST)
+    public @ResponseBody String confirmLoan(HttpServletRequest request, String approvalResult, String returnNode, String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("确认融资贸易背景，入参:"+ map);
+        logger.info("确认放款，入参:" + map);
         
         try {
-            return scfRequestService.webConfirmTradingBackgrand(requestNo, anAduit);
+            return scfRequestService.webConfirmLoan(map, approvalResult, returnNode, description);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
-            return AjaxObject.newError("confirmTradingBackgrand service failed").toJson();
+            logger.error("确认放款：", ex);
+            return AjaxObject.newError("confirmLoan service failed").toJson();
         }
         
     }
+    
+    @RequestMapping(value = "/calculatServiceFee", method = RequestMethod.POST)
+    public @ResponseBody String calculatServiceFee(HttpServletRequest request, String requestNo, BigDecimal loanBalance) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("计算手续费，入参:" + map);
+        
+        try {
+            return scfRequestService.webCalculatServiecFee(requestNo, loanBalance);
+        }
+        catch (Exception ex) {
+            logger.error("计算手续费：", ex);
+            return AjaxObject.newError("calculatServiceFee service failed").toJson();
+        }
+        
+    }
+    
+    @RequestMapping(value = "/calculatEndDate", method = RequestMethod.POST)
+    public @ResponseBody String calculatEndDate(HttpServletRequest request, String requestNo, String loanDate) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("计算结束日期，入参:" + map);
+        
+        try {
+            return scfRequestService.webCalculatEndDate(requestNo, loanDate);
+        }
+        catch (Exception ex) {
+            logger.error("计算结束日期：", ex);
+            return AjaxObject.newError("calculatEndDate service failed").toJson();
+        }
+        
+    }
+    
+    @RequestMapping(value = "/calculatInsterest", method = RequestMethod.POST)
+    public @ResponseBody String calculatInsterest(HttpServletRequest request, String requestNo, BigDecimal loanBalance) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("计算利息，入参:" + map);
+        
+        try {
+            return scfRequestService.webCalculatInsterest(requestNo, loanBalance);
+        }
+        catch (Exception ex) {
+            logger.error("计算利息：", ex);
+            return AjaxObject.newError("calculatInsterest service failed").toJson();
+        }
+        
+    }
+    
+    
 
-   
 }

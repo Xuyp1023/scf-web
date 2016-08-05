@@ -40,7 +40,7 @@ public class DeliveryNoticeController {
             return AjaxObject.newError("webQueryDeliveryNoticeList service failed").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("通知单查询：", ex);
             return AjaxObject.newError("webQueryDeliveryNoticeList service failed").toJson();
         }
 
@@ -55,7 +55,7 @@ public class DeliveryNoticeController {
             return scfDeliveryNoticeService.webAddDeliveryNotice(map);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+           logger.error("添加发货通知单：", ex);
             return AjaxObject.newError("addDeliveryNotice service failed").toJson();
         }
 
@@ -70,7 +70,7 @@ public class DeliveryNoticeController {
             return scfDeliveryNoticeService.webSaveModifyDeliveryNotice(map, id);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+           logger.error("修改发货通知单：" , ex);
             return AjaxObject.newError("saveModifyEnquiry service failed").toJson();
         }
 
