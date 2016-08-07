@@ -37,6 +37,7 @@ public class ScfTransportController {
         }
     }
 
+    //dateType  0-发货日期 1-收货日期
     @RequestMapping(value = "/queryTransport", method = RequestMethod.POST)
     public @ResponseBody String queryTransport(HttpServletRequest request, String flag, int pageNum, int pageSize)  {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
