@@ -41,7 +41,7 @@ public class FactorParamController {
             return AjaxObject.newError("saveFactorParam service failed").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("保理公司参数保存:" , ex);
             return AjaxObject.newError("saveFactorParam service failed").toJson();
         }
 
@@ -56,7 +56,7 @@ public class FactorParamController {
             return scfFactorParamService.webLoadFactorParam(custNo);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("理公司参数查询:", ex);
             return AjaxObject.newError("loadFactorParam service failed").toJson();
         }
     }

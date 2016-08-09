@@ -40,7 +40,7 @@ public class EnquiryController {
             return AjaxObject.newError("queryEnquiryList service failed").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("查询询价:", ex);
             return AjaxObject.newError("queryEnquiryList service failed").toJson();
         }
 
@@ -55,7 +55,7 @@ public class EnquiryController {
             return enquiryService.webAddEnquiry(map);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("保存询价:", ex);
             return AjaxObject.newError("addEnquiry service failed").toJson();
         }
 
@@ -70,7 +70,7 @@ public class EnquiryController {
             return enquiryService.webSaveModifyEnquiry(map, id);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("修改询价:", ex);
             return AjaxObject.newError("saveModifyEnquiry service failed").toJson();
         }
 
@@ -84,7 +84,7 @@ public class EnquiryController {
             return enquiryService.webFindEnquiryDetail(id);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("查看询价详情:", ex);
             return AjaxObject.newError("findEnquiryDetail service failed").toJson();
         }
     }
@@ -92,7 +92,7 @@ public class EnquiryController {
     @RequestMapping(value = "/queryOfferList", method = RequestMethod.POST)
     public @ResponseBody String queryOfferList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("查询报价，入参:"+ map.toString());
+        logger.info("查询报价:"+ map.toString());
         
         try {
             return enquiryService.webQueryOfferList(map, flag, pageNum, pageSize);
@@ -104,7 +104,7 @@ public class EnquiryController {
             return AjaxObject.newError("queryOfferList service failed").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("查询报价，入参:", ex);
             return AjaxObject.newError("queryOfferList service failed").toJson();
         }
 
@@ -119,7 +119,7 @@ public class EnquiryController {
             return enquiryService.webAddOffer(map);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("保存报价，入参:", ex);
             return AjaxObject.newError("saveOffer service failed").toJson();
         }
 
@@ -134,7 +134,7 @@ public class EnquiryController {
             return enquiryService.webSaveModifyOffer(map, id);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("修改报价:", ex);
             return AjaxObject.newError("updateOffer service failed").toJson();
         }
 
@@ -148,7 +148,7 @@ public class EnquiryController {
             return enquiryService.webFindOfferDetail(factorNo, enquiryNo);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("查看报价详情:", ex);
             return AjaxObject.newError("findOfferDetail service failed").toJson();
         }
     }
@@ -162,7 +162,7 @@ public class EnquiryController {
             return enquiryService.webQueryEnquiryByfactorNo(map, flag, pageNum, pageSize);
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("查看保理公司收到的询价:", ex);
             return AjaxObject.newError("findEnquiryByfactorNo service failed").toJson();
         }
     }
