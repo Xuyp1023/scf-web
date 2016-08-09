@@ -82,6 +82,21 @@ public class RepaymentController {
         }
         
     }
+    
+    @RequestMapping(value = "/queryPayRecordList", method = RequestMethod.POST)
+    public @ResponseBody String queryPayRecordList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("分页查询还款记录，入参:" + map);
+        
+        try {
+            return repaymentService.webQueryPayRecordList(map, flag, pageNum, pageSize);
+        }
+        catch (Exception ex) {
+            logger.error("分页查询还款记录：", ex);
+            return AjaxObject.newError("queryPayRecordList service failed").toJson();
+        }
+        
+    }
 
     
     
