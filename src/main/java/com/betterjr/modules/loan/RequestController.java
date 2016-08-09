@@ -206,12 +206,12 @@ public class RequestController {
     }
     
     @RequestMapping(value = "/approveRequest", method = RequestMethod.POST)
-    public @ResponseBody String approveRequest(HttpServletRequest request, String approvalResult, String returnNode, String description) {
+    public @ResponseBody String approveRequest(HttpServletRequest request, String anRequestNo, String approvalResult, String returnNode, String description, String tradeStatus) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("审批，入参:" + map);
         
         try {
-            return scfRequestService.webApproveRequest(approvalResult, returnNode, description);
+            return scfRequestService.webApproveRequest(anRequestNo, approvalResult, returnNode, description, tradeStatus);
         }
         catch (Exception ex) {
             logger.error("审批：", ex);
