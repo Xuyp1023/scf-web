@@ -25,11 +25,11 @@ public class ScfOrderController {
     private IScfOrderService scfOrderService;
     
     @RequestMapping(value = "/modifyOrder", method = RequestMethod.POST)
-    public @ResponseBody String modifyOrder(HttpServletRequest requset, Long id, String fileList) {
+    public @ResponseBody String modifyOrder(HttpServletRequest requset, Long id, String fileList, String otherFileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(requset, "");
         logger.info("订单信息修改,入参：" + anMap.toString());
         try{
-            return scfOrderService.webSaveModifyOrder(anMap, id, fileList);
+            return scfOrderService.webSaveModifyOrder(anMap, id, fileList, otherFileList);
         }
         catch(Exception e) {
             logger.error("订单信息编辑失败", e);
