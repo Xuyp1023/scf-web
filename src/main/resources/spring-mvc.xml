@@ -21,6 +21,7 @@
 	com.betterjr.modules.param;
 	com.betterjr.modules.enquiry;
 	com.betterjr.modules.order;
+    com.betterjr.modules.agreement;
 	com.betterjr.modules.test"
 		use-default-filters="false">
 		<context:include-filter type="annotation"
