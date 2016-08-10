@@ -159,12 +159,12 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/confirmScheme", method = RequestMethod.POST)
-    public @ResponseBody String findApprovedDetail(HttpServletRequest request, String requestNo, String aduitStatus) {
+    public @ResponseBody String findApprovedDetail(HttpServletRequest request, String requestNo, String approvalResult) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("确认融资方案，入参:" + map);
 
         try {
-            return scfRequestService.webConfirmScheme(requestNo, aduitStatus);
+            return scfRequestService.webConfirmScheme(requestNo, approvalResult);
         }
         catch (Exception ex) {
             logger.error("确认融资方案：", ex);
@@ -174,12 +174,12 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/requestTradingBackgrand", method = RequestMethod.POST)
-    public @ResponseBody String requestTradingBackgrand(HttpServletRequest request, String requestNo, String anAduitStatus, String anReturnNode, String anDescription) {
+    public @ResponseBody String requestTradingBackgrand(HttpServletRequest request, String requestNo, String approvalResult, String returnNode, String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("发起融资背景确认，入参:" + map);
 
         try {
-            return scfRequestService.webRequestTradingBackgrand(requestNo, anAduitStatus, anReturnNode, anDescription);
+            return scfRequestService.webRequestTradingBackgrand(requestNo, approvalResult, returnNode, description);
         }
         catch (Exception ex) {
             logger.error("发起融资背景确认：", ex);
@@ -189,12 +189,12 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/confirmTradingBackgrand", method = RequestMethod.POST)
-    public @ResponseBody String confirmTradingBackgrand(HttpServletRequest request, String requestNo, String aduitStatus) {
+    public @ResponseBody String confirmTradingBackgrand(HttpServletRequest request, String requestNo, String approvalResult) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("确认融资贸易背景，入参:" + map);
 
         try {
-            return scfRequestService.webConfirmTradingBackgrand(requestNo, aduitStatus);
+            return scfRequestService.webConfirmTradingBackgrand(requestNo, approvalResult);
         }
         catch (Exception ex) {
             logger.error("确认融资贸易背景：", ex);
@@ -204,12 +204,12 @@ public class RequestController {
     }
     
     @RequestMapping(value = "/approveRequest", method = RequestMethod.POST)
-    public @ResponseBody String approveRequest(HttpServletRequest request, String anRequestNo, String approvalResult, String returnNode, String description, String tradeStatus) {
+    public @ResponseBody String approveRequest(HttpServletRequest request, String requestNo, String approvalResult, String returnNode, String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("审批，入参:" + map);
         
         try {
-            return scfRequestService.webApproveRequest(anRequestNo, approvalResult, returnNode, description, tradeStatus);
+            return scfRequestService.webApproveRequest(requestNo, approvalResult, returnNode, description);
         }
         catch (Exception ex) {
             logger.error("审批：", ex);
