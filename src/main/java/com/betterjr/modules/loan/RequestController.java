@@ -1,7 +1,6 @@
 package com.betterjr.modules.loan;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
-import com.betterjr.modules.loan.IScfRequestService;
 
 @Controller
 @RequestMapping(value = "/Scf/Request")
@@ -176,12 +174,12 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/requestTradingBackgrand", method = RequestMethod.POST)
-    public @ResponseBody String requestTradingBackgrand(HttpServletRequest request, String requestNo) {
+    public @ResponseBody String requestTradingBackgrand(HttpServletRequest request, String requestNo, String anAduitStatus, String anReturnNode, String anDescription) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("发起融资背景确认，入参:" + map);
 
         try {
-            return scfRequestService.webRequestTradingBackgrand(requestNo);
+            return scfRequestService.webRequestTradingBackgrand(requestNo, anAduitStatus, anReturnNode, anDescription);
         }
         catch (Exception ex) {
             logger.error("发起融资背景确认：", ex);
@@ -279,7 +277,5 @@ public class RequestController {
         }
         
     }
-    
-    
 
 }
