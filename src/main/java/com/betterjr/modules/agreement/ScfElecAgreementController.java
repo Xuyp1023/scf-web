@@ -108,7 +108,7 @@ public class ScfElecAgreementController {
     @RequestMapping(value = "/transNotice", method = RequestMethod.POST)
     public @ResponseBody String transNotice(HttpServletRequest request) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("申请单号:" + anMap);
+        logger.info("transNotice 入参：" + anMap);
         try {
             boolean bool= scfElecAgreementService.webTransNotice(anMap);
             logger.info("bool-TransNotice:"+bool);
@@ -126,7 +126,7 @@ public class ScfElecAgreementController {
     @RequestMapping(value = "/transOpinion", method = RequestMethod.POST)
     public @ResponseBody String transOpinion(HttpServletRequest request) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("申请单号:" + anMap);
+        logger.info("transOpinion 入参：" + anMap);
         try {
             boolean bool= scfElecAgreementService.webTransOpinion(anMap);
             logger.info("bool-TransOpinion:"+bool);
@@ -140,4 +140,20 @@ public class ScfElecAgreementController {
             return AjaxObject.newError("买方确认书通知失败").toJson();
         }
     }
+    
+    @RequestMapping(value = "/findElecAgreeByRequestNo", method = RequestMethod.POST)
+    public @ResponseBody String findElecAgreeByRequestNo(String requestNo,String signType) {
+        logger.info("入参： 申请单号:" + requestNo+"，类型："+signType);
+        try {
+           return scfElecAgreementService.webFindOneElecAgreeByOrderNo(requestNo, signType);
+        }
+        catch (BytterTradeException btEx) {
+            return AjaxObject.newError(btEx.getMessage()).toJson();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            return AjaxObject.newError("买方确认书通知失败").toJson();
+        }
+    }
+    
 }
