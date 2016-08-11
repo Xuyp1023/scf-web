@@ -277,5 +277,54 @@ public class RequestController {
         }
         
     }
+    
+    
+    @RequestMapping(value = "/queryPendingRequest", method = RequestMethod.POST)
+    public @ResponseBody String queryPendingRequest(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        try{
+            return scfRequestService.webQueryPendingRequest(anMap, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("查询待批融资失败", e);
+            return AjaxObject.newError("查询待批融资失败").toJson();
+        }
+    }
+    
+    @RequestMapping(value = "/queryRepaymentRequest", method = RequestMethod.POST)
+    public @ResponseBody String queryRepaymentRequest(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        try{
+            return scfRequestService.webQueryRepaymentRequest(anMap, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("查询还款融资失败", e);
+            return AjaxObject.newError("查询还款融资失败").toJson();
+        }
+    }
+    
+    @RequestMapping(value = "/queryCompletedRequest", method = RequestMethod.POST)
+    public @ResponseBody String queryCompletedRequest(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        try{
+            return scfRequestService.webQueryCompletedRequest(anMap, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("查询历史融资失败", e);
+            return AjaxObject.newError("查询历史融资失败").toJson();
+        }
+    }
+    
+    @RequestMapping(value = "/queryCoreEnterpriseRequest", method = RequestMethod.POST)
+    public @ResponseBody String queryCoreEnterpriseRequest(HttpServletRequest request, String requestType, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        try{
+            return scfRequestService.webQueryCoreEnterpriseRequest(anMap, requestType, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("核心企业查询融资失败", e);
+            return AjaxObject.newError("核心企业查询融资失败").toJson();
+        }
+    }
 
 }
