@@ -37,12 +37,13 @@ public class ScfTransportController {
         }
     }
 
+    //dateType  0-发货日期 1-收货日期
     @RequestMapping(value = "/queryTransport", method = RequestMethod.POST)
     public @ResponseBody String queryTransport(HttpServletRequest request, String flag, int pageNum, int pageSize)  {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询订单运输单据,入参:" + anMap.toString());
         try{
-            return scfTransportService.webQueryTransportList(anMap, flag, pageNum, pageSize);
+            return scfTransportService.webQueryTransportList(anMap,flag, pageNum, pageSize);
         }
         catch (Exception e) {
             logger.error("查询订单运输单据失败",e);

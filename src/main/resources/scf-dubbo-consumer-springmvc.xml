@@ -18,6 +18,8 @@
 	com.betterjr.modules.order,
 	com.betterjr.modules.param,
     com.betterjr.modules.agreement,
+	com.betterjr.modules.receivable,
+	com.betterjr.modules.acceptbill,
 	com.betterjr.modules.test" />
 
 </beans>
