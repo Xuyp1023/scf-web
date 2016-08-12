@@ -25,11 +25,10 @@ public class ScfOrderRelationController {
     private IScfOrderRelationService scfOrderRelationService;
 
     @RequestMapping(value = "/addOrderRelation", method = RequestMethod.POST)
-    public @ResponseBody String addOrderRelation(HttpServletRequest request, String infoIdList) {
-        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("订单关联关系添加,入参:" + anMap);
+    public @ResponseBody String addOrderRelation(String enterType, Long enterId, String infoType, String infoIdList) {
+        logger.info("订单关联关系添加,入参:enterType=" + enterType + " enterId=" + enterId + " infoType=" + infoType + " infoIds=" + infoIdList );
         try {
-            return scfOrderRelationService.webAddOrderRelation(anMap, infoIdList);
+            return scfOrderRelationService.webAddOrderRelation(enterType, enterId, infoType, infoIdList);
         }
         catch (Exception e) {
             logger.error("订单关联关系添加失败", e);

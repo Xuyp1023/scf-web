@@ -39,11 +39,11 @@ public class ScfReceivableController {
     }
     
     @RequestMapping(value = "/queryReceivable", method = RequestMethod.POST)
-    public @ResponseBody String queryReceivable(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryReceivable(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款查询,入参:" + anMap.toString());
         try {
-            return scfReceivableService.webQueryReceivable(anMap, flag, pageNum, pageSize);
+            return scfReceivableService.webQueryReceivable(anMap, isOnlyNormal, flag, pageNum, pageSize);
         }
         catch (Exception e) {
             logger.error("应收账款查询失败", e);
