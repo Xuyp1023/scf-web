@@ -25,12 +25,12 @@ public class ScfAcceptBillController {
     private IScfAcceptBillService scfAcceptBillService;
 
     @RequestMapping(value = "/queryAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String queryAcceptBill(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryAcceptBill(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息查询,入参：" + anMap.toString());
         try {
 
-            return scfAcceptBillService.webQueryAcceptBill(anMap, flag, pageNum, pageSize);
+            return scfAcceptBillService.webQueryAcceptBill(anMap, isOnlyNormal, flag, pageNum, pageSize);
         }
         catch (Exception e) {
             logger.error("汇票信息查询失败", e);
@@ -39,7 +39,7 @@ public class ScfAcceptBillController {
     }
 
     @RequestMapping(value = "/modifyAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, Long id, String fileList) {
+    public @ResponseBody String modifyAcceptBill(HttpServletRequest request,String isOnlyNormal, Long id, String fileList) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息修改,入参：" + anMap.toString());
         try {

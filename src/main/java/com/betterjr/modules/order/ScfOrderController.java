@@ -37,12 +37,17 @@ public class ScfOrderController {
         }
     }
     
+    /**
+     * 
+     * @param isOnlyNormal 是否过滤，仅查询正常未融资数据 1：未融资 0：查询所有
+     * @return
+     */
     @RequestMapping(value = "/queryOrder", method = RequestMethod.POST)
-    public @ResponseBody String queryOrder(HttpServletRequest request, String flag, int pageNum, int pageSize){
+    public @ResponseBody String queryOrder(HttpServletRequest request,String isOnlyNormal, String flag, int pageNum, int pageSize){
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息查询,入参：" + anMap.toString());
         try{
-            return scfOrderService.webQueryOrder(anMap, flag, pageNum, pageSize);
+            return scfOrderService.webQueryOrder(anMap, isOnlyNormal, flag, pageNum, pageSize);
         }
         catch(Exception e) {
             logger.error("订单信息查询失败", e);
