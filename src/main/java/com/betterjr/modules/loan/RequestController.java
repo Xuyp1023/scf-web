@@ -174,7 +174,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/requestTradingBackgrand", method = RequestMethod.POST)
-    public @ResponseBody String requestTradingBackgrand(HttpServletRequest request, String requestNo, String approvalResult, String returnNode, String description) {
+    public @ResponseBody String requestTradingBackgrand(HttpServletRequest request, String requestNo, String approvalResult, String returnNode,
+            String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("发起融资背景确认，入参:" + map);
 
@@ -202,12 +203,13 @@ public class RequestController {
         }
 
     }
-    
+
     @RequestMapping(value = "/approveRequest", method = RequestMethod.POST)
-    public @ResponseBody String approveRequest(HttpServletRequest request, String requestNo, String approvalResult, String returnNode, String description) {
+    public @ResponseBody String approveRequest(HttpServletRequest request, String requestNo, String approvalResult, String returnNode,
+            String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("审批，入参:" + map);
-        
+
         try {
             return scfRequestService.webApproveRequest(requestNo, approvalResult, returnNode, description);
         }
@@ -215,14 +217,14 @@ public class RequestController {
             logger.error("审批：", ex);
             return AjaxObject.newError("approveRequest service failed").toJson();
         }
-        
+
     }
-    
+
     @RequestMapping(value = "/confirmLoan", method = RequestMethod.POST)
     public @ResponseBody String confirmLoan(HttpServletRequest request, String approvalResult, String returnNode, String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("确认放款，入参:" + map);
-        
+
         try {
             return scfRequestService.webConfirmLoan(map, approvalResult, returnNode, description);
         }
@@ -230,14 +232,14 @@ public class RequestController {
             logger.error("确认放款：", ex);
             return AjaxObject.newError("confirmLoan service failed").toJson();
         }
-        
+
     }
-    
+
     @RequestMapping(value = "/calculatServiceFee", method = RequestMethod.POST)
     public @ResponseBody String calculatServiceFee(HttpServletRequest request, String requestNo, BigDecimal loanBalance) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("计算手续费，入参:" + map);
-        
+
         try {
             return scfRequestService.webCalculatServiecFee(requestNo, loanBalance);
         }
@@ -245,14 +247,14 @@ public class RequestController {
             logger.error("计算手续费：", ex);
             return AjaxObject.newError("calculatServiceFee service failed").toJson();
         }
-        
+
     }
-    
+
     @RequestMapping(value = "/calculatEndDate", method = RequestMethod.POST)
     public @ResponseBody String calculatEndDate(HttpServletRequest request, String requestNo, String loanDate) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("计算结束日期，入参:" + map);
-        
+
         try {
             return scfRequestService.webCalculatEndDate(requestNo, loanDate);
         }
@@ -260,14 +262,14 @@ public class RequestController {
             logger.error("计算结束日期：", ex);
             return AjaxObject.newError("calculatEndDate service failed").toJson();
         }
-        
+
     }
-    
+
     @RequestMapping(value = "/calculatInsterest", method = RequestMethod.POST)
     public @ResponseBody String calculatInsterest(HttpServletRequest request, String requestNo, BigDecimal loanBalance) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("计算利息，入参:" + map);
-        
+
         try {
             return scfRequestService.webCalculatInsterest(requestNo, loanBalance);
         }
@@ -275,14 +277,13 @@ public class RequestController {
             logger.error("计算利息：", ex);
             return AjaxObject.newError("calculatInsterest service failed").toJson();
         }
-        
+
     }
-    
-    
+
     @RequestMapping(value = "/queryPendingRequest", method = RequestMethod.POST)
     public @ResponseBody String queryPendingRequest(HttpServletRequest request, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-        try{
+        try {
             return scfRequestService.webQueryPendingRequest(anMap, flag, pageNum, pageSize);
         }
         catch (Exception e) {
@@ -290,11 +291,11 @@ public class RequestController {
             return AjaxObject.newError("查询待批融资失败").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/queryRepaymentRequest", method = RequestMethod.POST)
     public @ResponseBody String queryRepaymentRequest(HttpServletRequest request, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-        try{
+        try {
             return scfRequestService.webQueryRepaymentRequest(anMap, flag, pageNum, pageSize);
         }
         catch (Exception e) {
@@ -302,11 +303,11 @@ public class RequestController {
             return AjaxObject.newError("查询还款融资失败").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/queryCompletedRequest", method = RequestMethod.POST)
     public @ResponseBody String queryCompletedRequest(HttpServletRequest request, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-        try{
+        try {
             return scfRequestService.webQueryCompletedRequest(anMap, flag, pageNum, pageSize);
         }
         catch (Exception e) {
@@ -314,16 +315,28 @@ public class RequestController {
             return AjaxObject.newError("查询历史融资失败").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/queryCoreEnterpriseRequest", method = RequestMethod.POST)
     public @ResponseBody String queryCoreEnterpriseRequest(HttpServletRequest request, String requestType, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-        try{
+        try {
             return scfRequestService.webQueryCoreEnterpriseRequest(anMap, requestType, flag, pageNum, pageSize);
         }
         catch (Exception e) {
             logger.error("核心企业查询融资失败", e);
             return AjaxObject.newError("核心企业查询融资失败").toJson();
+        }
+    }
+
+    @RequestMapping(value = "/queryWorkTask", method = RequestMethod.POST)
+    public @ResponseBody String queryWorkTask(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        try {
+            return scfRequestService.webQueryWorkTask(map, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("用户任务列表查询失败", e);
+            return AjaxObject.newError("用户任务列表查询失败").toJson();
         }
     }
 
