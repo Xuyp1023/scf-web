@@ -24,7 +24,7 @@ import com.betterjr.common.web.Servlets;
  *
  */
 @Controller
-@RequestMapping(value = "/ElecAgree")
+@RequestMapping(value = "/Scf/ElecAgree")
 public class ScfElecAgreementController {
     private static final Logger logger = LoggerFactory.getLogger(ScfElecAgreementController.class);
     

@@ -24,7 +24,7 @@ import com.betterjr.common.web.Servlets;
  *
  */
 @Controller
-@RequestMapping(value = "/CustAgree")
+@RequestMapping(value = "/Scf/CustAgree")
 public class CustAgreementController {
     
     private static final Logger logger = LoggerFactory.getLogger(CustAgreementController.class);
