@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.dubbo.rpc.RpcException;
+import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
@@ -32,8 +34,15 @@ public class ScfProductController {
 
             return scfProductService.webQueryProduct(anMap, flag, pageNum, pageSize);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("融资产品信息查询失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("融资产品信息查询失败").toJson();
         }
     }
@@ -45,8 +54,15 @@ public class ScfProductController {
 
             return scfProductService.webQueryProductKeyAndValue(coreCustNo, factorNo);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("融资产品下拉列表查询失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("融资产品下拉列表查询失败").toJson();
         }
     }
@@ -59,8 +75,15 @@ public class ScfProductController {
 
             return scfProductService.webAddProduct(anMap);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("融资产品录入失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("融资产品录入失败").toJson();
         }
     }
@@ -73,8 +96,15 @@ public class ScfProductController {
 
             return scfProductService.webSaveModifyProduct(anMap, id);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("融资产品修改失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("融资产品修改失败").toJson();
         }
     }
@@ -86,8 +116,15 @@ public class ScfProductController {
 
             return scfProductService.webSaveDeleteProduct(id);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("融资产品删除失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("融资产品删除失败").toJson();
         }
     }
@@ -99,8 +136,15 @@ public class ScfProductController {
 
             return scfProductService.webSaveShelvesProduct(id);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("融资产品上架失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("融资产品上架失败").toJson();
         }
     }
@@ -112,8 +156,15 @@ public class ScfProductController {
 
             return scfProductService.webSaveOfflineProduct(id);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("融资产品下架失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("融资产品下架失败").toJson();
         }
     }
