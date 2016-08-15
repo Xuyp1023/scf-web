@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.dubbo.rpc.RpcException;
+import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
@@ -32,8 +34,15 @@ public class ScfCreditController {
 
             return scfCreditService.webQueryFactorCredit(anMap, flag, pageNum, pageSize);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("授信额度信息查询失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("授信额度信息查询失败").toJson();
         }
     }
@@ -46,8 +55,15 @@ public class ScfCreditController {
 
             return scfCreditService.webQueryCustCredit(anMap, flag, pageNum, pageSize);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("授信余额信息查询失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("授信余额信息查询失败").toJson();
         }
     }
@@ -60,8 +76,15 @@ public class ScfCreditController {
 
             return scfCreditService.webQueryCreditDetail(anMap, creditId, flag, pageNum, pageSize);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("授信额度变动信息查询", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("授信额度变动信息查询").toJson();
         }
     }
@@ -73,8 +96,15 @@ public class ScfCreditController {
 
             return scfCreditService.webFindCreditSumByCustNo(custNo);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("授信额度信息查询失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("授信额度信息查询失败").toJson();
         }
     }
@@ -87,8 +117,15 @@ public class ScfCreditController {
 
             return scfCreditService.webAddCredit(anMap);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("授信额度录入失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("授信额度录入失败").toJson();
         }
     }
@@ -102,7 +139,7 @@ public class ScfCreditController {
             return scfCreditService.webModifyCredit(anMap, id);
         }
         catch (Exception e) {
-            logger.error("授信记录修改失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("授信记录修改失败").toJson();
         }
     }
@@ -114,8 +151,15 @@ public class ScfCreditController {
 
             return scfCreditService.webActivateCredit(id);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("授信额度激活失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("授信额度激活失败").toJson();
         }
     }
@@ -127,8 +171,15 @@ public class ScfCreditController {
 
             return scfCreditService.webTerminatCredit(id);
         }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("黑名单信息查询失败").toJson();
+        }
         catch (Exception e) {
-            logger.error("授信终止失败", e);
+            logger.error(e.getMessage(), e);
             return AjaxObject.newError("授信终止失败").toJson();
         }
     }
