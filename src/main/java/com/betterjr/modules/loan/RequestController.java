@@ -339,5 +339,16 @@ public class RequestController {
             return AjaxObject.newError("用户任务列表查询失败").toJson();
         }
     }
+    
+    @RequestMapping(value = "/queryTradeStatus", method = RequestMethod.POST)
+    public @ResponseBody String queryTradeStatus(HttpServletRequest request) {
+        try {
+            return scfRequestService.webQueryTradeStatus();
+        }
+        catch (Exception e) {
+            logger.error("状态列表查询失败", e);
+            return AjaxObject.newError("状态列表").toJson();
+        }
+    }
 
 }
