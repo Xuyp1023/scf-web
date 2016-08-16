@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.AjaxObject;
+import com.betterjr.common.web.ControllerExceptionHandler;
 import com.betterjr.common.web.Servlets;
+import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
 import com.betterjr.modules.receivable.IScfReceivableService;
 
 @Controller
@@ -29,27 +31,34 @@ public class ScfReceivableController {
     public @ResponseBody String modifyReceivable(HttpServletRequest request, Long id, String fileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款编辑,入参:" + anMap.toString());
-        try{
-            return scfReceivableService.webSaveModifyReceivable(anMap, id, fileList);
-        }
-        catch(Exception e) {
-            logger.error("应收账款编辑失败", e);
-            return AjaxObject.newError("应收账款编辑失败").toJson();
-        }
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webSaveModifyReceivable(anMap, id, fileList);
+            }
+        }, "应收账款编辑失败", logger);
     }
     
     @RequestMapping(value = "/queryReceivable", method = RequestMethod.POST)
     public @ResponseBody String queryReceivable(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款查询,入参:" + anMap.toString());
-        try {
-            return scfReceivableService.webQueryReceivable(anMap, isOnlyNormal, flag, pageNum, pageSize);
-        }
-        catch (Exception e) {
-            logger.error("应收账款查询失败", e);
-            return AjaxObject.newError("应收账款查询失败").toJson();
-        }
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webQueryReceivable(anMap, isOnlyNormal, flag, pageNum, pageSize);
+            }
+        }, "应收账款查询失败", logger);
     }
+    
+    @RequestMapping(value = "/findReceivableList", method = RequestMethod.POST)
+    public @ResponseBody String findReceivableList(String custNo, String isOnlyNormal) {
+        logger.info("应收账款查询,入参:custNo" + custNo + " isOnlyNormal" + isOnlyNormal);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webFindReceivableList(custNo, isOnlyNormal);
+            }
+        }, "应收账款查询失败", logger);
+    }
+    
         
     
 }
