@@ -26,8 +26,8 @@ public class ScfOrderController {
     private IScfOrderService scfOrderService;
     
     @RequestMapping(value = "/modifyOrder", method = RequestMethod.POST)
-    public @ResponseBody String modifyOrder(HttpServletRequest requset, Long id, String fileList, String otherFileList) {
-        Map<String, Object> anMap = Servlets.getParametersStartingWith(requset, "");
+    public @ResponseBody String modifyOrder(HttpServletRequest request, Long id, String fileList, String otherFileList) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
