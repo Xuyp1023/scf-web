@@ -40,10 +40,11 @@ public class CustAgreementController {
         try {
             return scfCustAgreemnetService.webQueryCustAgreementsByPage(anMap, Integer.parseInt(pageNum), Integer.parseInt(pageSize));
         } catch (RpcException btEx) {
+            logger.error("查询合同异常："+btEx.getMessage());
             if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("service failed").toJson();
+            return AjaxObject.newError("查询合同失败").toJson();
         } catch (Exception ex) {
             return AjaxObject.newError("service failed").toJson();
         }
@@ -56,8 +57,12 @@ public class CustAgreementController {
         try {
             return scfCustAgreemnetService.webAddCustAgreement(anMap, fileList);
         }
-        catch (BytterTradeException btEx) {
-            return AjaxObject.newError(btEx.getMessage()).toJson();
+        catch (RpcException btEx) {
+            logger.error("新增客户合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("新增客户合同失败").toJson();
         }
         catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
@@ -72,10 +77,15 @@ public class CustAgreementController {
         try {
             return scfCustAgreemnetService.webFindCustAgreementDetail(agreeId);
         }
-        catch (BytterTradeException btEx) {
+        catch (RpcException btEx) {
+            logger.error("查询客户合同明细异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
             return AjaxObject.newError(btEx.getMessage()).toJson();
         }
         catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             return AjaxObject.newError("查询客户合同明细失败，请检查").toJson();
         }
     }
@@ -87,10 +97,15 @@ public class CustAgreementController {
         try {
             return scfCustAgreemnetService.webModifyCustAgreement(anMap, agreeId, fileList);
         }
-        catch (BytterTradeException btEx) {
+        catch (RpcException btEx) {
+            logger.error("更新客户合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
             return AjaxObject.newError(btEx.getMessage()).toJson();
         }
         catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             return AjaxObject.newError("更新合同失败，请检查").toJson();
         }
     }
@@ -100,8 +115,15 @@ public class CustAgreementController {
         logger.info("查询客户合同附件, 入参:" + agreeId);
         try {
             return scfCustAgreemnetService.webFindCustFileItems(agreeId);
+        }catch (RpcException btEx) {
+            logger.error("查询客户合同附件异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError(btEx.getMessage()).toJson();
         }
         catch (Exception ex) {
+            logger.error("查询客户合同附件异常："+ex.getMessage());
             return AjaxObject.newError("查询客户合同附件失败，请检查").toJson();
         }
     }
@@ -111,9 +133,15 @@ public class CustAgreementController {
         logger.info("删除合同附件, 入参附件id:" + id +", agreeId:" + agreeId);
         try {
             return scfCustAgreemnetService.webDeleteFileItem(id, agreeId);
-        } 
+        }catch (RpcException btEx) {
+            logger.error("删除合同附件异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError(btEx.getMessage()).toJson();
+        }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("删除合同附件异常："+ex.getMessage());
             return AjaxObject.newError("删除合同附件失败，请检查").toJson();
         }
     }
@@ -125,11 +153,14 @@ public class CustAgreementController {
             scfCustAgreemnetService.webSaveCustAgreementStatus(agreeId, 1);
             return AjaxObject.newOk("启用客户合同成功").toJson();
         }
-        catch (BytterTradeException btEx) {
+        catch (RpcException btEx) {
+            logger.error("启用客户合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
             return AjaxObject.newError(btEx.getMessage()).toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
             return AjaxObject.newError("启用客户合同失败，请检查").toJson();
         }
     }
@@ -141,11 +172,15 @@ public class CustAgreementController {
             scfCustAgreemnetService.webSaveCustAgreementStatus(agreeId, 2);
             return AjaxObject.newOk("删除客户合同成功").toJson();
         }
-        catch (BytterTradeException btEx) {
+        catch (RpcException btEx) {
+            logger.error("删除客户合同成功异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
             return AjaxObject.newError(btEx.getMessage()).toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage(), ex);
             return AjaxObject.newError("删除客户合同失败，请检查").toJson();
         }
     }
