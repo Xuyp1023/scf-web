@@ -3,7 +3,6 @@ package com.betterjr.modules.agreement;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
-import com.betterjr.common.exception.BytterTradeException;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
@@ -38,12 +36,14 @@ public class ScfElecAgreementController {
         try {
             return scfElecAgreementService.webQueryElecAgreementByPage(anMap, pageNum, pageSize);
         } catch (RpcException btEx) {
+            logger.error("分页查询电子合同异常："+btEx.getMessage());
             if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("service failed").toJson();
+            return AjaxObject.newError("分页查询电子合同失败").toJson();
         } catch (Exception ex) {
-            return AjaxObject.newError("service failed").toJson();
+            logger.error(ex.getMessage(), ex);
+            return AjaxObject.newError("分页查询电子合同失败").toJson();
         }
     }
     
@@ -53,10 +53,15 @@ public class ScfElecAgreementController {
         try {
             return scfElecAgreementService.webCancelElecAgreement(appNo);
         }
-        catch (BytterTradeException btEx) {
-            return AjaxObject.newError(btEx.getMessage()).toJson();
+        catch (RpcException btEx) {
+            logger.error("取消电子合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("取消电子合同失败，请检查").toJson();
         }
         catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             return AjaxObject.newError("取消电子合同的流水号失败，请检查").toJson();
         }
     }
@@ -67,10 +72,15 @@ public class ScfElecAgreementController {
         try {
             return scfElecAgreementService.webFindElecAgreePage(appNo);
         }
-        catch (BytterTradeException btEx) {
-            return AjaxObject.newError(btEx.getMessage()).toJson();
+        catch (RpcException btEx) {
+            logger.error("生成电子合同的静态页面异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("生成静态页面失败").toJson();
         }
         catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
             return AjaxObject.newError("生成通知书的静态页面失败，请检查").toJson();
         }
     }
@@ -81,8 +91,12 @@ public class ScfElecAgreementController {
         try {
             return scfElecAgreementService.webFindValidCode(appNo,custType);
         }
-        catch (BytterTradeException btEx) {
-            return AjaxObject.newError(btEx.getMessage()).toJson();
+        catch (RpcException btEx) {
+            logger.error("获取签署合同的验证码异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("获取签署合同的验证码失败").toJson();
         }
         catch (Exception ex) {
             return AjaxObject.newError("获取签署合同的验证码失败，请检查").toJson();
@@ -95,11 +109,14 @@ public class ScfElecAgreementController {
         try {
             return scfElecAgreementService.webSendValidCode(appNo,custType,vCode);
         }
-        catch (BytterTradeException btEx) {
-            return AjaxObject.newError(btEx.getMessage()).toJson();
+        catch (RpcException btEx) {
+            logger.error("验证签署合同的验证码异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("验证签署合同的验证码失败").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
             return AjaxObject.newError("发送并验证签署合同的验证码失败，请检查").toJson();
         }
     }
@@ -114,11 +131,14 @@ public class ScfElecAgreementController {
             logger.info("bool-TransNotice:"+bool);
             return "OK";
         }
-        catch (BytterTradeException btEx) {
-            return AjaxObject.newError(btEx.getMessage()).toJson();
+        catch (RpcException btEx) {
+            logger.error("转让通知书异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("失败").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
             return AjaxObject.newError("转让书通知失败").toJson();
         }
     }
@@ -132,12 +152,37 @@ public class ScfElecAgreementController {
             logger.info("bool-TransOpinion:"+bool);
             return "OK";
         }
-        catch (BytterTradeException btEx) {
-            return AjaxObject.newError(btEx.getMessage()).toJson();
+        catch (RpcException btEx) {
+            logger.error("买方确认书通知异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("失败").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
             return AjaxObject.newError("买方确认书通知失败").toJson();
+        }
+    }
+    
+
+    @RequestMapping(value = "/transProtacal", method = RequestMethod.POST)
+    public @ResponseBody String transProtacal(HttpServletRequest request) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("transProtacal 入参：" + anMap);
+        try {
+            boolean bool= scfElecAgreementService.webTransProtacal(anMap);
+            logger.info("bool-transProtacal:"+bool);
+            return "OK";
+        }
+        catch (RpcException btEx) {
+            logger.error("三方协议异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("失败").toJson();
+        }
+        catch (Exception ex) {
+            return AjaxObject.newError("三方协议失败").toJson();
         }
     }
     
@@ -145,15 +190,18 @@ public class ScfElecAgreementController {
     public @ResponseBody String findElecAgreeByRequestNo(String requestNo,String signType) {
         logger.info("入参： 申请单号:" + requestNo+"，类型："+signType);
         try {
-           return scfElecAgreementService.webFindOneElecAgreeByOrderNo(requestNo, signType);
+           return scfElecAgreementService.webFindElecAgreeByOrderNo(requestNo, signType);
         }
-        catch (BytterTradeException btEx) {
-            return AjaxObject.newError(btEx.getMessage()).toJson();
+        catch (RpcException btEx) {
+            logger.error("买查询电子合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("失败").toJson();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage(),ex);
             return AjaxObject.newError("买方确认书通知失败").toJson();
         }
     }
-    
 }
