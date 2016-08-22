@@ -12,17 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
-import com.betterjr.modules.receivable.IScfReceivableService;
+import com.betterjr.common.web.Servlets;
 
 @Controller
 @RequestMapping("/Scf/Receivable")
 public class ScfReceivableController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ScfReceivableController.class);
+    private static final Logger logger =    LoggerFactory.getLogger(ScfReceivableController.class);
     
     @Reference(interfaceClass = IScfReceivableService.class)
     private IScfReceivableService scfReceivableService;
