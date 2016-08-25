@@ -59,7 +59,7 @@ public class TestController {
 
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(String username, String password) {
 		System.out.println("controller " + username + ":" + password);
 		return "/static/error.html";
@@ -68,6 +68,6 @@ public class TestController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout() {
 		return "/static/error.html";
-	}
+	}*/
 
 }

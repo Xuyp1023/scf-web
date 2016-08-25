@@ -10,7 +10,7 @@
 
 	<!-- 安全认证过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="loginUrl" value="/testController/login" />
+		<property name="loginUrl" value="/login" />
 		<property name="successUrl" value="/static/main.html" />
 		<property name="unauthorizedUrl" value="/static/error.html" />
 		<property name="filters">
@@ -37,8 +37,8 @@
 		<constructor-arg>
 			<value>
 				/static/** = anon
-				/testController/login = authcx
-				/testController/logout = logout
+				/login = authcx
+				/logout = logout
 				/p/** =anon
 				/** = user
 			</value>
