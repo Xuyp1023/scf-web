@@ -28,7 +28,7 @@ public class DeliveryNoticeController {
     @RequestMapping(value = "/queryDeliveryNoticeList", method = RequestMethod.POST)
     public @ResponseBody String queryDeliveryNoticeList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("通知单查询，入参:"+ map.toString());
+        logger.info("分页查询发货通知单，入参:"+ map.toString());
         
         try {
             return scfDeliveryNoticeService.webQueryDeliveryNoticeList(map, flag, pageNum, pageSize);
@@ -40,7 +40,7 @@ public class DeliveryNoticeController {
             return AjaxObject.newError("webQueryDeliveryNoticeList service failed").toJson();
         }
         catch (Exception ex) {
-            logger.error("通知单查询：", ex);
+            logger.error("分页查询通发货知单：", ex);
             return AjaxObject.newError("webQueryDeliveryNoticeList service failed").toJson();
         }
 
@@ -74,6 +74,18 @@ public class DeliveryNoticeController {
             return AjaxObject.newError("saveModifyEnquiry service failed").toJson();
         }
 
+    }
+    
+    @RequestMapping(value = "/findDeliveryNoticeList", method = RequestMethod.POST)
+    public @ResponseBody String findPayPlan(HttpServletRequest request) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        try {
+            return scfDeliveryNoticeService.webFindDeliveryNoticeList(map);
+        }
+        catch (Exception e) {
+            logger.error("发货通知单查询-无分页", e);
+            return AjaxObject.newError("发货通知单查询-无分页").toJson();
+        }
     }
 
    

@@ -350,5 +350,16 @@ public class RequestController {
             return AjaxObject.newError("状态列表").toJson();
         }
     }
-
+    
+    @RequestMapping(value = "/findPayPlan", method = RequestMethod.POST)
+    public @ResponseBody String findPayPlan(HttpServletRequest request) {
+        try {
+            return scfRequestService.webFindPayPlan(Servlets.getParametersStartingWith(request, ""));
+        }
+        catch (Exception e) {
+            logger.error("状态列表查询失败", e);
+            return AjaxObject.newError("状态列表").toJson();
+        }
+    }
+    
 }
