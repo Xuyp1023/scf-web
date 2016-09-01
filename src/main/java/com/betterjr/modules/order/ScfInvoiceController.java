@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.betterjr.common.web.AjaxObject;
+import com.betterjr.common.web.ControllerExceptionHandler;
+import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
 import com.betterjr.common.web.Servlets;
 
 @Controller
@@ -26,16 +27,13 @@ public class ScfInvoiceController {
     
     @RequestMapping(value = "/addInvoice", method = RequestMethod.POST)
     public @ResponseBody String addInvoice(HttpServletRequest request, String fileList) {
-        
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息录入,入参:" + anMap.toString());
-        try{
-            return scfInvoiceService.webAddInvoice(anMap, fileList);
-        }
-        catch(Exception e) {
-            logger.error("发票信息录入失败", e);
-            return AjaxObject.newError("发票信息录入失败").toJson();
-        }
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfInvoiceService.webAddInvoice(anMap, fileList);
+            }
+        }, "发票信息录入失败", logger);
                 
     }
     
@@ -43,13 +41,12 @@ public class ScfInvoiceController {
     public @ResponseBody String queryInvoice(HttpServletRequest request, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询订单发票信息,入参:" + anMap.toString());
-        try{
-            return scfInvoiceService.webQueryInvoiceList(anMap, flag, pageNum, pageSize);
-        }
-        catch (Exception e) {
-            logger.error("查询订单发票信息失败", e);
-            return AjaxObject.newError("查询订单发票信息失败").toJson();
-        }
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfInvoiceService.webQueryInvoiceList(anMap, flag, pageNum, pageSize);
+            }
+        }, "查询订单发票信息失败", logger);
+
     }
     
 }

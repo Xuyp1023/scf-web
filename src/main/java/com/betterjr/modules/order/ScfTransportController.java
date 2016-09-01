@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.betterjr.common.web.AjaxObject;
+import com.betterjr.common.web.ControllerExceptionHandler;
+import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
 import com.betterjr.common.web.Servlets;
 
 @Controller
@@ -28,13 +29,11 @@ public class ScfTransportController {
     public @ResponseBody String addTransport(HttpServletRequest request, String fileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单运输单据录入,入参:" + anMap.toString());
-        try {
-            return scfTransportService.webAddTransport(anMap, fileList);
-        }
-        catch (Exception e) {
-            logger.error("订单运输信息录入失败", e);
-            return AjaxObject.newError("订单运输信息录入失败").toJson();
-        }
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfTransportService.webAddTransport(anMap, fileList);
+            }
+        }, "订单运输单据录入失败", logger);
     }
 
     //dateType  0-发货日期 1-收货日期
@@ -42,12 +41,10 @@ public class ScfTransportController {
     public @ResponseBody String queryTransport(HttpServletRequest request, String flag, int pageNum, int pageSize)  {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询订单运输单据,入参:" + anMap.toString());
-        try{
-            return scfTransportService.webQueryTransportList(anMap,flag, pageNum, pageSize);
-        }
-        catch (Exception e) {
-            logger.error("查询订单运输单据失败",e);
-            return AjaxObject.newError("查询订单运输单据失败").toJson();
-        }
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfTransportService.webQueryTransportList(anMap,flag, pageNum, pageSize);
+            }
+        }, "查询订单运输单据失败", logger);
     }
 }
