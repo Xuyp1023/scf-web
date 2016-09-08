@@ -81,4 +81,31 @@ public class ScfOrderController {
             }
         }, "融资资料信息查询失败", logger);
     }
+    
+    /**
+     * 新增订单
+     */
+    @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
+    public @ResponseBody String addOrder(HttpServletRequest request, String fileList, String otherFileList) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单信息新增,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webAddOrder(anMap, fileList, otherFileList);
+            }
+        }, "订单信息新增失败", logger);
+    }
+    
+    /**
+     * 检查订单下发票所关联订单是否勾选完成
+     */
+    @RequestMapping(value = "/checkCompleteInvoice", method = RequestMethod.POST)
+    public @ResponseBody String checkCompleteInvoice(String requestType, String idList) {
+        logger.info("检查关联发票关系,入参：requestType=" + requestType + "idList=" + idList);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webCheckCompleteInvoice(requestType, idList);
+            }
+        }, "检查关联发票关系失败", logger);
+    }
 }
