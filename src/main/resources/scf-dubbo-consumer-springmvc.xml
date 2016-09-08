@@ -20,6 +20,7 @@
     com.betterjr.modules.agreement,
 	com.betterjr.modules.receivable,
 	com.betterjr.modules.acceptbill,
+    com.betterjr.modules.discount,
 	com.betterjr.modules.test" />
 
 </beans>

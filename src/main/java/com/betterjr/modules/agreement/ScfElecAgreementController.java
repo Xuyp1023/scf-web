@@ -193,7 +193,7 @@ public class ScfElecAgreementController {
            return scfElecAgreementService.webFindElecAgreeByOrderNo(requestNo, signType);
         }
         catch (RpcException btEx) {
-            logger.error("买查询电子合同异常："+btEx.getMessage());
+            logger.error("查询电子合同异常："+btEx.getMessage());
             if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
@@ -201,7 +201,7 @@ public class ScfElecAgreementController {
         }
         catch (Exception ex) {
             logger.error(ex.getMessage(),ex);
-            return AjaxObject.newError("买方确认书通知失败").toJson();
+            return AjaxObject.newError("查询电子合同异常").toJson();
         }
     }
 }
