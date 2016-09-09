@@ -78,4 +78,13 @@ public class ScfAcceptBillController {
         }, "汇票信息审核失败", logger);
     }
 
+    @RequestMapping(value = "/findAllFile", method = RequestMethod.POST)
+    public @ResponseBody String findAllFile(Long id) {
+        logger.info("汇票所有附件查询,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAllFile(id);
+            }
+        }, "汇票所有附件查询", logger);
+    }
 }
