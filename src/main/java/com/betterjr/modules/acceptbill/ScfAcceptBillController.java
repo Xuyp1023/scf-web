@@ -47,7 +47,7 @@ public class ScfAcceptBillController {
     }
 
     @RequestMapping(value = "/modifyAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, String isOnlyNormal, Long id, String fileList) {
+    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, Long id, String fileList) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -56,5 +56,35 @@ public class ScfAcceptBillController {
             }
         }, "汇票信息编辑失败", logger);
     }
+    
+    @RequestMapping(value = "/addAcceptBill", method = RequestMethod.POST)
+    public @ResponseBody String addAcceptBill(HttpServletRequest request, String fileList) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票信息登记,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webAddAcceptBill(anMap, fileList);
+            }
+        }, "汇票信息登记失败", logger);
+    }
+    
+    @RequestMapping(value = "/saveAduitAcceptBill", method = RequestMethod.POST)
+    public @ResponseBody String saveAduitAcceptBill(Long id) {
+        logger.info("汇票信息审核,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webSaveAduitAcceptBill(id);
+            }
+        }, "汇票信息审核失败", logger);
+    }
 
+    @RequestMapping(value = "/findAllFile", method = RequestMethod.POST)
+    public @ResponseBody String findAllFile(Long id) {
+        logger.info("汇票所有附件查询,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAllFile(id);
+            }
+        }, "汇票所有附件查询", logger);
+    }
 }

@@ -26,12 +26,12 @@ public class ScfInvoiceController {
     private IScfInvoiceService scfInvoiceService;
     
     @RequestMapping(value = "/addInvoice", method = RequestMethod.POST)
-    public @ResponseBody String addInvoice(HttpServletRequest request, String fileList) {
+    public @ResponseBody String addInvoice(HttpServletRequest request,String invoiceItemIds, String fileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息录入,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfInvoiceService.webAddInvoice(anMap, fileList);
+                return scfInvoiceService.webAddInvoice(anMap, invoiceItemIds, fileList);
             }
         }, "发票信息录入失败", logger);
                 
@@ -47,6 +47,30 @@ public class ScfInvoiceController {
             }
         }, "查询订单发票信息失败", logger);
 
+    }
+    
+    @RequestMapping(value = "/saveModifyInvoice", method = RequestMethod.POST)
+    public @ResponseBody String saveModifyInvoice(HttpServletRequest request,String invoiceItemIds, String fileList) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("发票信息编辑,入参:" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfInvoiceService.webSaveModifyInvoice(anMap, invoiceItemIds, fileList);
+            }
+        }, "发票信息录入编辑", logger);
+                
+    }
+    
+    @RequestMapping(value = "/addInvoiceItem", method = RequestMethod.POST)
+    public @ResponseBody String addInvoiceItem(HttpServletRequest request) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("发票信息详情录入,入参:" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfInvoiceService.webAddInvoiceItem(anMap);
+            }
+        }, "发票信息详情录入失败", logger);
+                
     }
     
 }
