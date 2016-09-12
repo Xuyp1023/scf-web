@@ -241,7 +241,7 @@ public class RequestController {
         logger.info("计算手续费，入参:" + map);
 
         try {
-            return scfRequestService.webCalculatServiecFee(requestNo, loanBalance);
+            return scfRequestService.webGetServiecFee(requestNo, loanBalance);
         }
         catch (Exception ex) {
             logger.error("计算手续费：", ex);
@@ -256,7 +256,7 @@ public class RequestController {
         logger.info("计算结束日期，入参:" + map);
 
         try {
-            return scfRequestService.webCalculatEndDate(requestNo, loanDate);
+            return scfRequestService.webGetEndDate(requestNo, loanDate);
         }
         catch (Exception ex) {
             logger.error("计算结束日期：", ex);
@@ -271,7 +271,7 @@ public class RequestController {
         logger.info("计算利息，入参:" + map);
 
         try {
-            return scfRequestService.webCalculatInsterest(requestNo, loanBalance);
+            return scfRequestService.webGetInsterest(requestNo, loanBalance);
         }
         catch (Exception ex) {
             logger.error("计算利息：", ex);
@@ -352,13 +352,13 @@ public class RequestController {
     }
     
     @RequestMapping(value = "/findPayPlan", method = RequestMethod.POST)
-    public @ResponseBody String findPayPlan(HttpServletRequest request) {
+    public @ResponseBody String findPayPlan(HttpServletRequest request, Long id) {
         try {
-            return scfRequestService.webFindPayPlan(Servlets.getParametersStartingWith(request, ""));
+            return scfRequestService.webFindPayPlan(id);
         }
         catch (Exception e) {
-            logger.error("状态列表查询失败", e);
-            return AjaxObject.newError("状态列表").toJson();
+            logger.error("还款计划详情查询失败", e);
+            return AjaxObject.newError("还款计划详情").toJson();
         }
     }
     
