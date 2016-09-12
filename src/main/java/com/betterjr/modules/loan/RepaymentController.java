@@ -214,5 +214,97 @@ public class RepaymentController {
         }, "分页查询展期列表", logger);
         
     }
-
+    
+    @RequestMapping(value = "/findExtensionList", method = RequestMethod.POST)
+    public @ResponseBody String findExtensionList(HttpServletRequest request, String requestNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("无分页查询展期列表,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webFindExtensionList(map);
+            }
+        }, "分页查询展期列表", logger);
+        
+    }
+    
+    @RequestMapping(value = "/findExemptList", method = RequestMethod.POST)
+    public @ResponseBody String findExemptList(HttpServletRequest request, String requestNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("无分页查询豁免列表,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webFindExemptList(map);
+            }
+        }, "无分页查询豁免列表", logger);
+        
+    }
+    
+    @RequestMapping(value = "/findPayRecordList", method = RequestMethod.POST)
+    public @ResponseBody String findPayRecordList(HttpServletRequest request, String requestNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("无分页查还款记录列表,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webFindPayRecordList(map);
+            }
+        }, "无分页查还款记录列表", logger);
+        
+    }
+    
+    @RequestMapping(value = "/findPlanList", method = RequestMethod.POST)
+    public @ResponseBody String findPlanList(HttpServletRequest request, String requestNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("无分页查还款计划列表,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webFindPlanList(map);
+            }
+        }, "无分页查还款计划列表", logger);
+        
+    }
+    
+    @RequestMapping(value = "/findPresMoneyist", method = RequestMethod.POST)
+    public @ResponseBody String findPresMoneyist(HttpServletRequest request, String requestNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("无分页查催收列表,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webFindPresMoneyist(map);
+            }
+        }, "无分页查催收列表", logger);
+        
+    }
+    
+    @RequestMapping(value = "/saveModifyPressMoney", method = RequestMethod.POST)
+    public @ResponseBody String saveModifyPressMoney(HttpServletRequest request, Long id) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("修改催收,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webSaveModifyPayPlan(map, id);
+            }
+        }, "修改催收", logger);
+        
+    }
+    
+    @RequestMapping(value = "/saveDelPressMoney", method = RequestMethod.POST)
+    public @ResponseBody String saveDelPressMoney(HttpServletRequest request, Long id) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("修改催收,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webSaveDelPressMoney(map, id);
+            }
+        }, "修改催收", logger);
+        
+    }
+    
+   
 }

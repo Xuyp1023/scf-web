@@ -15,7 +15,9 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.web.AjaxObject;
+import com.betterjr.common.web.ControllerExceptionHandler;
 import com.betterjr.common.web.Servlets;
+import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
 
 @Controller
 @RequestMapping(value = "/Scf/Enquiry")
@@ -167,4 +169,70 @@ public class EnquiryController {
         }
     }
 
+    @RequestMapping(value = "/addOfferReply", method = RequestMethod.POST)
+    public @ResponseBody String addOfferReply(HttpServletRequest request, String enquiryNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("保存报价回复,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return enquiryService.webAddOfferReply(map);
+            }
+        }, "保存报价回复", logger);
+        
+    }
+    
+    @RequestMapping(value = "/saveModifyOfferReply", method = RequestMethod.POST)
+    public @ResponseBody String saveModifyOfferReply(HttpServletRequest request, String enquiryNo, Long id) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("修改报价回复,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return enquiryService.webSaveModifyOfferReply(map, id);
+            }
+        }, "修改报价回复", logger);
+        
+    }
+    
+    @RequestMapping(value = "/queryOfferReply", method = RequestMethod.POST)
+    public @ResponseBody String queryOfferReply(HttpServletRequest request, String requestNo, int flag, int pageNum, int pageSize) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("分页报价回复,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return enquiryService.webQueryOfferReply(map, flag, pageNum, pageSize);
+            }
+        }, "分页查询报价回复", logger);
+        
+    }
+    
+    @RequestMapping(value = "/dropOffer", method = RequestMethod.POST)
+    public @ResponseBody String dropOffer(HttpServletRequest request, String enquiryNo, Long factorNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("放弃报价,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return enquiryService.webDropOffer(enquiryNo, factorNo);
+            }
+        }, "放弃报价", logger);
+        
+    }
+    
+    @RequestMapping(value = "/queryOfferByFactor", method = RequestMethod.POST)
+    public @ResponseBody String queryOfferByFactor(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("查看有哪些公司报了价,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return enquiryService.webQueryOfferByFactor(map, flag, pageNum, pageSize);
+            }
+        }, "查看有哪些公司报了价", logger);
+        
+    }
+    
+   
 }
