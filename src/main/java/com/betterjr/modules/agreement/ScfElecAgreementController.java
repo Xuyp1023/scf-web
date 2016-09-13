@@ -3,6 +3,8 @@ package com.betterjr.modules.agreement;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
+import com.betterjr.modules.agreement.utils.CustFileClientUtils;
+import com.betterjr.modules.document.entity.CustFileItem;
 
 /****
  * 电子合同管理
@@ -204,4 +208,70 @@ public class ScfElecAgreementController {
             return AjaxObject.newError("查询电子合同异常").toJson();
         }
     }
+    
+    @RequestMapping(value = "/downloadAgreePDF", method = { RequestMethod.GET, RequestMethod.POST })
+    public void downloadElecAgreePDF(HttpServletResponse response, String appNo) {
+        logger.info("下载电子合同的PDF格式文件，流水号：" + appNo);
+        CustFileItem fileItem = scfElecAgreementService.webFindPdfFileInfo(appNo);
+        CustFileClientUtils.fileDownload(response, fileItem,null);
+    }
+    
+    @RequestMapping(value = "/addOtherFile", method = RequestMethod.POST)
+    public @ResponseBody String addOtherFile(HttpServletRequest request) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("addOtherFile 入参：" + anMap);
+        try {
+           return scfElecAgreementService.webAddOtherFile(anMap);
+        }
+        catch (RpcException btEx) {
+            logger.error("添加其它资料异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("添加其它资料失败").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(),ex);
+            return AjaxObject.newError("添加其它资料异常：").toJson();
+        }
+    } 
+    
+    @RequestMapping(value = "/queryOtherFile", method = RequestMethod.POST)
+    public @ResponseBody String queryOtherFile(String requestNo) {
+        logger.info("queryOtherFile 入参：" + requestNo);
+        try {
+           return scfElecAgreementService.webQueryOtherFile(requestNo);
+        }
+        catch (RpcException btEx) {
+            logger.error("requestNo查询其它资料异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("查询出现异常").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(),ex);
+            return AjaxObject.newError("requestNo查询其它资料异常：").toJson();
+        }
+    } 
+    
+
+    @RequestMapping(value = "/delOtherFile", method = RequestMethod.POST)
+    public @ResponseBody String delOtherFile(Long otherId) {
+        logger.info("delOtherFile 入参：" + otherId);
+        try {
+           return scfElecAgreementService.webDelOtherFile(otherId);
+        }
+        catch (RpcException btEx) {
+            logger.error("删除资料异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("资料删除出现异常").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(),ex);
+            return AjaxObject.newError("删除资料异常：").toJson();
+        }
+    } 
 }

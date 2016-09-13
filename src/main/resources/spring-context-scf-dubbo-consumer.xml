@@ -32,6 +32,7 @@
 		com.betterjr.modules.order;
         com.betterjr.modules.agreement;
         com.betterjr.modules.discount;
+        com.betterjr.modules.push;
 		com.betterjr.modules.receivable;
 		com.betterjr.modules.acceptbill;
 		com.betterjr.modules.test">
