@@ -21,6 +21,7 @@
 	com.betterjr.modules.receivable,
 	com.betterjr.modules.acceptbill,
     com.betterjr.modules.discount,
+    com.betterjr.modules.push,
 	com.betterjr.modules.test" />
 
 </beans>
