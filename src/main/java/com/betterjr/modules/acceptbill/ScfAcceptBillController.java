@@ -87,4 +87,15 @@ public class ScfAcceptBillController {
             }
         }, "汇票所有附件查询", logger);
     }
+    
+    @RequestMapping(value = "queryFinancedByFactor", method = RequestMethod.POST)
+    public @ResponseBody String queryFinancedByFactor(HttpServletRequest request, Long factorNo) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票所有附件查询,入参：factorNo" + factorNo + anMap);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webQueryFinancedByFactor(anMap, factorNo);
+            }
+        }, "保理公司查询已融资汇票", logger);
+    }
 }
