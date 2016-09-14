@@ -39,23 +39,23 @@ public class BillRequestController {
 
     }
     
-    @RequestMapping(value = "/toRequest", method = RequestMethod.POST)
-    public @ResponseBody String toRequest(HttpServletRequest request, String id) {
+    @RequestMapping(value = "/requestByOffer", method = RequestMethod.POST)
+    public @ResponseBody String requestByOffer(HttpServletRequest request, String offerId) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("添加票据融资申请，入参:" + map.toString());
+        logger.info("根据报价信息进行融资申请，入参:" + map.toString());
 
         try {
-            return billRequestService.webToRequest(id);
+            return billRequestService.webRequestByOffer(offerId);
         }
         catch (Exception ex) {
-            logger.error("添加票据融资申请:", ex);
-            return AjaxObject.newError("toRequest service failed").toJson();
+            logger.error("根据报价信息进行融资申请:", ex);
+            return AjaxObject.newError("requestByOffer service failed").toJson();
         }
 
     }
 
-    @RequestMapping(value = "/queryRequestList", method = RequestMethod.POST)
-    public @ResponseBody String queryRequestList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+    @RequestMapping(value = "/queryBillRequestList", method = RequestMethod.POST)
+    public @ResponseBody String queryBillRequestList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("查询票据融资申请，入参:" + map.toString());
 
@@ -65,6 +65,36 @@ public class BillRequestController {
         catch (Exception ex) {
             logger.error("查询票据融资申请:", ex);
             return AjaxObject.newError("queryRequestList service failed").toJson();
+        }
+
+    }
+    
+    @RequestMapping(value = "/findRequestByBill", method = RequestMethod.POST)
+    public @ResponseBody String findRequestByBill(HttpServletRequest request, String billId) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("根据票据id查询融资申请，入参:" + map.toString());
+
+        try {
+            return billRequestService.webFindRequestByBill(billId);
+        }
+        catch (Exception ex) {
+            logger.error("根据票据id查询融资申请:", ex);
+            return AjaxObject.newError("findRequestByBill service failed").toJson();
+        }
+
+    }
+    
+    @RequestMapping(value = "/findRequestByNo", method = RequestMethod.POST)
+    public @ResponseBody String findRequestByNo(HttpServletRequest request, String requestNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("根据申请编号查询融资申请，入参:" + map.toString());
+
+        try {
+            return billRequestService.webFindRequestByNo(requestNo);
+        }
+        catch (Exception ex) {
+            logger.error("查询票据融资申请:", ex);
+            return AjaxObject.newError("findRequestByNo service failed").toJson();
         }
 
     }

@@ -267,14 +267,14 @@ public class RepaymentController {
         
     }
     
-    @RequestMapping(value = "/findPresMoneyist", method = RequestMethod.POST)
-    public @ResponseBody String findPresMoneyist(HttpServletRequest request, String requestNo) {
+    @RequestMapping(value = "/findPressMoneyList", method = RequestMethod.POST)
+    public @ResponseBody String findPressMoneyList(HttpServletRequest request, String requestNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.debug("无分页查催收列表,参数:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfRepaymentService.webFindPresMoneyist(map);
+                return scfRepaymentService.webFindPressMoneyList(map);
             }
         }, "无分页查催收列表", logger);
         
@@ -287,7 +287,7 @@ public class RepaymentController {
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfRepaymentService.webSaveModifyPayPlan(map, id);
+                return scfRepaymentService.webSaveModifyPressMoney(map, id);
             }
         }, "修改催收", logger);
         
