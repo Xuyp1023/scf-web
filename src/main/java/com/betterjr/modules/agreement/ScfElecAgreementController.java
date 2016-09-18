@@ -52,10 +52,10 @@ public class ScfElecAgreementController {
     }
     
     @RequestMapping(value = "/cancelElecAgreement", method = RequestMethod.POST)
-    public @ResponseBody String cancelElecAgreePage(String appNo) {
+    public @ResponseBody String cancelElecAgreePage(String appNo,String describe) {
         logger.info("取消电子合同的流水号：" + appNo);
         try {
-            return scfElecAgreementService.webCancelElecAgreement(appNo);
+            return scfElecAgreementService.webCancelElecAgreement(appNo,describe);
         }
         catch (RpcException btEx) {
             logger.error("取消电子合同异常："+btEx.getMessage());
