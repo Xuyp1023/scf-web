@@ -267,6 +267,19 @@ public class RepaymentController {
         
     }
     
+    @RequestMapping(value = "/findPayPlanDetail", method = RequestMethod.POST)
+    public @ResponseBody String findPayPlanDetail(HttpServletRequest request, String requestNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("无分页查还款计划列表,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webFindPayPlanDetail(requestNo);
+            }
+        }, "无分页查还款计划列表", logger);
+        
+    }
+    
     @RequestMapping(value = "/findPressMoneyList", method = RequestMethod.POST)
     public @ResponseBody String findPressMoneyList(HttpServletRequest request, String requestNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
