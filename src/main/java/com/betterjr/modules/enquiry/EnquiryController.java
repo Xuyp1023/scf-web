@@ -221,14 +221,14 @@ public class EnquiryController {
         
     }
     
-    @RequestMapping(value = "/custDropFactorOffer", method = RequestMethod.POST)
+    @RequestMapping(value = "/custDropOffer", method = RequestMethod.POST)
     public @ResponseBody String custDropFactorOffer(HttpServletRequest request, String enquiryNo, Long factorNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.debug("询价企业放弃 某个保理公司的报价,参数:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webCustDropFactorOffer(enquiryNo, factorNo);
+                return enquiryService.webCstDropOffer(enquiryNo, factorNo);
             }
         }, "放弃报价", logger);
         
