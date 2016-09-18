@@ -9,15 +9,19 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.1.xsd">
 
-    <bean class="com.betterjr.common.config.BetterPropertyPlaceholderConfigurer">
-        <property name="fileEncoding" value="UTF-8" />
-        <property name="betterLocations">
-            <list>
-                <value>scf-web-config.properties</value>
-            </list>
-        </property>
+	<bean class="com.betterjr.common.config.BetterPropertyPlaceholderConfigurer">
+		<property name="fileEncoding" value="UTF-8" />
+		<property name="betterLocations">
+			<list>
+				<value>scf-web-config.properties</value>
+			</list>
+		</property>
+	</bean>
+
+    <bean class="com.betterjr.common.utils.PropertiesHolder">
+        <property name="properties" value="scf-web-config.properties" />
     </bean>
-    
+
 	<bean class="com.betterjr.common.service.SpringContextHolder" />
 	<import resource="scf-dubbo-consumer.xml" />
 
