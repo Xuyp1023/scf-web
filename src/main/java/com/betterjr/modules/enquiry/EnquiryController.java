@@ -208,14 +208,27 @@ public class EnquiryController {
         
     }
     
-    @RequestMapping(value = "/dropOffer", method = RequestMethod.POST)
-    public @ResponseBody String dropOffer(HttpServletRequest request, String enquiryNo, Long factorNo) {
+    @RequestMapping(value = "/factorDropOffer", method = RequestMethod.POST)
+    public @ResponseBody String factorDropOffer(HttpServletRequest request, String enquiryNo, Long factorNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.debug("放弃报价,参数:"+ map);
+        logger.debug("资金方-放弃报价:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webDropOffer(enquiryNo, factorNo);
+                return enquiryService.webFactorDropOffer(enquiryNo, factorNo);
+            }
+        }, "放弃报价", logger);
+        
+    }
+    
+    @RequestMapping(value = "/custDropFactorOffer", method = RequestMethod.POST)
+    public @ResponseBody String custDropFactorOffer(HttpServletRequest request, String enquiryNo, Long factorNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("询价企业放弃 某个保理公司的报价,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return enquiryService.webCustDropFactorOffer(enquiryNo, factorNo);
             }
         }, "放弃报价", logger);
         
@@ -231,6 +244,32 @@ public class EnquiryController {
                 return enquiryService.webQueryOfferByFactor(map, flag, pageNum, pageSize);
             }
         }, "查看有哪些公司报了价", logger);
+        
+    }
+    
+    @RequestMapping(value = "/querySingleOrderEnquiryList", method = RequestMethod.POST)
+    public @ResponseBody String querySingleOrderEnquiryList(HttpServletRequest request,Long custNo, int flag, int pageNum, int pageSize) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("查看有哪些公司报了价,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return enquiryService.webQuerySingleOrderEnquiryList(custNo, flag, pageNum, pageSize);
+            }
+        }, "查看有哪些公司报了价", logger);
+        
+    }
+    
+    @RequestMapping(value = "/findSingleOrderEnquiryDetail", method = RequestMethod.POST)
+    public @ResponseBody String findSingleOrderEnquiryDetail(HttpServletRequest request,Long id) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("询价详情,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return enquiryService.webFindSingleOrderEnquiryDetail(id);
+            }
+        }, "询价详情", logger);
         
     }
     
