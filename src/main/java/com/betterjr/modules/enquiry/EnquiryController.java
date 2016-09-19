@@ -208,6 +208,19 @@ public class EnquiryController {
         
     }
     
+    @RequestMapping(value = "/custDropEnquiry", method = RequestMethod.POST)
+    public @ResponseBody String custDropEnquiry(HttpServletRequest request, Long enquiryId, String dropReason, String description) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("询价方-放弃询价:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return enquiryService.webCustDropEnquiry(enquiryId, dropReason, description);
+            }
+        }, "询价方-放弃询价", logger);
+        
+    }
+    
     @RequestMapping(value = "/factorDropOffer", method = RequestMethod.POST)
     public @ResponseBody String factorDropOffer(HttpServletRequest request, String enquiryNo, Long factorNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
