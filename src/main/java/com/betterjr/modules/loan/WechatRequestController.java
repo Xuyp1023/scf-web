@@ -16,9 +16,9 @@ import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
 @Controller
-@RequestMapping(value = "/Scf/BillRequest")
-public class BillRequestController {
-    private static final Logger logger = LoggerFactory.getLogger(BillRequestController.class);
+@RequestMapping(value = "/Wechat/Scf/BillRequest")
+public class WechatRequestController {
+    private static final Logger logger = LoggerFactory.getLogger(WechatRequestController.class);
 
     @Reference(interfaceClass = IScfBillRequestService.class)
     private IScfBillRequestService billRequestService;
