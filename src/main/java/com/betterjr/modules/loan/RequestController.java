@@ -190,12 +190,12 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/confirmTradingBackgrand", method = RequestMethod.POST)
-    public @ResponseBody String confirmTradingBackgrand(HttpServletRequest request, String requestNo, String approvalResult) {
+    public @ResponseBody String confirmTradingBackgrand(HttpServletRequest request, String requestNo, String approvalResult, String smsCode) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("确认融资贸易背景，入参:" + map);
 
         try {
-            return scfRequestService.webConfirmTradingBackgrand(requestNo, approvalResult);
+            return scfRequestService.webConfirmTradingBackgrand(requestNo, approvalResult, smsCode);
         }
         catch (Exception ex) {
             logger.error("确认融资贸易背景：", ex);
