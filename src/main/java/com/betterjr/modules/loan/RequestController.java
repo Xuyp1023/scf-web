@@ -323,8 +323,8 @@ public class RequestController {
             return scfRequestService.webQueryCoreEnterpriseRequest(anMap, requestType, flag, pageNum, pageSize);
         }
         catch (Exception e) {
-            logger.error("核心企业查询融资失败", e);
-            return AjaxObject.newError("核心企业查询融资失败").toJson();
+            logger.error("查询融资失败", e);
+            return AjaxObject.newError("查询融资失败").toJson();
         }
     }
 
