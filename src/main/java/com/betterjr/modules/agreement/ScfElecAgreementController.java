@@ -258,4 +258,23 @@ public class ScfElecAgreementController {
             return AjaxObject.newError("发送并验证签署合同的验证码失败，请检查").toJson();
         }
     }
+    
+    @RequestMapping(value = "/findAgreePageByRequestNo", method = { RequestMethod.GET, RequestMethod.POST })
+    public @ResponseBody String findAgreePageByRequestNo(String requestNo, String agreeType) {
+        logger.info("生成电子合同的静态页面，requestNo：" + requestNo+"，agreeType:"+agreeType);
+        try {
+            return scfElecAgreementService.webFindElecAgreePageByRequestNo(requestNo, agreeType);
+        }
+        catch (RpcException btEx) {
+            logger.error("生成电子合同的静态页面异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("生成静态页面失败").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return AjaxObject.newError("生成通知书的静态页面失败，请检查").toJson();
+        }
+    }
 }
