@@ -159,12 +159,12 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/confirmScheme", method = RequestMethod.POST)
-    public @ResponseBody String findApprovedDetail(HttpServletRequest request, String requestNo, String approvalResult) {
+    public @ResponseBody String findApprovedDetail(HttpServletRequest request, String requestNo, String approvalResult, String smsCode) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("确认融资方案，入参:" + map);
 
         try {
-            return scfRequestService.webConfirmScheme(requestNo, approvalResult);
+            return scfRequestService.webConfirmScheme(requestNo, approvalResult, smsCode);
         }
         catch (Exception ex) {
             logger.error("确认融资方案：", ex);
