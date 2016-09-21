@@ -26,9 +26,9 @@ import com.betterjr.modules.document.entity.CustFileItem;
  *
  */
 @Controller
-@RequestMapping(value = "/Scf/ElecAgree")
-public class ScfElecAgreementController {
-    private static final Logger logger = LoggerFactory.getLogger(ScfElecAgreementController.class);
+@RequestMapping(value = "/Wechat/Scf/ElecAgree")
+public class WechatElecAgreementController {
+    private static final Logger logger = LoggerFactory.getLogger(WechatElecAgreementController.class);
     
     @Reference(interfaceClass=IScfElecAgreementService.class)
     private IScfElecAgreementService scfElecAgreementService;
@@ -149,113 +149,5 @@ public class ScfElecAgreementController {
         logger.info("下载电子合同的PDF格式文件，流水号：" + appNo);
         CustFileItem fileItem = scfElecAgreementService.webFindPdfFileInfo(appNo);
         CustFileClientUtils.fileDownload(response, fileItem,null);
-    }
-    
-    @RequestMapping(value = "/addOtherFile", method = RequestMethod.POST)
-    public @ResponseBody String addOtherFile(HttpServletRequest request) {
-        Map anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("addOtherFile 入参：" + anMap);
-        try {
-           return scfElecAgreementService.webAddOtherFile(anMap);
-        }
-        catch (RpcException btEx) {
-            logger.error("添加其它资料异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
-                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("添加其它资料失败").toJson();
-        }
-        catch (Exception ex) {
-            logger.error(ex.getMessage(),ex);
-            return AjaxObject.newError("添加其它资料异常：").toJson();
-        }
-    } 
-    
-    @RequestMapping(value = "/queryOtherFile", method = RequestMethod.POST)
-    public @ResponseBody String queryOtherFile(String requestNo) {
-        logger.info("queryOtherFile 入参：" + requestNo);
-        try {
-           return scfElecAgreementService.webQueryOtherFile(requestNo);
-        }
-        catch (RpcException btEx) {
-            logger.error("requestNo查询其它资料异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
-                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("查询出现异常").toJson();
-        }
-        catch (Exception ex) {
-            logger.error(ex.getMessage(),ex);
-            return AjaxObject.newError("requestNo查询其它资料异常：").toJson();
-        }
-    } 
-    
-
-    @RequestMapping(value = "/delOtherFile", method = RequestMethod.POST)
-    public @ResponseBody String delOtherFile(Long otherId) {
-        logger.info("delOtherFile 入参：" + otherId);
-        try {
-           return scfElecAgreementService.webDelOtherFile(otherId);
-        }
-        catch (RpcException btEx) {
-            logger.error("删除资料异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
-                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("资料删除出现异常").toJson();
-        }
-        catch (Exception ex) {
-            logger.error(ex.getMessage(),ex);
-            return AjaxObject.newError("删除资料异常：").toJson();
-        }
-    } 
-    
-    /***
-     * 根据请求单号和合同类型获取验证码
-     * @param appNo
-     * @param custType
-     * @return
-     */
-    @RequestMapping(value = "/findValidCodeByRequestNo", method = RequestMethod.POST)
-    public @ResponseBody String findValidCodeByRequestNo(String requestNo, String agreeType) {
-        logger.info("获取签署合同的验证码，requestNo:" + requestNo + " agreeType:" + agreeType);
-        try {
-            return scfElecAgreementService.webFindValidCodeByRequestNo(requestNo, agreeType);
-        }
-        catch (RpcException btEx) {
-            logger.error("获取签署合同的验证码异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
-                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("获取签署合同的验证码失败").toJson();
-        }
-        catch (Exception ex) {
-            return AjaxObject.newError("获取签署合同的验证码失败，请检查").toJson();
-        }
-    }
-    
-    /****
-     * 根据申请单号发送验证签署合同验证码
-     * @param appNo
-     * @param custType
-     * @param vCode
-     * @return
-     */
-    @RequestMapping(value = "/sendValidCodeByRequestNo", method = RequestMethod.POST)
-    public @ResponseBody String sendValidCodeByRequestNo(String requestNo, String agreeType, String vCode) {
-        logger.info("发送并验证签署合同的验证码，requestNo:" + requestNo + " agreeType:" + agreeType + " vCode:" + vCode);
-        try {
-            return scfElecAgreementService.webSendValidCodeByRequestNo(requestNo, agreeType, vCode);
-        }
-        catch (RpcException btEx) {
-            logger.error("验证签署合同的验证码异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
-                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("验证签署合同的验证码失败").toJson();
-        }
-        catch (Exception ex) {
-            return AjaxObject.newError("发送并验证签署合同的验证码失败，请检查").toJson();
-        }
     }
 }
