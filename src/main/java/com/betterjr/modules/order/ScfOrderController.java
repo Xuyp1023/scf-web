@@ -108,4 +108,17 @@ public class ScfOrderController {
             }
         }, "检查关联发票关系失败", logger);
     }
+    
+    /**
+     * 检查订单下发票所关联订单是否勾选完成
+     */
+    @RequestMapping(value = "/findRequestBaseInfoFileList", method = RequestMethod.POST)
+    public @ResponseBody String findRequestBaseInfoFileList(String requestNo) {
+        logger.info("查询所有附件,入参：requestNo=" + requestNo);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webFindRequestBaseInfoFileList(requestNo);
+            }
+        }, "查询所有附件失败", logger);
+    }
 }
