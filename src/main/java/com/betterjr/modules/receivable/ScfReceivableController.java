@@ -26,12 +26,12 @@ public class ScfReceivableController {
     private IScfReceivableService scfReceivableService;
     
     @RequestMapping(value = "/modifyReceivable", method = RequestMethod.POST)
-    public @ResponseBody String modifyReceivable(HttpServletRequest request, Long id, String fileList) {
+    public @ResponseBody String modifyReceivable(HttpServletRequest request, Long id, String fileList, String otherFileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款编辑,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfReceivableService.webSaveModifyReceivable(anMap, id, fileList);
+                return scfReceivableService.webSaveModifyReceivable(anMap, id, fileList, otherFileList);
             }
         }, "应收账款编辑失败", logger);
     }
