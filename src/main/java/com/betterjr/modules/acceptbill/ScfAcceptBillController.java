@@ -47,23 +47,23 @@ public class ScfAcceptBillController {
     }
 
     @RequestMapping(value = "/modifyAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, Long id, String fileList) {
+    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, Long id, String fileList, String otherFileList) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webSaveModifyAcceptBill(anMap, id, fileList);
+                return scfAcceptBillService.webSaveModifyAcceptBill(anMap, id, fileList, otherFileList);
             }
         }, "汇票信息编辑失败", logger);
     }
     
     @RequestMapping(value = "/addAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String addAcceptBill(HttpServletRequest request, String fileList) {
+    public @ResponseBody String addAcceptBill(HttpServletRequest request, String fileList, String otherFileList) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息登记,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webAddAcceptBill(anMap, fileList);
+                return scfAcceptBillService.webAddAcceptBill(anMap, fileList, otherFileList);
             }
         }, "汇票信息登记失败", logger);
     }
