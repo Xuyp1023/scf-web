@@ -42,12 +42,12 @@ public class RepaymentController {
     }
     
     @RequestMapping(value = "/queryRepaymentFee", method = RequestMethod.POST)
-    public @ResponseBody String queryRepaymentFee(HttpServletRequest request, String requestNo, String payType, String factorNo) {
+    public @ResponseBody String queryRepaymentFee(HttpServletRequest request, String requestNo, String payType, String factorNo, String payDate) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("查询还款费用，入参:" + map);
         
         try {
-            return scfRepaymentService.webQueryRepaymentFee(requestNo, payType, factorNo);
+            return scfRepaymentService.webQueryRepaymentFee(requestNo, payType, factorNo, payDate);
         }
         catch (Exception ex) {
             logger.error("查询还款费用：", ex);
