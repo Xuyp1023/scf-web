@@ -42,12 +42,12 @@ public class RepaymentController {
     }
     
     @RequestMapping(value = "/queryRepaymentFee", method = RequestMethod.POST)
-    public @ResponseBody String queryRepaymentFee(HttpServletRequest request, String requestNo, String payType, String factorNo, String payDate) {
+    public @ResponseBody String queryRepaymentFee(HttpServletRequest request, String requestNo, String payType, String factorNo, String payDate, BigDecimal totalBalance) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("查询还款费用，入参:" + map);
         
         try {
-            return scfRepaymentService.webQueryRepaymentFee(requestNo, payType, factorNo, payDate);
+            return scfRepaymentService.webQueryRepaymentFee(requestNo, payType, factorNo, payDate, totalBalance);
         }
         catch (Exception ex) {
             logger.error("查询还款费用：", ex);
@@ -57,12 +57,12 @@ public class RepaymentController {
     }
     
     @RequestMapping(value = "/querySellerRepaymentFee", method = RequestMethod.POST)
-    public @ResponseBody String querySellerRepaymentFee(HttpServletRequest request) {
+    public @ResponseBody String querySellerRepaymentFee(HttpServletRequest request,String requestNo, String payType, String payDate, BigDecimal totalBalance) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("经销商还款，入参:" + map);
         
         try {
-            return scfRepaymentService.webQuerySellerRepaymentFee(map);
+            return scfRepaymentService.webQuerySellerRepaymentFee(requestNo, payType, payDate, totalBalance);
         }
         catch (Exception ex) {
             logger.error("经销商还款：", ex);
