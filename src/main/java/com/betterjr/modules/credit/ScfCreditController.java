@@ -39,7 +39,7 @@ public class ScfCreditController {
             if (BytterException.isCauseBytterException(e)) {
                 return AjaxObject.newError(e.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
+            return AjaxObject.newError("授信额度信息查询失败").toJson();
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -60,7 +60,7 @@ public class ScfCreditController {
             if (BytterException.isCauseBytterException(e)) {
                 return AjaxObject.newError(e.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
+            return AjaxObject.newError("授信额度信息查询失败").toJson();
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -81,11 +81,31 @@ public class ScfCreditController {
             if (BytterException.isCauseBytterException(e)) {
                 return AjaxObject.newError(e.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
+            return AjaxObject.newError("授信额度信息查询失败").toJson();
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
             return AjaxObject.newError("授信额度变动信息查询").toJson();
+        }
+    }
+
+    @RequestMapping(value = "/findCredit", method = RequestMethod.POST)
+    public @ResponseBody String findCredit(Long custNo, Long coreCustNo, Long factorNo, String creditMode) {
+        logger.info("授信额度信息查询,入参：" + custNo);
+        try {
+
+            return scfCreditService.webFindCredit(custNo, coreCustNo, factorNo, creditMode);
+        }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("授信额度信息查询失败").toJson();
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return AjaxObject.newError("授信额度信息查询失败").toJson();
         }
     }
 
@@ -101,7 +121,7 @@ public class ScfCreditController {
             if (BytterException.isCauseBytterException(e)) {
                 return AjaxObject.newError(e.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
+            return AjaxObject.newError("授信额度信息查询失败").toJson();
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -122,7 +142,7 @@ public class ScfCreditController {
             if (BytterException.isCauseBytterException(e)) {
                 return AjaxObject.newError(e.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
+            return AjaxObject.newError("授信额度信息查询失败").toJson();
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
