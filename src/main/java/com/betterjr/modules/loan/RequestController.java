@@ -362,4 +362,31 @@ public class RequestController {
         }
     }
     
+    /**
+     * 
+     */
+    @RequestMapping(value = "/querySupplierRequestByCore", method = RequestMethod.POST)
+    public @ResponseBody String querySupplierRequestByCore(HttpServletRequest request,String businStatus, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        try {
+            return scfRequestService.webQuerySupplierRequestByCore(anMap, businStatus, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("供应商融资查询失败", e);
+            return AjaxObject.newError("供应商融资融资查询成功").toJson();
+        }
+    }
+    
+    @RequestMapping(value = "/findPayPlan", method = RequestMethod.POST)
+    public @ResponseBody String querySellerRequestByCore(HttpServletRequest request,String businStatus, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        try {
+            return scfRequestService.webQuerySellerRequestByCore(anMap, businStatus, flag, pageNum, pageSize);
+        }
+        catch (Exception e) {
+            logger.error("经销商融资查询失败", e);
+            return AjaxObject.newError("经销商融资融资查询成功").toJson();
+        }
+    }
+    
 }
