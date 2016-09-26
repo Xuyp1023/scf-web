@@ -17,8 +17,8 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
-import com.betterjr.modules.agreement.utils.CustFileClientUtils;
 import com.betterjr.modules.document.entity.CustFileItem;
+import com.betterjr.modules.document.utils.CustFileClientUtils;
 
 /****
  * 电子合同管理
