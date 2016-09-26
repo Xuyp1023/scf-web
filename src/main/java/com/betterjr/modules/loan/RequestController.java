@@ -377,7 +377,7 @@ public class RequestController {
         }
     }
     
-    @RequestMapping(value = "/findPayPlan", method = RequestMethod.POST)
+    @RequestMapping(value = "/querySellerRequestByCore", method = RequestMethod.POST)
     public @ResponseBody String querySellerRequestByCore(HttpServletRequest request,String businStatus, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         try {
