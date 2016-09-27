@@ -24,6 +24,7 @@
 	<dubbo:annotation
 		package="com.betterjr.modules.account.dubboclient,
 		com.betterjr.modules.sys.dubboclient,
+		com.betterjr.modules.remote.dubboclient,
 		com.betterjr.modules.wechat.dubboclient,
 		com.betterjr.dubbo.extend.filter.user" />
 
