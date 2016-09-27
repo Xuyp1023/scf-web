@@ -77,10 +77,10 @@ public class DeliveryNoticeController {
     }
     
     @RequestMapping(value = "/findDeliveryNoticeList", method = RequestMethod.POST)
-    public @ResponseBody String findPayPlan(HttpServletRequest request) {
+    public @ResponseBody String findPayPlan(HttpServletRequest request, String factorNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         try {
-            return scfDeliveryNoticeService.webFindDeliveryNoticeList(map);
+            return scfDeliveryNoticeService.webFindDeliveryNoticeList(map, factorNo);
         }
         catch (Exception e) {
             logger.error("发货通知单查询-无分页", e);
