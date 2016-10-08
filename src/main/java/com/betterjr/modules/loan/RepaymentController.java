@@ -319,5 +319,18 @@ public class RepaymentController {
         
     }
     
+    @RequestMapping(value = "/notifyPay", method = RequestMethod.POST)
+    public @ResponseBody String notifyPay(HttpServletRequest request, String requestNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.debug("还款提醒,参数:"+ map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webNotifyPay(map, requestNo);
+            }
+        }, "还款提醒", logger);
+        
+    }
+    
    
 }
