@@ -142,7 +142,7 @@ public class ScfCreditController {
             if (BytterException.isCauseBytterException(e)) {
                 return AjaxObject.newError(e.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("授信额度信息查询失败").toJson();
+            return AjaxObject.newError("授信额度录入失败").toJson();
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);

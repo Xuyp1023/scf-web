@@ -277,4 +277,97 @@ public class ScfElecAgreementController {
             return AjaxObject.newError("生成通知书的静态页面失败，请检查").toJson();
         }
     }
+
+    /***
+     * 添加保理合同
+     * @param request 请求对象
+     * @param fileList 附件列表
+     * @return
+     */
+    @RequestMapping(value = "/addFactorAgree", method = RequestMethod.POST)
+    public @ResponseBody String addFactorAgreement(HttpServletRequest request, String fileList) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("新增电子合同, 入参:" + anMap.toString());
+        try {
+            return scfElecAgreementService.webAddFactorAgreement(anMap, fileList);
+        }
+        catch (RpcException btEx) {
+            logger.error("新增电子合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("新增电子合同失败").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return AjaxObject.newError("新增电子合同失败，请检查").toJson();
+        }
+    }
+    
+    /***
+     * 查询保理合同
+     */
+    @RequestMapping(value = "/queryFactorAgree", method = RequestMethod.POST)
+    public @ResponseBody String queryFactorAgree(HttpServletRequest request, int pageNum, int pageSize) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("查询保理合同, 入参:" + anMap.toString()+"，pageNum："+pageNum+"，pageSize:"+pageSize);
+        try {
+            return scfElecAgreementService.webQueryFactorAgreement(anMap, pageNum,pageSize);
+        }
+        catch (RpcException btEx) {
+            logger.error("新增电子合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("新增电子合同失败").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return AjaxObject.newError("新增电子合同失败，请检查").toJson();
+        }
+    }
+    
+    /***
+     * 查询保理合同关联列表
+     */
+    @RequestMapping(value = "/findFactorAgree", method = RequestMethod.POST)
+    public @ResponseBody String findFactorAgree(Long custNo,Long factorNo,String agreeType) {
+        logger.info("查询保理合同, 入参:custNo:" + custNo+"，factorNo："+factorNo+",agreeType:"+agreeType);
+        try {
+            return scfElecAgreementService.webFindFactorAgreement(custNo,factorNo,agreeType);
+        }
+        catch (RpcException btEx) {
+            logger.error("查询保理合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("查询保理合同失败").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return AjaxObject.newError("查询保理合同失败，请检查").toJson();
+        }
+    }
+    
+    /***
+     * 作废/启用保理合同
+     */
+    @RequestMapping(value = "/cancelFactorAgree", method = RequestMethod.POST)
+    public @ResponseBody String cancelFactorAgree(String appNo,String businStatus) {
+        logger.info("作废/启用保理合同, 入参:appNo:" + appNo+"，status:"+businStatus);
+        try {
+            return scfElecAgreementService.updateFactorAgree(appNo,businStatus);
+        }
+        catch (RpcException btEx) {
+            logger.error("作废/启用合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("作废/启用合同失败").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return AjaxObject.newError("作废/启用合同失败，请检查").toJson();
+        }
+    }
 }
