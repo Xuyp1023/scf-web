@@ -121,4 +121,17 @@ public class ScfOrderController {
             }
         }, "查询所有附件失败", logger);
     }
+    
+    /**
+     * 根据Id查看订单详情
+     */
+    @RequestMapping(value = "/findOrderDetailsById", method = RequestMethod.POST)
+    public @ResponseBody String findOrderDetailsById(Long id) {
+        logger.info("查询订单详情,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webFindOrderDetailsById(id);
+            }
+        }, "查询查询订单详情", logger);
+    }
 }
