@@ -88,6 +88,16 @@ public class ScfAcceptBillController {
         }, "汇票所有附件查询", logger);
     }
     
+    @RequestMapping(value = "/findAcceptBillDetailsById", method = RequestMethod.POST)
+    public @ResponseBody String findAcceptBillDetailsById(Long id) {
+        logger.info("汇票详情,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAcceptBillDetailsById(id);
+            }
+        }, "汇票详情", logger);
+    }
+    
     @RequestMapping(value = "queryFinancedByFactor", method = RequestMethod.POST)
     public @ResponseBody String queryFinancedByFactor(HttpServletRequest request, Long factorNo) {
         Map anMap = Servlets.getParametersStartingWith(request, "");

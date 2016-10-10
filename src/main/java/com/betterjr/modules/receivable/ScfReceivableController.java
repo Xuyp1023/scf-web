@@ -57,6 +57,16 @@ public class ScfReceivableController {
         }, "应收账款查询失败", logger);
     }
     
+    @RequestMapping(value = "/findReceivableDetailsById", method = RequestMethod.POST)
+    public @ResponseBody String findReceivableDetailsById(Long id) {
+        logger.info("应收账款详情查询,入参:id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webFindReceivableDetailsById(id);
+            }
+        }, "应收账款详情查询失败", logger);
+    }
+    
         
     
 }
