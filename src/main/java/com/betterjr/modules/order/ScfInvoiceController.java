@@ -72,5 +72,15 @@ public class ScfInvoiceController {
         }, "发票信息详情录入失败", logger);
                 
     }
-    
+
+    @RequestMapping(value = "/saveDeleteInvoice", method = RequestMethod.POST)
+    public @ResponseBody String saveDeleteInvoice(Long id) {
+        logger.info("发票信息删除,入参:id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfInvoiceService.webSaveDeleteInvoice(id);
+            }
+        }, "发票信息删除失败", logger);
+                
+    }
 }
