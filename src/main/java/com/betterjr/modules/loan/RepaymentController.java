@@ -36,7 +36,7 @@ public class RepaymentController {
         }
         catch (Exception ex) {
             logger.error("还款：", ex);
-            return AjaxObject.newError("repayment service failed").toJson();
+            return AjaxObject.newError("repayment service failed" + ex.getMessage()).toJson();
         }
         
     }
@@ -51,7 +51,7 @@ public class RepaymentController {
         }
         catch (Exception ex) {
             logger.error("查询还款费用：", ex);
-            return AjaxObject.newError("queryRepaymentFee service failed").toJson();
+            return AjaxObject.newError("queryRepaymentFee service failed" + ex.getMessage()).toJson();
         }
         
     }
@@ -66,7 +66,7 @@ public class RepaymentController {
         }
         catch (Exception ex) {
             logger.error("经销商还款：", ex);
-            return AjaxObject.newError("querySellerRepaymentFee service failed").toJson();
+            return AjaxObject.newError("querySellerRepaymentFee service failed" + ex.getMessage()).toJson();
         }
         
     }
@@ -81,7 +81,7 @@ public class RepaymentController {
         }
         catch (Exception ex) {
             logger.error("计算还款方式：", ex);
-            return AjaxObject.newError("calculatPayType service failed").toJson();
+            return AjaxObject.newError("calculatPayType service failed" + ex.getMessage()).toJson();
         }
         
     }
@@ -96,7 +96,7 @@ public class RepaymentController {
         }
         catch (Exception ex) {
             logger.error("分页查询还款记录：", ex);
-            return AjaxObject.newError("queryPayRecordList service failed").toJson();
+            return AjaxObject.newError("queryPayRecordList service failed" + ex.getMessage()).toJson();
         }
         
     }
