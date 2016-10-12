@@ -1,5 +1,7 @@
 package com.betterjr.modules.product;
 
+import static com.betterjr.common.web.ControllerExceptionHandler.exec;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.rpc.RpcException;
-import com.betterjr.common.exception.BytterException;
-import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
 @Controller
@@ -30,143 +29,57 @@ public class ScfProductController {
     public @ResponseBody String queryProduct(HttpServletRequest request, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("融资产品信息查询,入参：" + anMap.toString());
-        try {
-
-            return scfProductService.webQueryProduct(anMap, flag, pageNum, pageSize);
-        }
-        catch (RpcException e) {
-            logger.error(e.getMessage(), e);
-            if (BytterException.isCauseBytterException(e)) {
-                return AjaxObject.newError(e.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
-        }
-        catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return AjaxObject.newError("融资产品信息查询失败").toJson();
-        }
+        return exec(() -> scfProductService.webQueryProduct(anMap, flag, pageNum, pageSize), "融资产品信息查询失败", logger);
     }
 
     @RequestMapping(value = "/queryProductKeyAndValue", method = RequestMethod.POST)
     public @ResponseBody String queryProductKeyAndValue(Long coreCustNo, Long factorNo) {
-        logger.info("融资产品下拉列表查询,入参：" + " anCoreCustNo " + coreCustNo + ",factorNo " + factorNo);
-        try {
+        logger.info("融资产品下拉列表查询,入参：" + " anCoreCustNo=" + coreCustNo + ",factorNo= " + factorNo);
+        return exec(() -> scfProductService.webQueryProductKeyAndValue(coreCustNo, factorNo), "融资产品信息查询失败", logger);
+    }
 
-            return scfProductService.webQueryProductKeyAndValue(coreCustNo, factorNo);
-        }
-        catch (RpcException e) {
-            logger.error(e.getMessage(), e);
-            if (BytterException.isCauseBytterException(e)) {
-                return AjaxObject.newError(e.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
-        }
-        catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return AjaxObject.newError("融资产品下拉列表查询失败").toJson();
-        }
+    @RequestMapping(value = "/findProductByCode", method = RequestMethod.POST)
+    public @ResponseBody String findProductByCode(Long coreCustNo, Long factorNo, String productCode) {
+        logger.info("融资产品信息查询入参,coreCustNo= " + coreCustNo + ", factorNo= " + factorNo + ",productId= " + productCode);
+        return exec(() -> scfProductService.webFindProductByCode(coreCustNo, factorNo, productCode), "融资产品信息查询失败", logger);
+    }
+
+    @RequestMapping(value = "/findProductById", method = RequestMethod.POST)
+    public @ResponseBody String findProductById(Long id) {
+        logger.info("融资产品信息查询入参,id= " + id);
+        return exec(() -> scfProductService.webFindProductById(id), "融资产品信息查询失败", logger);
     }
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
     public @ResponseBody String addProduct(HttpServletRequest request) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("融资产品录入,入参：" + anMap.toString());
-        try {
-
-            return scfProductService.webAddProduct(anMap);
-        }
-        catch (RpcException e) {
-            logger.error(e.getMessage(), e);
-            if (BytterException.isCauseBytterException(e)) {
-                return AjaxObject.newError(e.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
-        }
-        catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return AjaxObject.newError("融资产品录入失败").toJson();
-        }
+        return exec(() -> scfProductService.webAddProduct(anMap), "融资产品录入失败", logger);
     }
 
     @RequestMapping(value = "/modifyProduct", method = RequestMethod.POST)
     public @ResponseBody String modifyProduct(HttpServletRequest request, Long id) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("融资产品修改,入参：" + anMap.toString());
-        try {
-
-            return scfProductService.webSaveModifyProduct(anMap, id);
-        }
-        catch (RpcException e) {
-            logger.error(e.getMessage(), e);
-            if (BytterException.isCauseBytterException(e)) {
-                return AjaxObject.newError(e.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
-        }
-        catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return AjaxObject.newError("融资产品修改失败").toJson();
-        }
+        return exec(() -> scfProductService.webSaveModifyProduct(anMap, id), "融资产品修改失败", logger);
     }
 
     @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST)
     public @ResponseBody String deleteProduct(Long id) {
         logger.info("融资产品删除,入参：" + id);
-        try {
-
-            return scfProductService.webSaveDeleteProduct(id);
-        }
-        catch (RpcException e) {
-            logger.error(e.getMessage(), e);
-            if (BytterException.isCauseBytterException(e)) {
-                return AjaxObject.newError(e.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
-        }
-        catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return AjaxObject.newError("融资产品删除失败").toJson();
-        }
+        return exec(() -> scfProductService.webSaveDeleteProduct(id), "融资产品删除失败", logger);
     }
 
     @RequestMapping(value = "/shelvesProduct", method = RequestMethod.POST)
     public @ResponseBody String shelvesProduct(Long id) {
         logger.info("融资产品上架,入参：" + id);
-        try {
-
-            return scfProductService.webSaveShelvesProduct(id);
-        }
-        catch (RpcException e) {
-            logger.error(e.getMessage(), e);
-            if (BytterException.isCauseBytterException(e)) {
-                return AjaxObject.newError(e.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
-        }
-        catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return AjaxObject.newError("融资产品上架失败").toJson();
-        }
+        return exec(() -> scfProductService.webSaveShelvesProduct(id), "融资产品上架失败", logger);
     }
 
     @RequestMapping(value = "/offlineProduct", method = RequestMethod.POST)
     public @ResponseBody String offlineProduct(Long id) {
         logger.info("融资产品下架,入参：" + id);
-        try {
-
-            return scfProductService.webSaveOfflineProduct(id);
-        }
-        catch (RpcException e) {
-            logger.error(e.getMessage(), e);
-            if (BytterException.isCauseBytterException(e)) {
-                return AjaxObject.newError(e.getCause().getMessage()).toJson();
-            }
-            return AjaxObject.newError("黑名单信息查询失败").toJson();
-        }
-        catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return AjaxObject.newError("融资产品下架失败").toJson();
-        }
+        return exec(() -> scfProductService.webSaveOfflineProduct(id), "融资产品下架失败", logger);
     }
 
 }
