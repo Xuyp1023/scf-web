@@ -36,7 +36,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("添加融资申请:", ex);
-            return AjaxObject.newError("addRequest service failed").toJson();
+            return AjaxObject.newError(ex.getMessage()).toJson();
         }
 
     }
@@ -102,7 +102,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("保存融资方案，", ex);
-            return AjaxObject.newError("offerScheme service failed").toJson();
+            return AjaxObject.newError("offerScheme service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -117,7 +117,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("修改融资方案：", ex);
-            return AjaxObject.newError("saveModifyScheme service failed").toJson();
+            return AjaxObject.newError("saveModifyScheme service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -134,11 +134,11 @@ public class RequestController {
             if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
-            return AjaxObject.newError("querySchemeList service failed").toJson();
+            return AjaxObject.newError("querySchemeList service failed:" + btEx.getMessage()).toJson();
         }
         catch (Exception ex) {
             logger.error("分页查询融资方案申请：", ex);
-            return AjaxObject.newError("querySchemeList service failed").toJson();
+            return AjaxObject.newError("querySchemeList service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -153,7 +153,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("查询融资方案详情：", ex);
-            return AjaxObject.newError("findSchemeDetail service failed").toJson();
+            return AjaxObject.newError("findSchemeDetail service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -168,7 +168,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("确认融资方案：", ex);
-            return AjaxObject.newError("confirmScheme service failed").toJson();
+            return AjaxObject.newError("confirmScheme service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -184,7 +184,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("发起融资背景确认：", ex);
-            return AjaxObject.newError("requestTradingBackgrand service failed").toJson();
+            return AjaxObject.newError("requestTradingBackgrand service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -199,7 +199,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("确认融资贸易背景：", ex);
-            return AjaxObject.newError("confirmTradingBackgrand service failed").toJson();
+            return AjaxObject.newError("confirmTradingBackgrand service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -215,7 +215,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("审批：", ex);
-            return AjaxObject.newError("approveRequest service failed").toJson();
+            return AjaxObject.newError("approveRequest service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -230,7 +230,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("确认放款：", ex);
-            return AjaxObject.newError("confirmLoan service failed").toJson();
+            return AjaxObject.newError("confirmLoan service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -245,7 +245,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("计算手续费：", ex);
-            return AjaxObject.newError("calculatServiceFee service failed").toJson();
+            return AjaxObject.newError("calculatServiceFee service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -260,7 +260,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("计算结束日期：", ex);
-            return AjaxObject.newError("calculatEndDate service failed").toJson();
+            return AjaxObject.newError("calculatEndDate service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -275,7 +275,7 @@ public class RequestController {
         }
         catch (Exception ex) {
             logger.error("计算利息：", ex);
-            return AjaxObject.newError("calculatInsterest service failed").toJson();
+            return AjaxObject.newError("calculatInsterest service failed:" + ex.getMessage()).toJson();
         }
 
     }
@@ -288,7 +288,7 @@ public class RequestController {
         }
         catch (Exception e) {
             logger.error("查询待批融资失败", e);
-            return AjaxObject.newError("查询待批融资失败").toJson();
+            return AjaxObject.newError("查询待批融资失败:" + e.getMessage()).toJson();
         }
     }
 
@@ -300,7 +300,7 @@ public class RequestController {
         }
         catch (Exception e) {
             logger.error("查询还款融资失败", e);
-            return AjaxObject.newError("查询还款融资失败").toJson();
+            return AjaxObject.newError("查询还款融资失败:" + e.getMessage()).toJson();
         }
     }
 
@@ -312,7 +312,7 @@ public class RequestController {
         }
         catch (Exception e) {
             logger.error("查询历史融资失败", e);
-            return AjaxObject.newError("查询历史融资失败").toJson();
+            return AjaxObject.newError("查询历史融资失败:" + e.getMessage()).toJson();
         }
     }
 
@@ -336,7 +336,7 @@ public class RequestController {
         }
         catch (Exception e) {
             logger.error("用户任务列表查询失败", e);
-            return AjaxObject.newError("用户任务列表查询失败").toJson();
+            return AjaxObject.newError("用户任务列表查询失败:" + e.getMessage()).toJson();
         }
     }
     
@@ -358,7 +358,7 @@ public class RequestController {
         }
         catch (Exception e) {
             logger.error("还款计划详情查询失败", e);
-            return AjaxObject.newError("还款计划详情").toJson();
+            return AjaxObject.newError("还款计划详情:" + e.getMessage()).toJson();
         }
     }
     
@@ -373,7 +373,7 @@ public class RequestController {
         }
         catch (Exception e) {
             logger.error("供应商融资查询失败", e);
-            return AjaxObject.newError("供应商融资融资查询成功").toJson();
+            return AjaxObject.newError("供应商融资查询失败:" + e.getMessage()).toJson();
         }
     }
     
@@ -385,7 +385,7 @@ public class RequestController {
         }
         catch (Exception e) {
             logger.error("经销商融资查询失败", e);
-            return AjaxObject.newError("经销商融资融资查询成功").toJson();
+            return AjaxObject.newError("经销商融资融资查询成功:" + e.getMessage()).toJson();
         }
     }
     

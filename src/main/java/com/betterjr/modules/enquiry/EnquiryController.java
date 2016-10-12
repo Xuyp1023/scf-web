@@ -43,7 +43,7 @@ public class EnquiryController {
         }
         catch (Exception ex) {
             logger.error("查询询价:", ex);
-            return AjaxObject.newError("queryEnquiryList service failed").toJson();
+            return AjaxObject.newError("queryEnquiryList service failed"+ex.getMessage()).toJson();
         }
 
     }
@@ -58,7 +58,7 @@ public class EnquiryController {
         }
         catch (Exception ex) {
             logger.error("保存询价:", ex);
-            return AjaxObject.newError("addEnquiry service failed").toJson();
+            return AjaxObject.newError("addEnquiry service failed"+ex.getMessage()).toJson();
         }
 
     }
@@ -73,7 +73,7 @@ public class EnquiryController {
         }
         catch (Exception ex) {
             logger.error("修改询价:", ex);
-            return AjaxObject.newError("saveModifyEnquiry service failed").toJson();
+            return AjaxObject.newError("saveModifyEnquiry service failed"+ex.getMessage()).toJson();
         }
 
     }
@@ -87,7 +87,7 @@ public class EnquiryController {
         }
         catch (Exception ex) {
             logger.error("查看询价详情:", ex);
-            return AjaxObject.newError("findEnquiryDetail service failed").toJson();
+            return AjaxObject.newError("findEnquiryDetail service failed"+ex.getMessage()).toJson();
         }
     }
     
@@ -107,7 +107,7 @@ public class EnquiryController {
         }
         catch (Exception ex) {
             logger.error("查询报价，入参:", ex);
-            return AjaxObject.newError("queryOfferList service failed").toJson();
+            return AjaxObject.newError("queryOfferList service failed"+ex.getMessage()).toJson();
         }
 
     }
@@ -122,7 +122,7 @@ public class EnquiryController {
         }
         catch (Exception ex) {
             logger.error("保存报价，入参:", ex);
-            return AjaxObject.newError("saveOffer service failed").toJson();
+            return AjaxObject.newError("saveOffer service failed"+ex.getMessage()).toJson();
         }
 
     }
@@ -151,7 +151,7 @@ public class EnquiryController {
         }
         catch (Exception ex) {
             logger.error("查看报价详情:", ex);
-            return AjaxObject.newError("findOfferDetail service failed").toJson();
+            return AjaxObject.newError("findOfferDetail service failed"+ex.getMessage()).toJson();
         }
     }
     
@@ -165,7 +165,7 @@ public class EnquiryController {
         }
         catch (Exception ex) {
             logger.error("查看保理公司收到的询价:", ex);
-            return AjaxObject.newError("findEnquiryByfactorNo service failed").toJson();
+            return AjaxObject.newError("findEnquiryByfactorNo service failed"+ex.getMessage()).toJson();
         }
     }
 
