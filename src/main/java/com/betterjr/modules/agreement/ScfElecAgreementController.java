@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
+import com.betterjr.common.config.ParamNames;
 import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
@@ -148,7 +149,8 @@ public class ScfElecAgreementController {
     public void downloadElecAgreePDF(HttpServletResponse response, String appNo) {
         logger.info("下载电子合同的PDF格式文件，流水号：" + appNo);
         CustFileItem fileItem = scfElecAgreementService.webFindPdfFileInfo(appNo);
-        CustFileClientUtils.fileDownload(response, fileItem,null);
+        
+        CustFileClientUtils.fileDownload(response, fileItem,scfElecAgreementService.webFindParamPath(ParamNames.OPENACCO_FILE_DOWNLOAD_PATH));
     }
     
     @RequestMapping(value = "/addOtherFile", method = RequestMethod.POST)
