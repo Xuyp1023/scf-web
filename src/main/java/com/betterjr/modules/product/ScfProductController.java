@@ -32,6 +32,12 @@ public class ScfProductController {
         return exec(() -> scfProductService.webQueryProduct(anMap, flag, pageNum, pageSize), "融资产品信息查询失败", logger);
     }
 
+    @RequestMapping(value = "/queryProductByCore", method = RequestMethod.POST)
+    public @ResponseBody String queryProductByCore(Long coreCustNo, String flag, int pageNum, int pageSize) {
+        logger.info("融资产品信息查询入参,coreCustNo= " + coreCustNo);
+        return exec(() -> scfProductService.webQueryProduct(coreCustNo, flag, pageNum, pageSize), "融资产品信息查询失败", logger);
+    }
+
     @RequestMapping(value = "/queryProductKeyAndValue", method = RequestMethod.POST)
     public @ResponseBody String queryProductKeyAndValue(Long coreCustNo, Long factorNo) {
         logger.info("融资产品下拉列表查询,入参：" + " anCoreCustNo=" + coreCustNo + ",factorNo= " + factorNo);
