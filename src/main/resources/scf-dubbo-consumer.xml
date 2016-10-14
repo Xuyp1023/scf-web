@@ -26,6 +26,7 @@
 		com.betterjr.modules.sys.dubboclient,
 		com.betterjr.modules.remote.dubboclient,
 		com.betterjr.modules.wechat.dubboclient,
+		com.betterjr.modules.cert.dubboclient,
 		com.betterjr.dubbo.extend.filter.user" />
 
 </beans>
