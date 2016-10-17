@@ -67,6 +67,15 @@ public class ScfReceivableController {
         }, "应收账款详情查询失败", logger);
     }
     
-        
+    @RequestMapping(value = "/addReceivable", method = RequestMethod.POST)
+    public @ResponseBody String addReceivable(HttpServletRequest request, String fileList, String otherFileList) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("应收账款新增,入参:" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webAddReceivable(anMap, fileList, otherFileList);
+            }
+        }, "应收账款新增失败", logger);
+    }    
     
 }
