@@ -307,6 +307,32 @@ public class ScfElecAgreementController {
     }
     
     /***
+     * 修改保理合同
+     * @param request 请求对象
+     * @param fileList 附件列表
+     * @return
+     */
+    @RequestMapping(value = "/updateFactorAgree", method = RequestMethod.POST)
+    public @ResponseBody String updateFactorAgreement(HttpServletRequest request,String appNo, String fileList) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("新增电子合同, 入参:" + anMap.toString());
+        try {
+            return scfElecAgreementService.webUpdateFactorAgreement(anMap,appNo, fileList);
+        }
+        catch (RpcException btEx) {
+            logger.error("新增电子合同异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("新增电子合同失败").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return AjaxObject.newError("新增电子合同失败，请检查").toJson();
+        }
+    }
+    
+    /***
      * 查询保理合同
      */
     @RequestMapping(value = "/queryFactorAgree", method = RequestMethod.POST)
@@ -355,10 +381,10 @@ public class ScfElecAgreementController {
      * 作废/启用保理合同
      */
     @RequestMapping(value = "/cancelFactorAgree", method = RequestMethod.POST)
-    public @ResponseBody String cancelFactorAgree(String appNo,String businStatus) {
-        logger.info("作废/启用保理合同, 入参:appNo:" + appNo+"，status:"+businStatus);
+    public @ResponseBody String cancelFactorAgree(String appNo,String signStatus) {
+        logger.info("作废/启用保理合同, 入参:appNo:" + appNo+"，status:"+signStatus);
         try {
-            return scfElecAgreementService.updateFactorAgree(appNo,businStatus);
+            return scfElecAgreementService.updateFactorAgree(appNo,signStatus);
         }
         catch (RpcException btEx) {
             logger.error("作废/启用合同异常："+btEx.getMessage());
