@@ -71,6 +71,19 @@ public class RepaymentController {
         
     }
     
+    @RequestMapping(value = "/queryDistributeFee", method = RequestMethod.POST)
+    public @ResponseBody String queryDistributeFee(HttpServletRequest request,String requestNo, String payType, String payDate, BigDecimal totalBalance) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("还款分配，入参:" + map);
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfRepaymentService.webQueryDistributeFee(requestNo, payType, payDate, totalBalance);
+            }
+        }, "还款分配", logger);
+        
+    }
+    
     @RequestMapping(value = "/calculatPayType", method = RequestMethod.POST)
     public @ResponseBody String calculatPayType(HttpServletRequest request, String requestNo, String payDate) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");

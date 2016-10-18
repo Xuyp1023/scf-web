@@ -34,7 +34,7 @@ public class WechatRequestController {
         }
         catch (Exception ex) {
             logger.error("添加票据融资申请:", ex);
-            return AjaxObject.newError("addBillRequest service failed").toJson();
+            return AjaxObject.newError("addBillRequest service failed" + ex.getMessage()).toJson();
         }
 
     }
