@@ -266,12 +266,12 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/calculatInsterest", method = RequestMethod.POST)
-    public @ResponseBody String calculatInsterest(HttpServletRequest request, String requestNo, BigDecimal loanBalance) {
+    public @ResponseBody String calculatInsterest(HttpServletRequest request, String requestNo, BigDecimal loanBalance, String loanDate, String endDate) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("计算利息，入参:" + map);
 
         try {
-            return scfRequestService.webGetInsterest(requestNo, loanBalance);
+            return scfRequestService.webGetInsterest(requestNo, loanBalance, loanDate, endDate);
         }
         catch (Exception ex) {
             logger.error("计算利息：", ex);
