@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
+import com.betterjr.common.utils.Collections3;
+import com.betterjr.common.utils.QueryTermBuilder;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.ControllerExceptionHandler;
 import com.betterjr.common.web.Servlets;
@@ -98,6 +100,27 @@ public class EnquiryController {
         
         try {
             return enquiryService.webQueryOfferList(map, flag, pageNum, pageSize);
+        }
+        catch (RpcException btEx) {
+            if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("queryOfferList service failed").toJson();
+        }
+        catch (Exception ex) {
+            logger.error("查询报价，入参:", ex);
+            return AjaxObject.newError("queryOfferList service failed"+ex.getMessage()).toJson();
+        }
+
+    }
+    
+    @RequestMapping(value = "/findOfferList", method = RequestMethod.POST)
+    public @ResponseBody String findOfferList(HttpServletRequest request, String enquiryNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("查询报价:"+ map.toString());
+        
+        try {
+            return enquiryService.webFindOfferList(enquiryNo);
         }
         catch (RpcException btEx) {
             if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
@@ -247,27 +270,29 @@ public class EnquiryController {
         
     }
     
-    @RequestMapping(value = "/queryOfferByFactor", method = RequestMethod.POST)
-    public @ResponseBody String queryOfferByFactor(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+    @RequestMapping(value = "/queryOfferByBill", method = RequestMethod.POST)
+    public @ResponseBody String queryOfferByBill(HttpServletRequest request, String enquiryNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.debug("查看有哪些公司报了价,参数:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webQueryOfferByFactor(map, flag, pageNum, pageSize);
+                return enquiryService.webQueryOfferByBill(enquiryNo);
             }
         }, "查看有哪些公司报了价", logger);
         
     }
     
     @RequestMapping(value = "/querySingleOrderEnquiryList", method = RequestMethod.POST)
-    public @ResponseBody String querySingleOrderEnquiryList(HttpServletRequest request,Long custNo, int flag, int pageNum, int pageSize) {
+    public @ResponseBody String querySingleOrderEnquiryList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        String[] queryTerm = new String[] { "custNo", "GTEactualDate", "LTEactualDate"};
+        Map<String, Object> qyMap = Collections3.filterMap(map, queryTerm);
         logger.debug("查看有哪些公司报了价,参数:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webQuerySingleOrderEnquiryList(custNo, flag, pageNum, pageSize);
+                return enquiryService.webQuerySingleOrderEnquiryList(qyMap, flag, pageNum, pageSize);
             }
         }, "查看有哪些公司报了价", logger);
         

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
+import com.betterjr.common.utils.Collections3;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.ControllerExceptionHandler;
 import com.betterjr.common.web.Servlets;
@@ -248,26 +249,27 @@ public class WechatEnquiryController {
     }
     
     @RequestMapping(value = "/queryOfferByFactor", method = RequestMethod.POST)
-    public @ResponseBody String queryOfferByFactor(HttpServletRequest request, int flag, int pageNum, int pageSize) {
-        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.debug("查看有哪些公司报了价,参数:"+ map);
+    public @ResponseBody String queryOfferByFactor(String enquriyNo) {
+        logger.debug("查看有哪些公司报了价,参数:"+ enquriyNo);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webQueryOfferByFactor(map, flag, pageNum, pageSize);
+                return enquiryService.webQueryOfferByBill(enquriyNo);
             }
         }, "查看有哪些公司报了价", logger);
         
     }
     
     @RequestMapping(value = "/querySingleOrderEnquiryList", method = RequestMethod.POST)
-    public @ResponseBody String querySingleOrderEnquiryList(HttpServletRequest request,Long custNo, int flag, int pageNum, int pageSize) {
+    public @ResponseBody String querySingleOrderEnquiryList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        String[] queryTerm = new String[] { "custNo", "GTEactualDate", "LTEactualDate"};
+        final Map<String, Object> quMap = Collections3.filterMap(map, queryTerm);
         logger.debug("查看有哪些公司报了价,参数:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webQuerySingleOrderEnquiryList(custNo, flag, pageNum, pageSize);
+                return enquiryService.webQuerySingleOrderEnquiryList(map, flag, pageNum, pageSize);
             }
         }, "查看有哪些公司报了价", logger);
         
