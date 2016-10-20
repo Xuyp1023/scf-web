@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
+import com.betterjr.common.utils.Collections3;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
@@ -59,6 +60,8 @@ public class RequestController {
     @RequestMapping(value = "/queryRequestList", method = RequestMethod.POST)
     public @ResponseBody String queryRequestList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        String[] queryTerm = new String[] { "custNo", "coreCustNo", "factorNo", "GTEactualDate", "LTEactualDate" };
+        map = Collections3.filterMap(map, queryTerm);
         logger.info("分页查询融资申请，入参:" + map.toString());
 
         try {
