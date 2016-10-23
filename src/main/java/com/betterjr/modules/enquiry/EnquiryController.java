@@ -270,14 +270,14 @@ public class EnquiryController {
         
     }
     
-    @RequestMapping(value = "/queryOfferByBill", method = RequestMethod.POST)
-    public @ResponseBody String queryOfferByBill(HttpServletRequest request, String enquiryNo) {
+    @RequestMapping(value = "/queryOfferByEnquiryObject", method = RequestMethod.POST)
+    public @ResponseBody String queryOfferByBill(HttpServletRequest request, String enquriyNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.debug("查看有哪些公司报了价,参数:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webQueryOfferByBill(enquiryNo);
+                return enquiryService.webQueryOfferByEnquiryObject(enquriyNo);
             }
         }, "查看有哪些公司报了价", logger);
         
@@ -299,13 +299,13 @@ public class EnquiryController {
     }
     
     @RequestMapping(value = "/findSingleOrderEnquiryDetail", method = RequestMethod.POST)
-    public @ResponseBody String findSingleOrderEnquiryDetail(HttpServletRequest request,Long id) {
+    public @ResponseBody String findSingleOrderEnquiryDetail(HttpServletRequest request,String enquriyNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.debug("询价详情,参数:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webFindSingleOrderEnquiryDetail(id);
+                return enquiryService.webFindSingleOrderEnquiryDetail(enquriyNo);
             }
         }, "询价详情", logger);
         
