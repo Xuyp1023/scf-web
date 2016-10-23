@@ -76,6 +76,16 @@ public class ScfReceivableController {
                 return scfReceivableService.webAddReceivable(anMap, fileList, otherFileList);
             }
         }, "应收账款新增失败", logger);
-    }    
+    }
+    
+    @RequestMapping(value = "/saveAduitReceivable", method = RequestMethod.POST)
+    public @ResponseBody String saveAduitReceivable(Long id) {
+        logger.info("应收账款审核,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webSaveAduitReceivable(id);
+            }
+        }, "应收账款审核失败", logger);
+    }
     
 }
