@@ -15,6 +15,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.utils.Collections3;
+import com.betterjr.common.utils.UserUtils;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.ControllerExceptionHandler;
 import com.betterjr.common.web.Servlets;
@@ -248,13 +249,13 @@ public class WechatEnquiryController {
         
     }
     
-    @RequestMapping(value = "/queryOfferByFactor", method = RequestMethod.POST)
-    public @ResponseBody String queryOfferByFactor(String enquriyNo) {
-        logger.debug("查看有哪些公司报了价,参数:"+ enquriyNo);
+    @RequestMapping(value = "/queryOfferByEnquiryObject", method = RequestMethod.POST)
+    public @ResponseBody String queryOfferByFactor(HttpServletRequest request, String enquiryNo) {
+        logger.debug("查看向只定公司发出询价的报价情况,参数:"+ enquiryNo);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webQueryOfferByBill(enquriyNo);
+                return enquiryService.webQueryOfferByEnquiryObject(enquiryNo);
             }
         }, "查看有哪些公司报了价", logger);
         
@@ -263,30 +264,43 @@ public class WechatEnquiryController {
     @RequestMapping(value = "/querySingleOrderEnquiryList", method = RequestMethod.POST)
     public @ResponseBody String querySingleOrderEnquiryList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        
         String[] queryTerm = new String[] { "custNo", "GTEactualDate", "LTEactualDate"};
-        final Map<String, Object> quMap = Collections3.filterMap(map, queryTerm);
-        logger.debug("查看有哪些公司报了价,参数:"+ map);
+        Map<String, Object> qyMap = Collections3.filterMap(map, queryTerm);
+        fillLoginCustNo(qyMap);
+        logger.debug("查看有哪些公司报了价,参数:"+ qyMap);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webQuerySingleOrderEnquiryList(map, flag, pageNum, pageSize);
+                return enquiryService.webQuerySingleOrderEnquiryList(qyMap, flag, pageNum, pageSize);
             }
         }, "查看有哪些公司报了价", logger);
         
     }
     
     @RequestMapping(value = "/findSingleOrderEnquiryDetail", method = RequestMethod.POST)
-    public @ResponseBody String findSingleOrderEnquiryDetail(HttpServletRequest request,Long id) {
+    public @ResponseBody String findSingleOrderEnquiryDetail(HttpServletRequest request, String enquiryNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        map.put("id", enquiryNo);
         logger.debug("询价详情,参数:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return enquiryService.webFindSingleOrderEnquiryDetail(id);
+                return enquiryService.webFindSingleOrderEnquiryDetail(enquiryNo);
             }
         }, "询价详情", logger);
         
     }
     
+    private void fillLoginCustNo(Map<String, Object> anMap) {
+        if(UserUtils.supplierUser() || UserUtils.sellerUser()){
+            anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo());
+        }
+        else if(UserUtils.factorUser()){
+            anMap.put("factorNo", UserUtils.getDefCustInfo().getCustNo());
+        }else{
+            anMap.put("coreCustNo", UserUtils.getDefCustInfo().getCustNo());
+        }
+    }
    
 }
