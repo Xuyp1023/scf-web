@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
+import com.betterjr.common.utils.UserUtils;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 import com.betterjr.modules.document.entity.CustFileItem;
@@ -38,6 +39,7 @@ public class WechatElecAgreementController {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("分页查询电子合同, 入参:"+anMap.toString());
         try {
+            fillLoginCustNo(anMap);
             return scfElecAgreementService.webQueryElecAgreementByPage(anMap, pageNum, pageSize);
         } catch (RpcException btEx) {
             logger.error("分页查询电子合同异常："+btEx.getMessage());
@@ -150,4 +152,41 @@ public class WechatElecAgreementController {
         CustFileItem fileItem = scfElecAgreementService.webFindPdfFileInfo(appNo);
         CustFileClientUtils.fileDownload(response, fileItem,null);
     }
+    
+    /**
+     * 查询详情
+     * @param appNo
+     * @return
+     */
+    @RequestMapping(value = "/findElecAgreeInfo", method = RequestMethod.POST)
+    public @ResponseBody String findElecAgreeInfo(String appNo) {
+        logger.info("入参：appno:" + appNo);
+        try {
+           return scfElecAgreementService.webFindElecAgreementInfo(appNo);
+        }
+        catch (RpcException btEx) {
+            logger.error("查询电子合同详情异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("查询电子合同详情失败").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(),ex);
+            return AjaxObject.newError("查询电子合同详情异常").toJson();
+        }
+    }
+    
+    /***
+     * 获取当前登录客户号
+     * @param anMap
+     */
+    private void fillLoginCustNo(Map<String, Object> anMap) {
+        if(UserUtils.supplierUser() || UserUtils.sellerUser()){
+            anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo());
+        }
+        else if(UserUtils.factorUser()){
+            anMap.put("factorNo", UserUtils.getDefCustInfo().getCustNo());
+        }
+    } 
 }
