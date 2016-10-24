@@ -114,6 +114,27 @@ public class EnquiryController {
 
     }
     
+    @RequestMapping(value = "/searchOfferList", method = RequestMethod.POST)
+    public @ResponseBody String searchOfferList(HttpServletRequest request) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("查询报价:"+ map.toString());
+        
+        try {
+            return enquiryService.webSearchOfferList(map);
+        }
+        catch (RpcException btEx) {
+            if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("queryOfferList service failed").toJson();
+        }
+        catch (Exception ex) {
+            logger.error("查询报价，入参:", ex);
+            return AjaxObject.newError("queryOfferList service failed"+ex.getMessage()).toJson();
+        }
+        
+    }
+    
     @RequestMapping(value = "/findOfferList", method = RequestMethod.POST)
     public @ResponseBody String findOfferList(HttpServletRequest request, String enquiryNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");

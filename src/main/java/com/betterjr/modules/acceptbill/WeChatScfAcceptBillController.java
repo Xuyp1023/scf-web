@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.betterjr.common.utils.UserUtils;
 import com.betterjr.common.web.ControllerExceptionHandler;
 import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
@@ -28,6 +29,7 @@ public class WeChatScfAcceptBillController {
     public @ResponseBody String queryAcceptBill(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息查询,入参：" + anMap.toString());
+        anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo().toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return scfAcceptBillService.webQueryAcceptBill(anMap, isOnlyNormal, flag, pageNum, pageSize);
