@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.betterjr.common.utils.UserUtils;
 import com.betterjr.common.web.ControllerExceptionHandler;
 import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
@@ -27,6 +28,7 @@ public class WeChatScfAcceptBillController {
     @RequestMapping(value = "/queryAcceptBill", method = RequestMethod.POST)
     public @ResponseBody String queryAcceptBill(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo().toString());
         logger.info("汇票信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
@@ -96,5 +98,15 @@ public class WeChatScfAcceptBillController {
                 return scfAcceptBillService.webQueryFinancedByFactor(anMap, factorNo);
             }
         }, "保理公司查询已融资汇票", logger);
+    }
+    
+    @RequestMapping(value = "/findAcceptBillDetailsById", method = RequestMethod.POST)
+    public @ResponseBody String findAcceptBillDetailsById(Long id) {
+        logger.info("汇票详情,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAcceptBillDetailsById(id);
+            }
+        }, "汇票详情", logger);
     }
 }
