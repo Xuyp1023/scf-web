@@ -28,6 +28,7 @@ public class WeChatScfAcceptBillController {
     @RequestMapping(value = "/queryAcceptBill", method = RequestMethod.POST)
     public @ResponseBody String queryAcceptBill(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo().toString());
         logger.info("汇票信息查询,入参：" + anMap.toString());
         anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo().toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -98,5 +99,15 @@ public class WeChatScfAcceptBillController {
                 return scfAcceptBillService.webQueryFinancedByFactor(anMap, factorNo);
             }
         }, "保理公司查询已融资汇票", logger);
+    }
+    
+    @RequestMapping(value = "/findAcceptBillDetailsById", method = RequestMethod.POST)
+    public @ResponseBody String findAcceptBillDetailsById(Long id) {
+        logger.info("汇票详情,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAcceptBillDetailsById(id);
+            }
+        }, "汇票详情", logger);
     }
 }
