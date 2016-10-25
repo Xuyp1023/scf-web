@@ -53,6 +53,7 @@ public class WechatEnquiryController {
     @RequestMapping(value = "/addEnquiry", method = RequestMethod.POST)
     public @ResponseBody String addEnquiry(HttpServletRequest request) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        fillLoginCustNo(map);
         logger.info("保存询价，入参:"+ map.toString());
         
         try {
@@ -236,7 +237,7 @@ public class WechatEnquiryController {
     @RequestMapping(value = "/custDropEnquiry", method = RequestMethod.POST)
     public @ResponseBody String custDropEnquiry(HttpServletRequest request, Long offerId, String dropReason, String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.debug("询价方-放弃询价:"+ map);
+        logger.debug("询价方-放弃资金方提供的报价:"+ map);
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
@@ -329,12 +330,12 @@ public class WechatEnquiryController {
     
     private void fillLoginCustNo(Map<String, Object> anMap) {
         if(UserUtils.supplierUser() || UserUtils.sellerUser()){
-            anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo());
+            anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo().toString());
         }
         else if(UserUtils.factorUser()){
-            anMap.put("factorNo", UserUtils.getDefCustInfo().getCustNo());
+            anMap.put("factorNo", UserUtils.getDefCustInfo().getCustNo().toString());
         }else{
-            anMap.put("coreCustNo", UserUtils.getDefCustInfo().getCustNo());
+            anMap.put("coreCustNo", UserUtils.getDefCustInfo().getCustNo().toString());
         }
     }
    

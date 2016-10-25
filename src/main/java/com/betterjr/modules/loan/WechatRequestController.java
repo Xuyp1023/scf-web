@@ -17,7 +17,7 @@ import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
 @Controller
-@RequestMapping(value = "/Wechat/Scf/BillRequest")
+@RequestMapping(value = "/Wechat/Scf/Request")
 public class WechatRequestController {
     private static final Logger logger = LoggerFactory.getLogger(WechatRequestController.class);
 
@@ -25,7 +25,7 @@ public class WechatRequestController {
     private IScfBillRequestService billRequestService;
 
     
-    @RequestMapping(value = "/addBillRequest", method = RequestMethod.POST)
+    @RequestMapping(value = "/addRequest", method = RequestMethod.POST)
     public @ResponseBody String addBillRequest(HttpServletRequest request) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("添加票据融资申请，入参:" + map.toString());
