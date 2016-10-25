@@ -31,11 +31,10 @@ public class ScfSupplierPushController {
     private IScfSupplierPushService scfSupplierPushService;
     
     @RequestMapping(value = "/addPush", method = RequestMethod.POST)
-    public @ResponseBody String addPush(HttpServletRequest request) {
-        Map anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("推送, 入参:" + anMap.toString());
+    public @ResponseBody String addPush(Long billId) {
+        logger.info("推送, 入参:" + billId);
         try {
-            return scfSupplierPushService.webAddPushSupplier(anMap);
+            return scfSupplierPushService.webAddPushSupplier(billId);
         }
         catch (RpcException btEx) {
             logger.error("推送异常："+btEx.getMessage());

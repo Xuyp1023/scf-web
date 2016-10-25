@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
+import com.betterjr.common.config.ParamNames;
 import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.utils.UserUtils;
 import com.betterjr.common.web.AjaxObject;
@@ -110,8 +111,8 @@ public class WechatElecAgreementController {
     }
     
     @RequestMapping(value = "/sendValidCode", method = RequestMethod.POST)
-    public @ResponseBody String sendValidCode(String appNo, String custType, String vCode) {
-        logger.info("发送并验证签署合同的验证码，流水号:" + appNo + " custType:" + custType + " vCode:" + vCode);
+    public @ResponseBody String sendValidCode(String appNo, String custType, String vCode,String tradePwd) {
+        logger.info("发送并验证签署合同的验证码，流水号:" + appNo + " custType:" + custType + " vCode:" + vCode+",tradePwd:"+tradePwd);
         try {
             return scfElecAgreementService.webSendValidCode(appNo,custType,vCode);
         }
@@ -150,7 +151,7 @@ public class WechatElecAgreementController {
     public void downloadElecAgreePDF(HttpServletResponse response, String appNo) {
         logger.info("下载电子合同的PDF格式文件，流水号：" + appNo);
         CustFileItem fileItem = scfElecAgreementService.webFindPdfFileInfo(appNo);
-        CustFileClientUtils.fileDownload(response, fileItem,null);
+        CustFileClientUtils.fileDownload(response, fileItem,scfElecAgreementService.webFindParamPath(ParamNames.OPENACCO_FILE_DOWNLOAD_PATH));
     }
     
     /**
