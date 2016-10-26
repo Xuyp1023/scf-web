@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.utils.Collections3;
+import com.betterjr.common.utils.UserUtils;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
@@ -21,8 +22,8 @@ import com.betterjr.common.web.Servlets;
 public class WechatRequestController {
     private static final Logger logger = LoggerFactory.getLogger(WechatRequestController.class);
 
-    @Reference(interfaceClass = IScfBillRequestService.class)
-    private IScfBillRequestService billRequestService;
+    @Reference(interfaceClass = IScfWechatRequestService.class)
+    private IScfWechatRequestService billRequestService;
 
     
     @RequestMapping(value = "/addRequest", method = RequestMethod.POST)
@@ -31,7 +32,8 @@ public class WechatRequestController {
         logger.info("添加票据融资申请，入参:" + map.toString());
 
         try {
-            return billRequestService.webAddBillRequest(map);
+            fillLoginCustNo(map);
+            return billRequestService.webAddRequest(map);
         }
         catch (Exception ex) {
             logger.error("添加票据融资申请:", ex);
@@ -63,7 +65,7 @@ public class WechatRequestController {
         logger.info("查询票据融资申请，入参:" + map.toString());
 
         try {
-            return billRequestService.webQueryBillRequestList(map, flag, pageNum, pageSize);
+            return billRequestService.webQueryRequestList(map, flag, pageNum, pageSize);
         }
         catch (Exception ex) {
             logger.error("查询票据融资申请:", ex);
@@ -100,6 +102,17 @@ public class WechatRequestController {
             return AjaxObject.newError("findRequestByNo service failed").toJson();
         }
 
+    }
+    
+    private void fillLoginCustNo(Map<String, Object> anMap) {
+        if(UserUtils.supplierUser() || UserUtils.sellerUser()){
+            anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo().toString());
+        }
+        else if(UserUtils.factorUser()){
+            anMap.put("factorNo", UserUtils.getDefCustInfo().getCustNo().toString());
+        }else{
+            anMap.put("coreCustNo", UserUtils.getDefCustInfo().getCustNo().toString());
+        }
     }
     
 }
