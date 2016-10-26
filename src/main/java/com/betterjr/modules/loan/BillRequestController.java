@@ -23,8 +23,8 @@ import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
 public class BillRequestController {
     private static final Logger logger = LoggerFactory.getLogger(RequestController.class);
     
-    @Reference(interfaceClass = IScfBillRequestService.class)
-    private IScfBillRequestService billRequestService;
+    @Reference(interfaceClass = IScfWechatRequestService.class)
+    private IScfWechatRequestService billRequestService;
     
     @RequestMapping(value = "/queryBillRequestList", method = RequestMethod.POST)
     public @ResponseBody String queryRequestList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
@@ -33,7 +33,7 @@ public class BillRequestController {
         Map<String, Object> qyMap = Collections3.filterMap(map, queryTerm);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return billRequestService.webQueryBillRequestList(qyMap, flag, pageNum, pageSize);
+                return billRequestService.webQueryRequestList(qyMap, flag, pageNum, pageSize);
             }
         }, "查询融资申请列表", logger);
     }
@@ -45,7 +45,7 @@ public class BillRequestController {
         
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return billRequestService.webAddBillRequest(map);
+                return billRequestService.webAddRequest(map);
             }
         }, "加票据融资申请", logger);
     }
