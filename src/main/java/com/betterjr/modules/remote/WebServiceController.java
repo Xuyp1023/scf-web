@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.codec.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,13 @@ public class WebServiceController {
     @RequestMapping(value = "/webservice/coreEnt", method = RequestMethod.POST)
     public @ResponseBody String jsonCoreService(HttpServletRequest anRequest){
         Map<String, String> map = Servlets.getParameters(anRequest);
+        if ("1".equals(map.get("based"))) {
+            try {
+                map.put("data", new String(Base64.decode(map.get("data")), "UTF-8"));
+            }
+            catch (final UnsupportedEncodingException e) {
+            }
+        }
         logger.info("入参:" + map.toString());
         try{
             return RemoteInvokeUtils.getWebServiceClient().process(map);
