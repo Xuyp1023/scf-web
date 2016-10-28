@@ -110,7 +110,7 @@ public class ScfOrderController {
     }
     
     /**
-     * 检查订单下发票所关联订单是否勾选完成
+     * 查询融资申请下面所有附件
      */
     @RequestMapping(value = "/findRequestBaseInfoFileList", method = RequestMethod.POST)
     public @ResponseBody String findRequestBaseInfoFileList(String requestNo) {
@@ -131,6 +131,19 @@ public class ScfOrderController {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return scfOrderService.webFindOrderDetailsById(id);
+            }
+        }, "查询查询订单详情", logger);
+    }
+    
+    /**
+     * 检查业务所需信息是否完成--贸易合同、发票
+     * 1:订单，2:票据;3:应收款;
+     */
+    @RequestMapping(value = "/checkInfoCompleted", method = RequestMethod.POST)
+    public @ResponseBody String checkInfoCompleted(String idList, String requestType) {
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webCheckInfoCompleted(idList, requestType);
             }
         }, "查询查询订单详情", logger);
     }
