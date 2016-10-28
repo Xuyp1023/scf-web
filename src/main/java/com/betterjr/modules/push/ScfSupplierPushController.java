@@ -49,4 +49,24 @@ public class ScfSupplierPushController {
         }
     } 
     
+    @RequestMapping(value = "/pushSign", method = RequestMethod.POST)
+    public @ResponseBody String pushSign(String appNo) {
+        logger.info("推送, 入参:" + appNo);
+        try {
+            scfSupplierPushService.webAddPushSign(appNo);
+            return "OK";
+        }
+        catch (RpcException btEx) {
+            logger.error("推送异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("推送失败").toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return AjaxObject.newError("推送失败，请检查").toJson();
+        }
+    }
+    
 }
