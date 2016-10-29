@@ -147,4 +147,13 @@ public class ScfOrderController {
             }
         }, "查询查询订单详情", logger);
     }
+    
+    @RequestMapping(value = "/checkAgreementStatus", method = RequestMethod.POST)
+    public @ResponseBody String checkAgreementStatus(Long acceptBillId) {
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webCheckAgreementStatus(acceptBillId);
+            }
+        }, "合同状态检查成功", logger);
+    }
 }
