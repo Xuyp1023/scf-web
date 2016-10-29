@@ -24,6 +24,9 @@ public class WechatRequestController {
 
     @Reference(interfaceClass = IScfWechatRequestService.class)
     private IScfWechatRequestService billRequestService;
+    
+    @Reference(interfaceClass = IScfRequestService.class)
+    private IScfRequestService requestService;
 
     
     @RequestMapping(value = "/addRequest", method = RequestMethod.POST)
@@ -60,7 +63,7 @@ public class WechatRequestController {
     @RequestMapping(value = "/queryRequestList", method = RequestMethod.POST)
     public @ResponseBody String queryBillRequestList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        String[] queryTerm = new String[] { "businStatus"};
+        String[] queryTerm = new String[] { "tradeStatus"};
         map = Collections3.filterMap(map, queryTerm);
         logger.info("查询票据融资申请，入参:" + map.toString());
 
@@ -100,6 +103,21 @@ public class WechatRequestController {
         catch (Exception ex) {
             logger.error("查询票据融资申请:", ex);
             return AjaxObject.newError("findRequestByNo service failed").toJson();
+        }
+
+    }
+    
+    @RequestMapping(value = "/confirmScheme", method = RequestMethod.POST)
+    public @ResponseBody String confirmScheme(HttpServletRequest request, String requestNo, String smsCode) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("确认保理方案，入参:" + map.toString());
+
+        try {
+            return requestService.webConfirmScheme(requestNo, "1", smsCode);
+        }
+        catch (Exception ex) {
+            logger.error("确认保理方案:", ex);
+            return AjaxObject.newError("confirmScheme service failed").toJson();
         }
 
     }
