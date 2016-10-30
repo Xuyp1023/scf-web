@@ -113,7 +113,7 @@ public class WechatRequestController {
         logger.info("确认保理方案，入参:" + map.toString());
 
         try {
-            return requestService.webConfirmScheme(requestNo, "1", smsCode);
+            return requestService.webConfirmScheme(requestNo, "0", smsCode);
         }
         catch (Exception ex) {
             logger.error("确认保理方案:", ex);
