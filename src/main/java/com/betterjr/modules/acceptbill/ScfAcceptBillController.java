@@ -36,13 +36,13 @@ public class ScfAcceptBillController {
         }, "汇票信息查询失败", logger);
     }
     
-    @RequestMapping(value = "/queryAcceptBillByCustNo", method = RequestMethod.POST)
+    @RequestMapping(value = "/findAcceptBillByCustNo", method = RequestMethod.POST)
     public @ResponseBody String queryAcceptBill(HttpServletRequest request, String custNo) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webfindAcceptBillList(custNo);
+                return scfAcceptBillService.webFindAcceptBillListByCustNo(custNo);
             }
         }, "汇票信息查询失败", logger);
     }
