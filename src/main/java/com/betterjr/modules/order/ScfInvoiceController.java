@@ -81,6 +81,17 @@ public class ScfInvoiceController {
                 return scfInvoiceService.webSaveDeleteInvoice(id);
             }
         }, "发票信息删除失败", logger);
-                
+        
+    }
+    
+    @RequestMapping(value = "/queryIncompletedInvoice", method = RequestMethod.POST)
+    public @ResponseBody String queryIncompletedInvoice(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("发票信息查询,入参" + anMap);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfInvoiceService.webQueryIncompletedInvoice(anMap, flag, pageNum, pageSize);
+            }
+        }, "发票信息查询失败", logger);
     }
 }
