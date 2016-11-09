@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,8 @@ import com.betterjr.common.utils.UserUtils;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 import com.betterjr.modules.document.entity.CustFileItem;
-import com.betterjr.modules.document.utils.CustFileClientUtils;
+import com.betterjr.modules.document.service.DataStoreService;
+import com.betterjr.modules.document.utils.FileWebClientUtils;
 
 /****
  * 电子合同管理
@@ -34,21 +36,26 @@ public class WechatElecAgreementController {
     
     @Reference(interfaceClass=IScfElecAgreementService.class)
     private IScfElecAgreementService scfElecAgreementService;
-    
+
+    @Autowired
+    private DataStoreService dataStoreService;
+
     @RequestMapping(value = "/queryElecAgreement", method = RequestMethod.POST)
     public @ResponseBody String queryElecAgreement(HttpServletRequest request, int pageNum, int pageSize) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("分页查询电子合同, 入参:"+anMap.toString());
+        logger.info("分页查询电子合同, 入参:" + anMap.toString());
         try {
             fillLoginCustNo(anMap);
             return scfElecAgreementService.webQueryElecAgreementByPage(anMap, pageNum, pageSize);
-        } catch (RpcException btEx) {
-            logger.error("分页查询电子合同异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+        }
+        catch (RpcException btEx) {
+            logger.error("分页查询电子合同异常：" + btEx.getMessage());
+            if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
             return AjaxObject.newError("分页查询电子合同失败").toJson();
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
             return AjaxObject.newError("分页查询电子合同失败").toJson();
         }
@@ -151,7 +158,7 @@ public class WechatElecAgreementController {
     public void downloadElecAgreePDF(HttpServletResponse response, String appNo) {
         logger.info("下载电子合同的PDF格式文件，流水号：" + appNo);
         CustFileItem fileItem = scfElecAgreementService.webFindPdfFileInfo(appNo);
-        CustFileClientUtils.fileDownload(response, fileItem,scfElecAgreementService.webFindParamPath(ParamNames.OPENACCO_FILE_DOWNLOAD_PATH));
+        FileWebClientUtils.fileDownload(dataStoreService, response, fileItem);
     }
     
     /**
