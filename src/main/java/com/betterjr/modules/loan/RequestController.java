@@ -380,15 +380,27 @@ public class RequestController {
         }
     }
     
-    @RequestMapping(value = "/querySellerRequestByCore", method = RequestMethod.POST)
-    public @ResponseBody String querySellerRequestByCore(HttpServletRequest request,String businStatus, String flag, int pageNum, int pageSize) {
+    @RequestMapping(value = "/queryRequest", method = RequestMethod.POST)
+    public @ResponseBody String supplierQueryRequest(HttpServletRequest request,String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         try {
-            return scfRequestService.webQuerySellerRequestByCore(anMap, businStatus, flag, pageNum, pageSize);
+            return scfRequestService.webCustQueryRequest(anMap, flag, pageNum, pageSize);
         }
         catch (Exception e) {
-            logger.error("经销商融资查询失败", e);
-            return AjaxObject.newError("经销商融资融资查询成功:" + e.getMessage()).toJson();
+            logger.error("供应商查询失败", e);
+            return AjaxObject.newError("供应商查询成功:" + e.getMessage()).toJson();
+        }
+    }
+    
+    @RequestMapping(value = "/loan", method = RequestMethod.POST)
+    public @ResponseBody String loan(HttpServletRequest request) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        try {
+            return scfRequestService.webLoan(anMap);
+        }
+        catch (Exception e) {
+            logger.error("放款失败", e);
+            return AjaxObject.newError("放款成功:" + e.getMessage()).toJson();
         }
     }
     
