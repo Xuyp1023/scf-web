@@ -398,7 +398,7 @@ public class RequestController {
         try {
             return scfRequestService.webLoan(anMap);
         }
-        catch (Exception e) {
+        catch (Exception e) { 
             logger.error("放款失败", e);
             return AjaxObject.newError("放款成功:" + e.getMessage()).toJson();
         }
