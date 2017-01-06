@@ -58,11 +58,12 @@ public class ScfOrderController {
      * @return
      */
     @RequestMapping(value = "/findOrderList", method = RequestMethod.POST)
-    public @ResponseBody String findOrderList(String custNo,String isOnlyNormal){
-        logger.info("订单信息查询,入参：custNo=" + custNo + " isOnlyNormal=" + isOnlyNormal);
+    public @ResponseBody String findOrderList(HttpServletRequest request,String isOnlyNormal){
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单信息查询,入参：" + anMap + " isOnlyNormal=" + isOnlyNormal);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webFindOrderList(custNo, isOnlyNormal);
+                return scfOrderService.webFindOrderList(anMap, isOnlyNormal);
             }
         }, "订单信息查询失败", logger);
     }

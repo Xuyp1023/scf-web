@@ -48,11 +48,12 @@ public class ScfReceivableController {
     }
     
     @RequestMapping(value = "/findReceivableList", method = RequestMethod.POST)
-    public @ResponseBody String findReceivableList(String custNo, String isOnlyNormal) {
-        logger.info("应收账款查询,入参:custNo" + custNo + " isOnlyNormal" + isOnlyNormal);
+    public @ResponseBody String findReceivableList(HttpServletRequest request, String isOnlyNormal) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("应收账款查询,入参:" + anMap + " isOnlyNormal" + isOnlyNormal);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfReceivableService.webFindReceivableList(custNo, isOnlyNormal);
+                return scfReceivableService.webFindReceivableList(anMap, isOnlyNormal);
             }
         }, "应收账款查询失败", logger);
     }

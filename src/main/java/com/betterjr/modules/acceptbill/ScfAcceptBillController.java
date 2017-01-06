@@ -48,11 +48,12 @@ public class ScfAcceptBillController {
     }
 
     @RequestMapping(value = "/findAcceptBillList", method = RequestMethod.POST)
-    public @ResponseBody String findAcceptBillList(String custNo, String isOnlyNormal) {
-        logger.info("汇票信息查询,入参：custNo" + custNo + " isOnlyNormal=" + isOnlyNormal);
+    public @ResponseBody String findAcceptBillList(HttpServletRequest request, String isOnlyNormal) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票信息查询,入参：" + anMap + " isOnlyNormal=" + isOnlyNormal);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webFindAcceptBillList(custNo, isOnlyNormal);
+                return scfAcceptBillService.webFindAcceptBillList(anMap, isOnlyNormal);
             }
         }, "汇票信息查询失败", logger);
     }
