@@ -387,8 +387,8 @@ public class RequestController {
             return scfRequestService.webCustQueryRequest(anMap, flag, pageNum, pageSize);
         }
         catch (Exception e) {
-            logger.error("供应商查询失败", e);
-            return AjaxObject.newError("供应商查询成功:" + e.getMessage()).toJson();
+            logger.error("查询融资列表失败", e);
+            return AjaxObject.newError("查询融资列表失败:" + e.getMessage()).toJson();
         }
     }
     
