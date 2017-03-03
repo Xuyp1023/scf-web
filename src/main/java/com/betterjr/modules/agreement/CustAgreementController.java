@@ -183,4 +183,24 @@ public class CustAgreementController {
             return AjaxObject.newError("删除客户合同失败，请检查").toJson();
         }
     }
+    
+    @RequestMapping(value = "/deleteContractAgree", method = RequestMethod.POST)
+    public @ResponseBody String deleteContractAgree(Long agreeId) {
+        logger.info("删除客户合同, 入参:" + agreeId);
+        try {
+            scfCustAgreemnetService.webDeleteContractAgree(agreeId);
+            return AjaxObject.newOk("删除客户合同成功").toJson();
+        }
+        catch (RpcException btEx) {
+            logger.error("删除客户合同成功异常："+btEx.getMessage());
+            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+                return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError(btEx.getMessage()).toJson();
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            return AjaxObject.newError("删除客户合同失败，请检查").toJson();
+        }
+    }
 }
