@@ -32,6 +32,7 @@
 		com.betterjr.modules.credit;
 		com.betterjr.modules.loan;
 		com.betterjr.modules.param;
+		com.betterjr.modules.template;
 		com.betterjr.modules.enquiry;
 		com.betterjr.modules.order;
         com.betterjr.modules.agreement;
