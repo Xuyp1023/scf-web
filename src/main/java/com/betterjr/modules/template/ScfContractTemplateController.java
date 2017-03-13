@@ -45,7 +45,7 @@ public class ScfContractTemplateController {
 			return templateService.webSaveModifyTemplate(param, id);
 		} catch (Exception ex) {
 			logger.error("合同模板修改失败：", ex);
-			return AjaxObject.newError("repayment service failed" + ex.getMessage()).toJson();
+			return AjaxObject.newError("saveModifyTemplate service failed" + ex.getMessage()).toJson();
 		}
 	}
 	
