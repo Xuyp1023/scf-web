@@ -16,6 +16,7 @@
 		<property name="filters">
 			<map>
 				<entry key="logout" value-ref="logoutFilter" />
+				<entry key="token" value-ref="tokenAuthenticationFilter" />
 				<entry key="authcx" value-ref="captchaFormAuthenticationFilter" />
 				<entry key="userx" value-ref="betterUserFilter" />
 			</map>
@@ -30,22 +31,26 @@
 	<bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
 		<property name="redirectUrl" value="/static/index.html" />
 	</bean>
-	
-	<bean id="betterUserFilter"
-        class="com.betterjr.modules.sys.security.BetterUserFilter" />
-        
+
+	<bean id="betterUserFilter" class="com.betterjr.modules.sys.security.BetterUserFilter" />
+
 	<bean id="captchaFormAuthenticationFilter"
 		class="com.betterjr.modules.sys.security.CaptchaFormAuthenticationFilter" />
+
+	<bean id="tokenAuthenticationFilter"
+		class="com.betterjr.modules.sys.security.TokenAuthenticationFilter" />
 
 	<!-- Shiro权限过滤过滤器定义 -->
 	<bean name="shiroFilterChainDefinitions" class="java.lang.String">
 		<constructor-arg>
 			<value>
 				/forAgency/** = anon
+				/access/** = anon
 				/static/** = anon
 				/login = authcx
+				/tokenLogin/** = token
 				/logout = logout
-				/p/** =anon
+				/p/** = anon
 				/** = userx
 			</value>
 		</constructor-arg>
