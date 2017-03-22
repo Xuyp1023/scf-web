@@ -157,4 +157,19 @@ public class ScfOrderController {
             }
         }, "合同状态检查成功", logger);
     }
+    
+    /**
+     * 查询核心企业编号
+     */
+    @RequestMapping(value = "/findCoreCustNo", method = RequestMethod.POST)
+    public @ResponseBody String findRequestBaseInfoFileList(String orderId, String orderType) {
+        logger.info("查询核心企业编号,入参：orderId=" + orderId + "orderType:" +orderType);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webFindCoreCustNo(orderId, orderType);
+            }
+        }, "查询核心企业编号失败", logger);
+    }
+    
+    
 }
