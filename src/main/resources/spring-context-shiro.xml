@@ -48,6 +48,7 @@
 				/access/** = anon
 				/static/** = anon
 				/login = authcx
+				/roleList = anon
 				/tokenLogin/** = token
 				/logout = logout
 				/p/** = anon
