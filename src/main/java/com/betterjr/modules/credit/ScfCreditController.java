@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.betterjr.common.exception.BytterException;
+import com.betterjr.common.exception.BytterTradeException;
 import com.betterjr.common.web.AjaxObject;
 import com.betterjr.common.web.Servlets;
 
@@ -157,6 +158,17 @@ public class ScfCreditController {
         try {
 
             return scfCreditService.webModifyCredit(anMap, id);
+        }
+        catch (RpcException e) {
+            logger.error(e.getMessage(), e);
+            if (BytterException.isCauseBytterException(e)) {
+                return AjaxObject.newError(e.getCause().getMessage()).toJson();
+            }
+            return AjaxObject.newError("授信额度信息查询失败").toJson();
+        }
+        catch (BytterTradeException e) {
+            logger.error(e.getMessage(), e);
+            return AjaxObject.newError(e.getMessage()).toJson();
         }
         catch (Exception e) {
             logger.error(e.getMessage(), e);
