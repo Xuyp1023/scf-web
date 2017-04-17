@@ -70,12 +70,12 @@ public class ScfAcceptBillController {
     }
     
     @RequestMapping(value = "/addAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String addAcceptBill(HttpServletRequest request, String fileList, String otherFileList) {
+    public @ResponseBody String addAcceptBill(HttpServletRequest request, String fileList,boolean confirmFlag) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息登记,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webAddAcceptBill(anMap, fileList, otherFileList);
+                return scfAcceptBillService.webAddAcceptBillDO(anMap, fileList, confirmFlag);
             }
         }, "汇票信息登记失败", logger);
     }
