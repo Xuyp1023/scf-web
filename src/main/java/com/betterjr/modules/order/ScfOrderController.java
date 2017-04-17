@@ -26,12 +26,12 @@ public class ScfOrderController {
     private IScfOrderService scfOrderService;
     
     @RequestMapping(value = "/modifyOrder", method = RequestMethod.POST)
-    public @ResponseBody String modifyOrder(HttpServletRequest request, Long id, String fileList, String otherFileList) {
+    public @ResponseBody String modifyOrder(HttpServletRequest request, String fileList,boolean confirmFlag) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webSaveModifyOrder(anMap, id, fileList, otherFileList);
+                return scfOrderService.webSaveModifyOrderDO(anMap,fileList, confirmFlag);
             }
         }, "订单信息编辑失败", logger);
     }
@@ -47,7 +47,7 @@ public class ScfOrderController {
         logger.info("订单信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webQueryOrder(anMap, isOnlyNormal, flag, pageNum, pageSize);
+                return scfOrderService.webQueryOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize);
             }
         }, "订单信息查询失败", logger);
     }
@@ -87,12 +87,12 @@ public class ScfOrderController {
      * 新增订单
      */
     @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
-    public @ResponseBody String addOrder(HttpServletRequest request, String fileList, String otherFileList) {
+    public @ResponseBody String addOrder(HttpServletRequest request, String fileList, boolean confirmFlag) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webAddOrder(anMap, fileList, otherFileList);
+                return scfOrderService.webAddOrderDO(anMap, fileList,confirmFlag);
             }
         }, "订单信息新增失败", logger);
     }

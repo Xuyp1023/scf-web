@@ -24,6 +24,7 @@
 	com.betterjr.modules.acceptbill,
     com.betterjr.modules.discount,
     com.betterjr.modules.push,
+    com.betterjr.modules.asset,
 	com.betterjr.modules.test,
     com.betterjr.modules.ledger" />
 
