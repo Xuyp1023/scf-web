@@ -59,12 +59,12 @@ public class ScfAcceptBillController {
     }
 
     @RequestMapping(value = "/modifyAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, Long id, String fileList, String otherFileList) {
+    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, String fileList, boolean anConfirmFlag) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webSaveModifyAcceptBill(anMap, id, fileList, otherFileList);
+                return scfAcceptBillService.webSaveModifyAcceptBillDO(anMap, fileList, anConfirmFlag);
             }
         }, "汇票信息编辑失败", logger);
     }
@@ -89,7 +89,37 @@ public class ScfAcceptBillController {
             }
         }, "汇票信息审核失败", logger);
     }
+    
+    @RequestMapping(value = "/saveAnnulAcceptBill", method = RequestMethod.POST)
+    public @ResponseBody String saveAnnulAcceptBill(String anRefNo,String anVersion) {
+        logger.info("汇票信息作废,入参：refNo=" + anRefNo+"  version:"+anVersion);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webSaveAnnulAcceptBill(anRefNo,anVersion);
+            }
+        }, "汇票信息废止失败", logger);
+    }
 
+    @RequestMapping(value = "/findBillDO", method = RequestMethod.POST)
+    public @ResponseBody String findBillDO(String anRefNo,String anVersion) {
+        logger.info("汇票查询详情,入参：refNo=" + anRefNo +" : version="+anVersion);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAcceptBillDOByRefNoVersion(anRefNo, anVersion);
+            }
+        }, "汇票查询详情成功", logger);
+    }
+    
+    @RequestMapping(value = "/saveAuditBillDO", method = RequestMethod.POST)
+    public @ResponseBody String saveAuditBillDO(String anRefNo,String anVersion) {
+        logger.info("汇票审核,入参：refNo=" + anRefNo +" : version="+anVersion);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webSaveAuditBillDOByRefNoVersion(anRefNo, anVersion);
+            }
+        }, "汇票审核成功", logger);
+    }
+    
     @RequestMapping(value = "/findAllFile", method = RequestMethod.POST)
     public @ResponseBody String findAllFile(Long id) {
         logger.info("汇票所有附件查询,入参：id=" + id);
