@@ -171,5 +171,51 @@ public class ScfOrderController {
         }, "查询核心企业编号失败", logger);
     }
     
+    /**
+     * 查询废止状态的所有订单
+     * @param request
+     * @param isOnlyNormal
+     * @param flag
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/queryCanAnnulOrder", method = RequestMethod.POST)
+    public @ResponseBody String queryCanAnnulOrder(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单已经审核然后想废止的信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webQueryCanAnnulOrder(anMap, isOnlyNormal, flag, pageNum, pageSize);
+            }
+        }, "订单信息查询失败", logger);
+    }
+    
+    /**
+     * 废止当前的单据
+     * @param refNo
+     * @param version
+     * @return
+     */
+    @RequestMapping(value = "/saveAnnulOrder", method = RequestMethod.POST)
+    public @ResponseBody String saveAnnulOrder(String refNo,String version) {
+        logger.info("订单信息作废,入参：refNo=" + refNo+"  version:"+version);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveAnnulOrder(refNo,version);
+            }
+        }, "订单信息废止失败", logger);
+    }
+    
+    @RequestMapping(value = "/saveAuditOrder", method = RequestMethod.POST)
+    public @ResponseBody String saveAuditOrder(String refNo,String version) {
+        logger.info("订单审核,入参：refNo=" + refNo +" : version="+version);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveAuditOrderByRefNoVersion(refNo, version);
+            }
+        }, "订单审核成功！", logger);
+    }
+    
     
 }

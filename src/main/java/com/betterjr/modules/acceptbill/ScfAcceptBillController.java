@@ -36,6 +36,59 @@ public class ScfAcceptBillController {
         }, "汇票信息查询失败", logger);
     }
     
+    /**
+     * 查询登入页面的数据来源和核准页面的数据来源
+     * @param request
+     * @param isOnlyNormal
+     * @param flag
+     * @param pageNum
+     * @param pageSize
+     * @param isAudit true 用来查询核准页面的数据来源   false 用来查询登入数据的数据来源
+     * @return
+     */
+    @RequestMapping(value = "/queryIneffectiveBill", method = RequestMethod.POST)
+    public @ResponseBody String queryIneffectiveBill(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize,boolean isAudit) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票未生效信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webQueryIneffectiveAcceptBill(anMap, isOnlyNormal, flag, pageNum, pageSize,isAudit);
+            }
+        }, "汇票信息查询失败", logger);
+    }
+    
+    /**
+     * 查询核心企业/供应商已经生效的票据次信息
+     * @param request
+     * @param isOnlyNormal
+     * @param flag
+     * @param pageNum
+     * @param pageSize
+     * @param isCust true 是核心企业的票据池信息  false 是供应商的票据池信息
+     * @return
+     */
+    @RequestMapping(value = "/queryEffectiveBill", method = RequestMethod.POST)
+    public @ResponseBody String queryEffectiveBill(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize,boolean isCust) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票已经生效信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webQueryEffectiveAcceptBill(anMap, isOnlyNormal, flag, pageNum, pageSize,isCust);
+            }
+        }, "汇票信息查询失败", logger);
+    }
+    
+    @RequestMapping(value = "/queryCanAnnulBill", method = RequestMethod.POST)
+    public @ResponseBody String queryCanAnnulBill(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票已经审核然后想废止的信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webQueryCanAnnulAcceptBill(anMap, isOnlyNormal, flag, pageNum, pageSize);
+            }
+        }, "汇票信息查询失败", logger);
+    }
+    
     @RequestMapping(value = "/findAcceptBillByCustNo", method = RequestMethod.POST)
     public @ResponseBody String queryAcceptBill(HttpServletRequest request, String custNo) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
@@ -90,34 +143,62 @@ public class ScfAcceptBillController {
         }, "汇票信息审核失败", logger);
     }
     
+    /**
+     * 登入状态的废止
+     * @param refNo
+     * @param version
+     * @return
+     */
     @RequestMapping(value = "/saveAnnulAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String saveAnnulAcceptBill(String anRefNo,String anVersion) {
-        logger.info("汇票信息作废,入参：refNo=" + anRefNo+"  version:"+anVersion);
+    public @ResponseBody String saveAnnulAcceptBill(String refNo,String version) {
+        logger.info("汇票信息作废,入参：refNo=" + refNo+"  version:"+version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webSaveAnnulAcceptBill(anRefNo,anVersion);
+                return scfAcceptBillService.webSaveAnnulAcceptBill(refNo,version);
+            }
+        }, "汇票信息废止失败", logger);
+    }
+    
+    /**
+     * 生效单据的废止
+     * @param refNo
+     * @param version
+     * @return
+     */
+    @RequestMapping(value = "/saveAnnulEffectiveAcceptBill", method = RequestMethod.POST)
+    public @ResponseBody String saveAnnulEffectiveAcceptBill(String refNo,String version) {
+        logger.info("汇票信息作废,入参：refNo=" + refNo+"  version:"+version);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webSaveCoreCustAnnulBill(refNo,version);
             }
         }, "汇票信息废止失败", logger);
     }
 
+    /**
+     * 查找单条票据的详情
+     * @param anRefNo
+     * @param anVersion
+     * @return
+     */
     @RequestMapping(value = "/findBillDO", method = RequestMethod.POST)
-    public @ResponseBody String findBillDO(String anRefNo,String anVersion) {
-        logger.info("汇票查询详情,入参：refNo=" + anRefNo +" : version="+anVersion);
+    public @ResponseBody String findBillDO(String refNo,String version) {
+        logger.info("汇票查询详情,入参：refNo=" + refNo +" : version="+version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webFindAcceptBillDOByRefNoVersion(anRefNo, anVersion);
+                return scfAcceptBillService.webFindAcceptBillDOByRefNoVersion(refNo, version);
             }
         }, "汇票查询详情成功", logger);
     }
     
     @RequestMapping(value = "/saveAuditBillDO", method = RequestMethod.POST)
-    public @ResponseBody String saveAuditBillDO(String anRefNo,String anVersion) {
-        logger.info("汇票审核,入参：refNo=" + anRefNo +" : version="+anVersion);
+    public @ResponseBody String saveAuditBillDO(String refNo,String version) {
+        logger.info("汇票审核,入参：refNo=" + refNo +" : version="+version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webSaveAuditBillDOByRefNoVersion(anRefNo, anVersion);
+                return scfAcceptBillService.webSaveAuditBillDOByRefNoVersion(refNo, version);
             }
-        }, "汇票审核成功", logger);
+        }, "汇票审核成功！", logger);
     }
     
     @RequestMapping(value = "/findAllFile", method = RequestMethod.POST)
