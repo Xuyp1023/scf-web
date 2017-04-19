@@ -89,4 +89,120 @@ public class ScfReceivableController {
         }, "应收账款审核失败", logger);
     }
     
+    /**
+     * 新增应收账款
+     * @param request
+     * @param fileList  文件上传批次号
+     * @param confirmFlag true 新增并确认   false  新增
+     * @return
+     */
+    @RequestMapping(value = "/saveAddReceivableDO", method = RequestMethod.POST)
+    public @ResponseBody String addReceivableDO(HttpServletRequest request, String fileList, boolean confirmFlag) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单信息新增,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webAddReceivableDO(anMap, fileList,confirmFlag);
+            }
+        }, "订单信息新增失败", logger);
+    }
+    
+    /**
+     * 应收账款信息编辑
+     * @param request
+     * @param fileList 上传批次号
+     * @param confirmFlag 编辑并确认
+     * @return
+     */
+    @RequestMapping(value = "/saveModifyReceivableDO", method = RequestMethod.POST)
+    public @ResponseBody String modifyReceivableDO(HttpServletRequest request, String fileList,boolean confirmFlag) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("应收账款信息修改,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webSaveModifyReceivableDO(anMap,fileList, confirmFlag);
+            }
+        }, "应收账款信息编辑失败", logger);
+    }
+    
+    /**
+     * 对应收账款进行废止操作
+     * @param refNo
+     * @param version
+     * @return
+     */
+    @RequestMapping(value = "/saveAnnulReceivable", method = RequestMethod.POST)
+    public @ResponseBody String saveAnnulReceivable(String refNo,String version) {
+        logger.info("应收账款信息作废,入参：refNo=" + refNo+"  version:"+version);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webSaveAnnulReceivable(refNo,version);
+            }
+        }, "应收账款信息废止失败", logger);
+    }
+    
+    /**
+     * 对应收账款单据进行审核操作
+     * @param refNo
+     * @param version
+     * @return
+     */
+    @RequestMapping(value = "/saveAuditReceivable", method = RequestMethod.POST)
+    public @ResponseBody String saveAuditOrder(String refNo,String version) {
+        logger.info("应收账款审核,入参：refNo=" + refNo +" : version="+version);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webSaveAuditReceivableByRefNoVersion(refNo, version);
+            }
+        }, "应收账款审核成功！", logger);
+    }
+    
+    /**
+     * 查询樱花艘账款详情信息
+     * @param refNo
+     * @param version
+     * @return
+     */
+    @RequestMapping(value = "/findReceivable", method = RequestMethod.POST)
+    public @ResponseBody String findReceivable(String refNo,String version) {
+        
+        logger.info("应收账款查询详情,入参：refNo=" + refNo +" : version="+version);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webFindReceivableByRefNoVersion(refNo, version);
+            }
+        }, "应收账款查询详情成功！", logger);
+    }
+    
+    /**
+     * 查询未生效的应收账款信息，登入数据来源和审核界面数据来源
+     * @param request
+     * @param flag 是否需要查询分页
+     * @param pageNum
+     * @param pageSize
+     * @param isAudit 审核的标记
+     * @return
+     */
+    @RequestMapping(value = "/queryIneffectiveReceivable", method = RequestMethod.POST)
+    public @ResponseBody String queryIneffectiveReceivable(HttpServletRequest request, String flag, int pageNum, int pageSize,boolean isAudit) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("应收账款未生效信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webQueryIneffectiveReceivable(anMap, flag, pageNum, pageSize,isAudit);
+            }
+        }, "应收账款信息查询失败", logger);
+    }
+    
+    
+    @RequestMapping(value = "/queryEffectiveReceivable", method = RequestMethod.POST)
+    public @ResponseBody String queryEffectiveReceivable(HttpServletRequest request, String flag, int pageNum, int pageSize,boolean isCust) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("应收账款已经生效信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfReceivableService.webQueryEffectiveReceivable(anMap, flag, pageNum, pageSize,isCust);
+            }
+        }, "应收账款信息查询失败", logger);
+    }
 }
