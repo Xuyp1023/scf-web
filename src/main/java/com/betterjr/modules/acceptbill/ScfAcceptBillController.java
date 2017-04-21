@@ -221,7 +221,7 @@ public class ScfAcceptBillController {
         }, "汇票详情", logger);
     }
     
-    @RequestMapping(value = "queryFinancedByFactor", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryFinancedByFactor", method = RequestMethod.POST)
     public @ResponseBody String queryFinancedByFactor(HttpServletRequest request, Long factorNo) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票所有附件查询,入参：factorNo" + factorNo + anMap);

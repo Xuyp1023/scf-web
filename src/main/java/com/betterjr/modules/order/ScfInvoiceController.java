@@ -15,6 +15,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
 import com.betterjr.common.web.Servlets;
+import com.betterjr.modules.vo.InvoiceVO;
 
 @Controller
 @RequestMapping("/Scf/Invoice")
@@ -103,12 +104,12 @@ public class ScfInvoiceController {
      * @return
      */
     @RequestMapping(value = "/addInvoiceDO", method = RequestMethod.POST)
-    public @ResponseBody String addInvoiceDO(HttpServletRequest request, String fileList, boolean confirmFlag) {
+    public @ResponseBody String addInvoiceDO(HttpServletRequest request, String fileList, boolean confirmFlag, InvoiceVO invoice) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfInvoiceService.webAddInvoiceDO(anMap, fileList,confirmFlag);
+                return scfInvoiceService.webAddInvoiceDO(anMap, fileList,confirmFlag,invoice.getInvoiceItemList());
             }
         }, "发票信息新增失败", logger);
     }
@@ -121,12 +122,12 @@ public class ScfInvoiceController {
      * @return
      */
     @RequestMapping(value = "/modifyInvoiceDO", method = RequestMethod.POST)
-    public @ResponseBody String modifyInvoiceDO(HttpServletRequest request, String fileList,boolean confirmFlag) {
+    public @ResponseBody String modifyInvoiceDO(HttpServletRequest request, String fileList,boolean confirmFlag,InvoiceVO invoice) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfInvoiceService.webSaveModifyInvoiceDO(anMap,fileList, confirmFlag);
+                return scfInvoiceService.webSaveModifyInvoiceDO(anMap,fileList, confirmFlag,invoice.getInvoiceItemList());
             }
         }, "发票信息编辑失败", logger);
     }
