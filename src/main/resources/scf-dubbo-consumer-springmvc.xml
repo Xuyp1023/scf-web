@@ -12,6 +12,7 @@
 	<!-- 扫描dubbo注解 -->
 	<dubbo:annotation package="
 	com.betterjr.modules.product,
+	com.betterjr.modules.productconfig,
 	com.betterjr.modules.credit,
 	com.betterjr.modules.loan,
 	com.betterjr.modules.enquiry,
