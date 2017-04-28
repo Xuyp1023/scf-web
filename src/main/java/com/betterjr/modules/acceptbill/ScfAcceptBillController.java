@@ -78,6 +78,15 @@ public class ScfAcceptBillController {
         }, "汇票信息查询失败", logger);
     }
     
+    /**
+     * 查询票据回收的列表
+     * @param request
+     * @param isOnlyNormal
+     * @param flag
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @RequestMapping(value = "/queryCanAnnulBill", method = RequestMethod.POST)
     public @ResponseBody String queryCanAnnulBill(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
@@ -111,17 +120,31 @@ public class ScfAcceptBillController {
         }, "汇票信息查询失败", logger);
     }
 
+    /**
+     * 票据修改
+     * @param request
+     * @param fileList
+     * @param confirmFlag
+     * @return
+     */
     @RequestMapping(value = "/modifyAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, String fileList, boolean anConfirmFlag) {
+    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, String fileList, boolean confirmFlag) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webSaveModifyAcceptBillDO(anMap, fileList, anConfirmFlag);
+                return scfAcceptBillService.webSaveModifyAcceptBillDO(anMap, fileList, confirmFlag);
             }
         }, "汇票信息编辑失败", logger);
     }
     
+    /**
+     * 票据新增
+     * @param request
+     * @param fileList
+     * @param confirmFlag
+     * @return
+     */
     @RequestMapping(value = "/addAcceptBill", method = RequestMethod.POST)
     public @ResponseBody String addAcceptBill(HttpServletRequest request, String fileList,boolean confirmFlag) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
