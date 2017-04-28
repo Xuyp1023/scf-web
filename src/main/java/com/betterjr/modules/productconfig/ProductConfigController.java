@@ -74,10 +74,10 @@ public class ProductConfigController {
     }
     
     @RequestMapping(value = "/addProductAssetDictRelation", method = RequestMethod.POST)
-    public @ResponseBody String AddProductAssetDictRelation(HttpServletRequest request, String productCode, String listId) {
+    public @ResponseBody String AddProductAssetDictRelation(HttpServletRequest request, String productCode, String listIdType) {
         //Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("保存产品与资产类型关系表" + productCode);
-        return exec(() -> productConfigService.webAddProductAssetDictRelation(productCode, listId), "保存产品与资产类型关系表失败", logger);
+        return exec(() -> productConfigService.webAddProductAssetDictRelation(productCode, listIdType), "保存产品与资产类型关系表失败", logger);
     }
     
     @RequestMapping(value = "/findAssetDictByProduct", method = RequestMethod.POST)
@@ -94,6 +94,13 @@ public class ProductConfigController {
         return exec(() -> productConfigService.webQueryCoreByProduct(productCode, flag, pageNum, pageSize), "查询资产类型列表失败", logger);
     }
     
+    @RequestMapping(value = "/findCoreByProductList", method = RequestMethod.POST)
+    public @ResponseBody String findCoreByProductList(HttpServletRequest request, String productCode) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("查询核心企业列表,入参：" + anMap.toString());
+        return exec(() -> productConfigService.webFindCoreByProductList(productCode), "查询核心企业列表失败", logger);
+    }
+    
     @RequestMapping(value = "/findAssetDict", method = RequestMethod.POST)
     public @ResponseBody String findAssetDict(HttpServletRequest request, Long factorNo) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
@@ -106,6 +113,20 @@ public class ProductConfigController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("分页查询资产类型列表,入参：" + anMap.toString());
         return exec(() -> productConfigService.webQueryAssetDict(factorNo, flag, pageNum, pageSize), "查询资产类型列表失败", logger);
+    }
+    
+    @RequestMapping(value = "/delProductConfig", method = RequestMethod.POST)
+    public @ResponseBody String delProductConfig(HttpServletRequest request, Long id) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("删除产品,入参：" + anMap.toString());
+        return exec(() -> productConfigService.webDelProductConfig(id), "删除产品失败", logger);
+    }
+
+    @RequestMapping(value = "/queryProductKeyAndValue", method = RequestMethod.POST)
+    public @ResponseBody String delProductConfig(HttpServletRequest request,  Long coreCustNo,  Long factorNo) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("删除产品,入参：" + anMap.toString());
+        return exec(() -> productConfigService.webQueryProductKeyAndValue(coreCustNo, factorNo), "删除产品失败", logger);
     }
 
 
