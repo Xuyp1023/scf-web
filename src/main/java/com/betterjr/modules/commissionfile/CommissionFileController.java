@@ -63,6 +63,20 @@ public class CommissionFileController {
     }
     
     /**
+     * 查找佣金文件导出模版
+     * @return
+     */
+    @RequestMapping(value = "/findTemplateFile", method = RequestMethod.POST)
+    public @ResponseBody String findTemplateFile() {
+        
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return fileService.webFindTemplateFile();
+            }
+        }, "佣金导入模版文件查询失败", logger);
+    }
+    
+    /**
      * 删除文件
      * @param refNo  凭证编号
      * @return
