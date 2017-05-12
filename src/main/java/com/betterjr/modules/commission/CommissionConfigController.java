@@ -50,6 +50,7 @@ public class CommissionConfigController {
             final String operator = domainAttributeDubboClientService.findString(operOrg, "PLAT_COMMISSION_MAKE_OPERATOR");
             final Long confirmDays = domainAttributeDubboClientService.findNumber(operOrg, "PLAT_COMMISSION_CONFIRM_DAYS");
             final String importTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_IMPORT_TEMPLATE");
+            final String exportTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_EXPORT_TEMPLATE");
             final String dailyTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_DAILY_TEMPLATE");
             final String monthlyTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE");
 
@@ -60,6 +61,7 @@ public class CommissionConfigController {
             param.put("operator", operator);
             param.put("confirmDays", confirmDays);
             param.put("importTemplate", importTemplate);
+            param.put("exportTemplate", exportTemplate);
             param.put("dailyTemplate", dailyTemplate);
             param.put("monthlyTemplate", monthlyTemplate);
             return AjaxObject.newOk("参数查询成功！", param).toJson();
@@ -71,7 +73,7 @@ public class CommissionConfigController {
     @RequestMapping(value = "/saveConfig", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody String saveConfig(final HttpServletRequest request, final BigDecimal interestRate, final BigDecimal taxRate,
             final String custName, final String operator, final Long confirmDays,
-            final String importTemplate, final String dailyTemplate, final String monthlyTemplate) {
+            final String importTemplate, final String exportTemplate, final String dailyTemplate, final String monthlyTemplate) {
         if (UserUtils.platformUser()) {
             final Map<String, Object> param = Servlets.getParametersStartingWith(request, "");
             logger.info("参数设置,入参：" + param.toString());
@@ -85,6 +87,7 @@ public class CommissionConfigController {
                 domainAttributeDubboClientService.saveNumber(operOrg, "PLAT_COMMISSION_CONFIRM_DAYS", confirmDays);
 
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_IMPORT_TEMPLATE", importTemplate);
+                domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_EXPORT_TEMPLATE", exportTemplate);
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_DAILY_TEMPLATE", dailyTemplate);
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE", monthlyTemplate);
                 return AjaxObject.newOk("参数保存成功！").toJson();
