@@ -25,6 +25,9 @@
 	com.betterjr.modules.order;
     com.betterjr.modules.agreement;
     com.betterjr.modules.remote;
+    com.betterjr.modules.commission;
+    com.betterjr.modules.commissionfile;
+    com.betterjr.modules.delivery;
 	com.betterjr.modules.sys.controller"
 		use-default-filters="false">
 		<context:include-filter type="annotation"

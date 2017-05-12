@@ -42,6 +42,9 @@
         com.betterjr.modules.push;
 		com.betterjr.modules.receivable;
 		com.betterjr.modules.acceptbill;
+		com.betterjr.modules.commission;
+		com.betterjr.modules.commissionfile;
+		com.betterjr.modules.delivery;
         com.betterjr.modules.ledger">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
