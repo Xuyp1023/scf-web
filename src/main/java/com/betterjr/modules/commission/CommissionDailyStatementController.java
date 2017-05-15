@@ -44,9 +44,9 @@ public class CommissionDailyStatementController {
     }
     
     @RequestMapping(value = "/findDailyStatementInfoByMonth", method = RequestMethod.POST)
-    public @ResponseBody String findDailyStatementInfoByMonth(String billMonth,Long custNo) {
+    public @ResponseBody String findDailyStatementInfoByMonth(String billMonth,Long custNo,String businStatus) {
         logger.info("根据对账月份查询日账单列表,入参：month:" + billMonth+",custNo:"+custNo);
-        return exec(() -> dailyStatementService.webFindDailyStatementInfoByMonth(billMonth, custNo), "根据对账月份查询日账单列表", logger);
+        return exec(() -> dailyStatementService.webFindDailyStatementInfoByMonth(billMonth, custNo,businStatus), "根据对账月份查询日账单列表", logger);
     }
     
     @RequestMapping(value = "/findDailyStatementBasicsInfo", method = RequestMethod.POST)
@@ -76,10 +76,10 @@ public class CommissionDailyStatementController {
     }
     
     @RequestMapping(value = "/queryPayResultRecord", method = RequestMethod.POST)
-    public @ResponseBody String queryPayResultRecord(Long custNo,String payDate,int flag,int pageNum, int pageSize) { 
+    public @ResponseBody String queryPayResultRecord(Long custNo,String payDate,String payStatus,int flag,int pageNum, int pageSize) { 
         String anPayDate=payDate.replace("-", "");
-        logger.info("分页查询支付结果,入参：custNo:" + custNo+",payDate:"+anPayDate);
-        return exec(() -> dailyStatementService.webQueryPayResultRecord(custNo, anPayDate, flag, pageNum, pageSize), "分页查询支付结果", logger);
+        logger.info("分页查询支付结果,入参：custNo:" + custNo+",payDate:"+anPayDate+"，payStatus："+payStatus);
+        return exec(() -> dailyStatementService.webQueryPayResultRecord(custNo, anPayDate,payStatus, flag, pageNum, pageSize), "分页查询支付结果", logger);
     }
     
     @RequestMapping(value = "/findPayResultInfo", method = RequestMethod.POST)
