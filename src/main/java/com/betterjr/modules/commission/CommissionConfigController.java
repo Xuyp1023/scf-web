@@ -53,6 +53,9 @@ public class CommissionConfigController {
             final String exportTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_EXPORT_TEMPLATE");
             final String dailyTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_DAILY_TEMPLATE");
             final String monthlyTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE");
+            final Map<String, Object> certLicenseObj = (Map<String, Object>) domainAttributeDubboClientService.findObject("GLOBAL_TIANWEI_CERT_LICENSE");
+
+            final String certLicense = (String) certLicenseObj.get("certLicense");
 
             final Map<String, Object> param = new HashMap<>();
             param.put("interestRate", interestRate);
@@ -64,6 +67,7 @@ public class CommissionConfigController {
             param.put("exportTemplate", exportTemplate);
             param.put("dailyTemplate", dailyTemplate);
             param.put("monthlyTemplate", monthlyTemplate);
+            param.put("certLicense", certLicense);
             return AjaxObject.newOk("参数查询成功！", param).toJson();
         } else {
             return AjaxObject.newError("操作失败！").toJson();
@@ -72,7 +76,9 @@ public class CommissionConfigController {
 
     @RequestMapping(value = "/findCertLicense", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody String findCertLicense(final HttpServletRequest request) {
-        final String certLicense = domainAttributeDubboClientService.findString("GLOBAL_TIANWEI_CERT_LICENSE");
+        final Map<String, Object> certLicenseObj = (Map<String, Object>) domainAttributeDubboClientService.findObject("GLOBAL_TIANWEI_CERT_LICENSE");
+
+        final String certLicense = (String) certLicenseObj.get("certLicense");
 
         return AjaxObject.newOk("参数查询成功！", certLicense).toJson();
     }
@@ -97,7 +103,9 @@ public class CommissionConfigController {
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_EXPORT_TEMPLATE", exportTemplate);
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_DAILY_TEMPLATE", dailyTemplate);
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE", monthlyTemplate);
-                domainAttributeDubboClientService.saveString("GLOBAL_TIANWEI_CERT_LICENSE", certLicense);
+                final Map<String, Object> certLicenseObj = new HashMap<>();
+                certLicenseObj.put("certLicense", certLicense);
+                domainAttributeDubboClientService.saveObject("GLOBAL_TIANWEI_CERT_LICENSE", certLicenseObj);
                 return AjaxObject.newOk("参数保存成功！").toJson();
             }, "保存参数出错！", logger);
         } else {
