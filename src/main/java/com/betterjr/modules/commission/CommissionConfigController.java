@@ -70,10 +70,17 @@ public class CommissionConfigController {
         }
     }
 
+    @RequestMapping(value = "/findCertLicense", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody String findCertLicense(final HttpServletRequest request) {
+        final String certLicense = domainAttributeDubboClientService.findString("GLOBAL_TIANWEI_CERT_LICENSE");
+
+        return AjaxObject.newOk("参数查询成功！", certLicense).toJson();
+    }
+
     @RequestMapping(value = "/saveConfig", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody String saveConfig(final HttpServletRequest request, final BigDecimal interestRate, final BigDecimal taxRate,
             final String custName, final String operator, final Long confirmDays,
-            final String importTemplate, final String exportTemplate, final String dailyTemplate, final String monthlyTemplate) {
+            final String importTemplate, final String exportTemplate, final String dailyTemplate, final String monthlyTemplate, final String certLicense) {
         if (UserUtils.platformUser()) {
             final Map<String, Object> param = Servlets.getParametersStartingWith(request, "");
             logger.info("参数设置,入参：" + param.toString());
@@ -90,6 +97,7 @@ public class CommissionConfigController {
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_EXPORT_TEMPLATE", exportTemplate);
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_DAILY_TEMPLATE", dailyTemplate);
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE", monthlyTemplate);
+                domainAttributeDubboClientService.saveString("GLOBAL_TIANWEI_CERT_LICENSE", certLicense);
                 return AjaxObject.newOk("参数保存成功！").toJson();
             }, "保存参数出错！", logger);
         } else {
