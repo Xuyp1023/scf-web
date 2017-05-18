@@ -55,7 +55,7 @@ public class CommissionConfigController {
             final String monthlyTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE");
             final Map<String, Object> certLicenseObj = (Map<String, Object>) domainAttributeDubboClientService.findObject("GLOBAL_TIANWEI_CERT_LICENSE");
 
-            final String certLicense = (String) certLicenseObj.get("certLicense");
+            final String certLicense = certLicenseObj != null ? (String) certLicenseObj.get("certLicense") : null;
 
             final Map<String, Object> param = new HashMap<>();
             param.put("interestRate", interestRate);
