@@ -36,6 +36,92 @@ public class ScfAcceptBillController {
         }, "汇票信息查询失败", logger);
     }
     
+    @RequestMapping(value = "/findAcceptBillByCustNo", method = RequestMethod.POST)
+    public @ResponseBody String queryAcceptBill(HttpServletRequest request, String custNo) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAcceptBillListByCustNo(custNo);
+            }
+        }, "汇票信息查询失败", logger);
+    }
+
+    @RequestMapping(value = "/findAcceptBillList", method = RequestMethod.POST)
+    public @ResponseBody String findAcceptBillList(HttpServletRequest request, String isOnlyNormal) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票信息查询,入参：" + anMap + " isOnlyNormal=" + isOnlyNormal);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAcceptBillList(anMap, isOnlyNormal);
+            }
+        }, "汇票信息查询失败", logger);
+    }
+
+    @RequestMapping(value = "/modifyAcceptBill", method = RequestMethod.POST)
+    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, Long id, String fileList, String otherFileList) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票信息修改,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webSaveModifyAcceptBill(anMap, id, fileList, otherFileList);
+            }
+        }, "汇票信息编辑失败", logger);
+    }
+    
+    @RequestMapping(value = "/addAcceptBill", method = RequestMethod.POST)
+    public @ResponseBody String addAcceptBill(HttpServletRequest request, String fileList, String otherFileList) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票信息登记,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webAddAcceptBill(anMap, fileList, otherFileList);
+            }
+        }, "汇票信息登记失败", logger);
+    }
+    
+    
+    @RequestMapping(value = "/saveAduitAcceptBill", method = RequestMethod.POST)
+    public @ResponseBody String saveAduitAcceptBill(Long id) {
+        logger.info("汇票信息审核,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webSaveAduitAcceptBill(id);
+            }
+        }, "汇票信息审核失败", logger);
+    }
+    
+    @RequestMapping(value = "/findAllFile", method = RequestMethod.POST)
+    public @ResponseBody String findAllFile(Long id) {
+        logger.info("汇票所有附件查询,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAllFile(id);
+            }
+        }, "汇票所有附件查询", logger);
+    }
+    
+    @RequestMapping(value = "/findAcceptBillDetailsById", method = RequestMethod.POST)
+    public @ResponseBody String findAcceptBillDetailsById(Long id) {
+        logger.info("汇票详情,入参：id=" + id);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webFindAcceptBillDetailsById(id);
+            }
+        }, "汇票详情", logger);
+    }
+    
+    @RequestMapping(value = "/queryFinancedByFactor", method = RequestMethod.POST)
+    public @ResponseBody String queryFinancedByFactor(HttpServletRequest request, Long factorNo) {
+        Map anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票所有附件查询,入参：factorNo" + factorNo + anMap);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfAcceptBillService.webQueryFinancedByFactor(anMap, factorNo);
+            }
+        }, "保理公司查询已融资汇票", logger);
+    }
+    
     /**
      * 查询登入页面的数据来源和核准页面的数据来源
      * @param request
@@ -98,27 +184,6 @@ public class ScfAcceptBillController {
         }, "汇票信息查询失败", logger);
     }
     
-    @RequestMapping(value = "/findAcceptBillByCustNo", method = RequestMethod.POST)
-    public @ResponseBody String queryAcceptBill(HttpServletRequest request, String custNo) {
-        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("汇票信息查询,入参：" + anMap.toString());
-        return ControllerExceptionHandler.exec(new ExceptionHandler() {
-            public String handle() {
-                return scfAcceptBillService.webFindAcceptBillListByCustNo(custNo);
-            }
-        }, "汇票信息查询失败", logger);
-    }
-
-    @RequestMapping(value = "/findAcceptBillList", method = RequestMethod.POST)
-    public @ResponseBody String findAcceptBillList(HttpServletRequest request, String isOnlyNormal) {
-        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("汇票信息查询,入参：" + anMap + " isOnlyNormal=" + isOnlyNormal);
-        return ControllerExceptionHandler.exec(new ExceptionHandler() {
-            public String handle() {
-                return scfAcceptBillService.webFindAcceptBillList(anMap, isOnlyNormal);
-            }
-        }, "汇票信息查询失败", logger);
-    }
 
     /**
      * 票据修改
@@ -127,8 +192,8 @@ public class ScfAcceptBillController {
      * @param confirmFlag
      * @return
      */
-    @RequestMapping(value = "/modifyAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, String fileList, boolean confirmFlag) {
+    @RequestMapping(value = "/modifyAcceptBillDO", method = RequestMethod.POST)
+    public @ResponseBody String modifyAcceptBillDO(HttpServletRequest request, String fileList, boolean confirmFlag) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -145,8 +210,8 @@ public class ScfAcceptBillController {
      * @param confirmFlag
      * @return
      */
-    @RequestMapping(value = "/addAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String addAcceptBill(HttpServletRequest request, String fileList,boolean confirmFlag) {
+    @RequestMapping(value = "/addAcceptBillDO", method = RequestMethod.POST)
+    public @ResponseBody String addAcceptBillDO(HttpServletRequest request, String fileList,boolean confirmFlag) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息登记,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -154,16 +219,6 @@ public class ScfAcceptBillController {
                 return scfAcceptBillService.webAddAcceptBillDO(anMap, fileList, confirmFlag);
             }
         }, "汇票信息登记失败", logger);
-    }
-    
-    @RequestMapping(value = "/saveAduitAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String saveAduitAcceptBill(Long id) {
-        logger.info("汇票信息审核,入参：id=" + id);
-        return ControllerExceptionHandler.exec(new ExceptionHandler() {
-            public String handle() {
-                return scfAcceptBillService.webSaveAduitAcceptBill(id);
-            }
-        }, "汇票信息审核失败", logger);
     }
     
     /**
@@ -224,34 +279,15 @@ public class ScfAcceptBillController {
         }, "汇票审核成功！", logger);
     }
     
-    @RequestMapping(value = "/findAllFile", method = RequestMethod.POST)
-    public @ResponseBody String findAllFile(Long id) {
-        logger.info("汇票所有附件查询,入参：id=" + id);
+    @RequestMapping(value = "/modifyAcceptBillFile", method = RequestMethod.POST)
+    public @ResponseBody String modifyAcceptBillFile(String fileList,String refNo,String version) {
+        
+        logger.info("汇票信息新增附件参数 fileList=" + fileList+"  refNo="+refNo+"  version="+version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfAcceptBillService.webFindAllFile(id);
+                return scfAcceptBillService.webSaveModifyAcceptBillFile(fileList, refNo, version);
             }
-        }, "汇票所有附件查询", logger);
+        }, "汇票信息新增附件", logger);
     }
     
-    @RequestMapping(value = "/findAcceptBillDetailsById", method = RequestMethod.POST)
-    public @ResponseBody String findAcceptBillDetailsById(Long id) {
-        logger.info("汇票详情,入参：id=" + id);
-        return ControllerExceptionHandler.exec(new ExceptionHandler() {
-            public String handle() {
-                return scfAcceptBillService.webFindAcceptBillDetailsById(id);
-            }
-        }, "汇票详情", logger);
-    }
-    
-    @RequestMapping(value = "/queryFinancedByFactor", method = RequestMethod.POST)
-    public @ResponseBody String queryFinancedByFactor(HttpServletRequest request, Long factorNo) {
-        Map anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("汇票所有附件查询,入参：factorNo" + factorNo + anMap);
-        return ControllerExceptionHandler.exec(new ExceptionHandler() {
-            public String handle() {
-                return scfAcceptBillService.webQueryFinancedByFactor(anMap, factorNo);
-            }
-        }, "保理公司查询已融资汇票", logger);
-    }
 }

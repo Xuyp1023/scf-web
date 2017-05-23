@@ -26,12 +26,12 @@ public class ScfOrderController {
     private IScfOrderService scfOrderService;
     
     @RequestMapping(value = "/modifyOrder", method = RequestMethod.POST)
-    public @ResponseBody String modifyOrder(HttpServletRequest request, String fileList,boolean confirmFlag) {
+    public @ResponseBody String modifyOrder(HttpServletRequest request, Long id, String fileList, String otherFileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webSaveModifyOrderDO(anMap,fileList, confirmFlag);
+                return scfOrderService.webSaveModifyOrder(anMap, id, fileList, otherFileList);
             }
         }, "订单信息编辑失败", logger);
     }
@@ -87,25 +87,14 @@ public class ScfOrderController {
      * 新增订单
      */
     @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
-    public @ResponseBody String addOrder(HttpServletRequest request, String fileList, boolean confirmFlag) {
+    public @ResponseBody String addOrder(HttpServletRequest request, String fileList, String otherFileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webAddOrderDO(anMap, fileList,confirmFlag);
+                return scfOrderService.webAddOrder(anMap, fileList, otherFileList);
             }
         }, "订单信息新增失败", logger);
-    }
-    
-    @RequestMapping(value = "/saveResolveFile", method = RequestMethod.POST)
-    public @ResponseBody String saveResolveFile(HttpServletRequest request) {
-        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("订单解析,入参：" + anMap.toString());
-        return ControllerExceptionHandler.exec(new ExceptionHandler() {
-            public String handle() {
-                return scfOrderService.webSaveResolveFile(anMap);
-            }
-        }, "订单解析失败", logger);
     }
     
     /**
@@ -292,4 +281,44 @@ public class ScfOrderController {
         }, "订单信息查询失败", logger);
     }
     
+    @RequestMapping(value = "/modifyOrderDO", method = RequestMethod.POST)
+    public @ResponseBody String modifyOrderDO(HttpServletRequest request, String fileList,boolean confirmFlag) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单信息修改,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveModifyOrderDO(anMap,fileList, confirmFlag);
+            }
+        }, "订单信息编辑失败", logger);
+    }
+    
+    /**
+     * 新增订单
+     */
+    @RequestMapping(value = "/addOrderDO", method = RequestMethod.POST)
+    public @ResponseBody String addOrderDO(HttpServletRequest request, String fileList, boolean confirmFlag) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单信息新增,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webAddOrderDO(anMap, fileList,confirmFlag);
+            }
+        }, "订单信息新增失败", logger);
+    }
+    
+    /**
+     * 订单文件解析
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/saveResolveFile", method = RequestMethod.POST)
+    public @ResponseBody String saveResolveFile(HttpServletRequest request) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单解析,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveResolveFile(anMap);
+            }
+        }, "订单解析失败", logger);
+    }
 }
