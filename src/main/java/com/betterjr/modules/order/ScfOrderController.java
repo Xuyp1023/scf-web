@@ -97,6 +97,17 @@ public class ScfOrderController {
         }, "订单信息新增失败", logger);
     }
     
+    @RequestMapping(value = "/saveResolveFile", method = RequestMethod.POST)
+    public @ResponseBody String saveResolveFile(HttpServletRequest request) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单解析,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveResolveFile(anMap);
+            }
+        }, "订单解析失败", logger);
+    }
+    
     /**
      * 检查订单下发票所关联订单是否勾选完成
      */
@@ -237,6 +248,16 @@ public class ScfOrderController {
                 return scfOrderService.webQueryIneffectiveOrder(anMap, isOnlyNormal, flag, pageNum, pageSize,isAudit);
             }
         }, "订单信息查询失败", logger);
+    }
+    
+    @RequestMapping(value = "/queryExportOrderRecord", method = RequestMethod.POST)
+    public @ResponseBody String queryExportOrderRecord(Long resolveFileid) {
+        logger.info("订单导入数据查询,入参：" + resolveFileid);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webQueryExportOrderRecordList(resolveFileid);
+            }
+        }, "订单导入数据查询失败", logger);
     }
     
     /**
