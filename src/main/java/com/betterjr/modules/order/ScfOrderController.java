@@ -240,11 +240,11 @@ public class ScfOrderController {
     }
     
     @RequestMapping(value = "/queryExportOrderRecord", method = RequestMethod.POST)
-    public @ResponseBody String queryExportOrderRecord(Long resolveFileid) {
+    public @ResponseBody String queryExportOrderRecord(Long resolveFileid, String flag, int pageNum, int pageSize) {
         logger.info("订单导入数据查询,入参：" + resolveFileid);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webQueryExportOrderRecordList(resolveFileid);
+                return scfOrderService.webQueryExportOrderRecordList(resolveFileid,flag,pageNum,pageSize);
             }
         }, "订单导入数据查询失败", logger);
     }
