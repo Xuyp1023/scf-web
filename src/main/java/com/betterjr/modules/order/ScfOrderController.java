@@ -207,6 +207,12 @@ public class ScfOrderController {
         }, "订单信息废止失败", logger);
     }
     
+    /**
+     * 订单审核
+     * @param refNo
+     * @param version
+     * @return
+     */
     @RequestMapping(value = "/saveAuditOrder", method = RequestMethod.POST)
     public @ResponseBody String saveAuditOrder(String refNo,String version) {
         logger.info("订单审核,入参：refNo=" + refNo +" : version="+version);
@@ -214,7 +220,23 @@ public class ScfOrderController {
             public String handle() {
                 return scfOrderService.webSaveAuditOrderByRefNoVersion(refNo, version);
             }
-        }, "订单审核成功！", logger);
+        }, "订单审核失败！", logger);
+    }
+    
+    /**
+     * 订单批量审核
+     * @param refNo
+     * @param version
+     * @return
+     */
+    @RequestMapping(value = "/saveAuditOrders", method = RequestMethod.POST)
+    public @ResponseBody String saveAuditOrders(String ids) {
+        logger.info("订单批量审核,入参：ids=" + ids);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveAuditOrderByOrderIds(ids);
+            }
+        }, "订单审核失败！", logger);
     }
     
     /**
