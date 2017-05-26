@@ -256,7 +256,7 @@ public class ScfOrderController {
         logger.info("订单未生效信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webQueryIneffectiveOrder(anMap, isOnlyNormal, flag, pageNum, pageSize,isAudit);
+                return scfOrderService.webQueryIneffectiveOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize,isAudit);
             }
         }, "订单信息查询失败", logger);
     }
@@ -287,7 +287,7 @@ public class ScfOrderController {
         logger.info("订单已经生效信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webQueryEffectiveOrder(anMap, isOnlyNormal, flag, pageNum, pageSize,isCust);
+                return scfOrderService.webQueryEffectiveOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize,isCust);
             }
         }, "订单信息查询失败", logger);
     }
