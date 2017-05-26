@@ -47,7 +47,7 @@ public class ScfOrderController {
         logger.info("订单信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webQueryOrder(anMap, isOnlyNormal, flag, pageNum, pageSize);
+                return scfOrderService.webQueryOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize);
             }
         }, "订单信息查询失败", logger);
     }
@@ -171,5 +171,176 @@ public class ScfOrderController {
         }, "查询核心企业编号失败", logger);
     }
     
+    /**
+     * 查询废止状态的所有订单
+     * @param request
+     * @param isOnlyNormal
+     * @param flag
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/queryCanAnnulOrder", method = RequestMethod.POST)
+    public @ResponseBody String queryCanAnnulOrder(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单已经审核然后想废止的信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webQueryCanAnnulOrder(anMap, isOnlyNormal, flag, pageNum, pageSize);
+            }
+        }, "订单信息查询失败", logger);
+    }
     
+    /**
+     * 废止当前的单据
+     * @param refNo
+     * @param version
+     * @return
+     */
+    @RequestMapping(value = "/saveAnnulOrder", method = RequestMethod.POST)
+    public @ResponseBody String saveAnnulOrder(String refNo,String version) {
+        logger.info("订单信息作废,入参：refNo=" + refNo+"  version:"+version);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveAnnulOrder(refNo,version);
+            }
+        }, "订单信息废止失败", logger);
+    }
+    
+    /**
+     * 订单审核
+     * @param refNo
+     * @param version
+     * @return
+     */
+    @RequestMapping(value = "/saveAuditOrder", method = RequestMethod.POST)
+    public @ResponseBody String saveAuditOrder(String refNo,String version) {
+        logger.info("订单审核,入参：refNo=" + refNo +" : version="+version);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveAuditOrderByRefNoVersion(refNo, version);
+            }
+        }, "订单审核失败！", logger);
+    }
+    
+    /**
+     * 订单批量审核
+     * @param refNo
+     * @param version
+     * @return
+     */
+    @RequestMapping(value = "/saveAuditOrders", method = RequestMethod.POST)
+    public @ResponseBody String saveAuditOrders(String ids) {
+        logger.info("订单批量审核,入参：ids=" + ids);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveAuditOrderByOrderIds(ids);
+            }
+        }, "订单审核失败！", logger);
+    }
+    
+    /**
+     * 查询未生效的订单，，登入界面和审核界面的数据来源
+     * @param request
+     * @param isOnlyNormal
+     * @param flag
+     * @param pageNum
+     * @param pageSize
+     * @param isAudit true 是审核界面的数据来源
+     *                false 是登入界面的数据来源
+     * @return
+     */
+    @RequestMapping(value = "/queryIneffectiveOrder", method = RequestMethod.POST)
+    public @ResponseBody String queryIneffectiveOrder(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize,boolean isAudit) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单未生效信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webQueryIneffectiveOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize,isAudit);
+            }
+        }, "订单信息查询失败", logger);
+    }
+    
+    @RequestMapping(value = "/queryExportOrderRecord", method = RequestMethod.POST)
+    public @ResponseBody String queryExportOrderRecord(Long resolveFileid, String flag, int pageNum, int pageSize) {
+        logger.info("订单导入数据查询,入参：" + resolveFileid);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webQueryExportOrderRecordList(resolveFileid,flag,pageNum,pageSize);
+            }
+        }, "订单导入数据查询失败", logger);
+    }
+    
+    /**
+     * 查找已经生效的订单  
+     * @param request
+     * @param isOnlyNormal
+     * @param flag
+     * @param pageNum
+     * @param pageSize
+     * @param isCust  true ：供应商的已经生效的订单   false  核心企业已经生效的底单
+     * @return
+     */
+    @RequestMapping(value = "/queryEffectiveOrder", method = RequestMethod.POST)
+    public @ResponseBody String queryEffectiveOrder(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize,boolean isCust) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单已经生效信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webQueryEffectiveOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize,isCust);
+            }
+        }, "订单信息查询失败", logger);
+    }
+    
+    @RequestMapping(value = "/findOrderDetail", method = RequestMethod.POST)
+    public @ResponseBody String findOrderDetail(String refNo,String version) {
+        
+        logger.info("订单详细信息查询,入参： refNo:" + refNo+"  version: " +version);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webfindOrderDetail(refNo,version);
+            }
+        }, "订单信息查询失败", logger);
+    }
+    
+    @RequestMapping(value = "/modifyOrderDO", method = RequestMethod.POST)
+    public @ResponseBody String modifyOrderDO(HttpServletRequest request, String fileList,boolean confirmFlag) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单信息修改,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveModifyOrderDO(anMap,fileList, confirmFlag);
+            }
+        }, "订单信息编辑失败", logger);
+    }
+    
+    /**
+     * 新增订单
+     */
+    @RequestMapping(value = "/addOrderDO", method = RequestMethod.POST)
+    public @ResponseBody String addOrderDO(HttpServletRequest request, String fileList, boolean confirmFlag) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单信息新增,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webAddOrderDO(anMap, fileList,confirmFlag);
+            }
+        }, "订单信息新增失败", logger);
+    }
+    
+    /**
+     * 订单文件解析
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/saveResolveFile", method = RequestMethod.POST)
+    public @ResponseBody String saveResolveFile(HttpServletRequest request) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("订单解析,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return scfOrderService.webSaveResolveFile(anMap);
+            }
+        }, "订单解析失败", logger);
+    }
 }

@@ -28,6 +28,7 @@
     com.betterjr.modules.commission;
     com.betterjr.modules.commissionfile;
     com.betterjr.modules.delivery;
+    com.betterjr.modules.asset;
 	com.betterjr.modules.sys.controller"
 		use-default-filters="false">
 		<context:include-filter type="annotation"
