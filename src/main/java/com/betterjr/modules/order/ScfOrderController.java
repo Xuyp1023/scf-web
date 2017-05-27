@@ -47,7 +47,7 @@ public class ScfOrderController {
         logger.info("订单信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfOrderService.webQueryOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize);
+                return scfOrderService.webQueryOrder(anMap, isOnlyNormal, flag, pageNum, pageSize);
             }
         }, "订单信息查询失败", logger);
     }
