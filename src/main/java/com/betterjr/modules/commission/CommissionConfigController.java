@@ -43,7 +43,7 @@ public class CommissionConfigController {
     @RequestMapping(value = "/queryConfig", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody String queryConfig(final HttpServletRequest request) {
         if (UserUtils.platformUser()) {
-            final String operOrg = UserUtils.getOperOrg();
+            final String operOrg = UserUtils.getOperatorInfo().getOperOrg();
             final BigDecimal interestRate = domainAttributeDubboClientService.findMoney(operOrg, "PLAT_COMMISSION_INTEREST_RATE");
             final BigDecimal taxRate = domainAttributeDubboClientService.findMoney(operOrg, "PLAT_COMMISSION_TAX_RATE");
             final String custName = domainAttributeDubboClientService.findString(operOrg, "PLAT_COMMISSION_MAKE_CUSTNAME");
@@ -90,7 +90,7 @@ public class CommissionConfigController {
         if (UserUtils.platformUser()) {
             final Map<String, Object> param = Servlets.getParametersStartingWith(request, "");
             logger.info("参数设置,入参：" + param.toString());
-            final String operOrg = UserUtils.getOperOrg();
+            final String operOrg  = UserUtils.getOperatorInfo().getOperOrg();
             return exec(() -> {
 
                 domainAttributeDubboClientService.saveMoney(operOrg, "PLAT_COMMISSION_INTEREST_RATE", interestRate);
