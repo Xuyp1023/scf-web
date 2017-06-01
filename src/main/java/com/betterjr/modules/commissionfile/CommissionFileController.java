@@ -91,6 +91,21 @@ public class CommissionFileController {
         }, "佣金文件删除失败", logger);
     }
     
+    /**
+     * 佣金文件作废
+     * @param fileId  文件id
+     * @return
+     */
+    @RequestMapping(value = "/saveCannulFile", method = RequestMethod.POST)
+    public @ResponseBody String saveCannulFile(Long fileId) {
+        logger.info("佣金文件作废,入参：" + fileId);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return fileService.webSaveCannulFile(fileId);
+            }
+        }, "佣金文件作废失败", logger);
+    }
+    
     
     /**
      * 佣金文件解析

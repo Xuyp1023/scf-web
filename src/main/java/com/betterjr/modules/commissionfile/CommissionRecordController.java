@@ -29,7 +29,7 @@ public class CommissionRecordController {
     
     
     /**
-     * 佣金文件查询
+     * 佣金记录查询
      * @param request
      * @param flag
      * @param pageNum
@@ -43,6 +43,25 @@ public class CommissionRecordController {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return recordService.webQueryRecordList(anMap, flag, pageNum, pageSize);
+            }
+        }, "佣金记录查询失败", logger);
+    }
+    
+    /**
+     * 佣金记录审核全部查询所有记录
+     * @param request
+     * @param flag
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "/queryCanAuditRecordList", method = RequestMethod.POST)
+    public @ResponseBody String queryCanAuditRecordList(HttpServletRequest request,  String flag, int pageNum, int pageSize) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("佣金记录信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return recordService.webQueryCanAuditRecordList(anMap, flag, pageNum, pageSize);
             }
         }, "佣金记录查询失败", logger);
     }
