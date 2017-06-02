@@ -126,7 +126,7 @@ public class ProductConfigController {
     public @ResponseBody String delProductConfig(HttpServletRequest request,  Long coreCustNo,  Long factorNo) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("删除产品,入参：" + anMap.toString());
-        return exec(() -> productConfigService.webQueryProductKeyAndValue(coreCustNo, factorNo), "删除产品失败", logger);
+        return exec(() -> productConfigService.webQueryProductKeyAndValue(coreCustNo, factorNo), "查询产品失败", logger);
     }
 
 

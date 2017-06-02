@@ -37,7 +37,7 @@ public class RequestTempController {
 		logger.info("修改融资申请，入参:" + map.toString());
 		return exec(() -> scfRequestTempService.webSaveModifyRequestTemp(map, requestNo), "修改融资申请失败", logger);
 	}
-
+	
 	@RequestMapping(value = "/queryRequestTempList", method = RequestMethod.POST)
 	public @ResponseBody String queryRequestTempList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
 		Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
