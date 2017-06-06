@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 
 @Controller
 @RequestMapping(value = "/Scf/Commissionfiledown")
@@ -24,6 +24,9 @@ public class CommissionFileDownController {
     
     @Reference(interfaceClass = ICommissionFileDownService.class)
     private ICommissionFileDownService fileService;
+    
+    /*@Reference(interfaceClass = IContractCorpAccountService.class)
+    private IContractCorpAccountService custFileDubboService;*/
     
     /**
      * 查询佣金文件下载
@@ -38,6 +41,9 @@ public class CommissionFileDownController {
      */
     @RequestMapping(value = "/queryFileList", method = RequestMethod.POST)
     public @ResponseBody String queryFileList(HttpServletRequest request,  String flag, int pageNum, int pageSize) {
+        
+       /* @SuppressWarnings("unused")
+        String webFindCorpInfo = custFileDubboService.webFindCorpInfo(123l);*/
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
