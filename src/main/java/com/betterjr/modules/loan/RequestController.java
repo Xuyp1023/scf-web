@@ -1,5 +1,7 @@
 package com.betterjr.modules.loan;
 
+import static com.betterjr.common.web.ControllerExceptionHandler.exec;
+
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -402,6 +404,13 @@ public class RequestController {
             logger.error("放款失败", e);
             return AjaxObject.newError("放款成功:" + e.getMessage()).toJson();
         }
+    }
+    
+    @RequestMapping(value = "/addScheme", method = RequestMethod.POST)
+    public @ResponseBody String addScheme(HttpServletRequest request) {
+	    Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+	    logger.info("保存融资批复,入参：" + anMap.toString());
+	    return exec(() -> scfRequestService.webAddScheme(anMap), "修改融资产品信息失败", logger);
     }
     
 }
