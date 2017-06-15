@@ -38,11 +38,11 @@ public class AssetController {
      */
     @RequestMapping(value = "/queryCanUseBaseData", method = RequestMethod.POST)
     public @ResponseBody String queryCanUseBaseData( Long custNo,String dataType,String flag, int pageNum, int pageSize) {
-        logger.info("订单信息修改,入参：  custNo=" + custNo+"  ;dataType="+dataType);
+        logger.info("资产查询可用的基础资产信息,入参：  custNo=" + custNo+"  ;dataType="+dataType);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return assetService.webQueryCanUseBaseData(custNo, dataType, pageNum, pageSize,flag);
             }
-        }, "订单信息编辑失败", logger);
+        }, "资产查询可用的基础资产信息失败", logger);
     } 
 }
