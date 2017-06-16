@@ -45,4 +45,15 @@ public class AssetController {
             }
         }, "资产查询可用的基础资产信息失败", logger);
     } 
+    
+    
+    @RequestMapping(value = "/findAssetById", method = RequestMethod.POST)
+    public @ResponseBody String findAssetById( Long assetId) {
+        logger.info("资产查询,入参：  assetId=" +assetId);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return assetService.webFindAssetById(assetId);
+            }
+        }, "资产查询信息失败", logger);
+    } 
 }
