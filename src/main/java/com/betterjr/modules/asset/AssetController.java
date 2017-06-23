@@ -31,18 +31,30 @@ public class AssetController {
      * 查询可以用于融资和询价的基础资产信息
      * @param custNo
      * @param dataType 关联的基础数据的类型1订单2票据3应收账款4发票5贸易合同6运输单单据类型
+     * @param ids  存放不需要查询的id集合
      * @param flag
      * @param pageNum
      * @param pageSize
      * @return
      */
     @RequestMapping(value = "/queryCanUseBaseData", method = RequestMethod.POST)
-    public @ResponseBody String queryCanUseBaseData( Long custNo,String dataType,String flag, int pageNum, int pageSize) {
-        logger.info("订单信息修改,入参：  custNo=" + custNo+"  ;dataType="+dataType);
+    public @ResponseBody String queryCanUseBaseData( Long custNo,Long coreCustNo,String dataType,String ids,String flag, int pageNum, int pageSize) {
+        logger.info("资产查询可用的基础资产信息,入参：  custNo=" + custNo+"  ;dataType="+dataType);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return assetService.webQueryCanUseBaseData(custNo, dataType, pageNum, pageSize,flag);
+                return assetService.webQueryCanUseBaseData(custNo,coreCustNo, dataType, ids, pageNum, pageSize,flag);
             }
-        }, "订单信息编辑失败", logger);
+        }, "资产查询可用的基础资产信息失败", logger);
+    } 
+    
+    
+    @RequestMapping(value = "/findAssetById", method = RequestMethod.POST)
+    public @ResponseBody String findAssetById( Long assetId) {
+        logger.info("资产查询,入参：  assetId=" +assetId);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return assetService.webFindAssetById(assetId);
+            }
+        }, "资产查询信息失败", logger);
     } 
 }
