@@ -38,6 +38,13 @@ public class RequestTempController {
 		return exec(() -> scfRequestTempService.webSaveModifyRequestTemp(map, requestNo), "修改融资申请失败", logger);
 	}
 	
+	@RequestMapping(value = "/saveAnnulRequestTemp", method = RequestMethod.POST)
+	public @ResponseBody String saveModifyRequestTemp(String requestNo) {
+	    //Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+	    logger.info("作废融资申请，入参:requestNo =" + requestNo);
+	    return exec(() -> scfRequestTempService.webSaveAnnulRequestTemp(requestNo), "作废融资申请失败", logger);
+	}
+	
 	@RequestMapping(value = "/queryRequestTempList", method = RequestMethod.POST)
 	public @ResponseBody String queryRequestTempList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
 		Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
