@@ -57,4 +57,15 @@ public class AssetController {
             }
         }, "资产查询信息失败", logger);
     } 
+    
+    
+    @RequestMapping(value = "/saveRejectOrBreakAsset", method = RequestMethod.POST)
+    public @ResponseBody String saveRejectOrBreakAsset( Long assetId) {
+        logger.info("资产驳回,入参：  assetId=" +assetId);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return assetService.webSaveRejectOrBreakAsset(assetId);
+            }
+        }, "资产驳回失败", logger);
+    } 
 }
