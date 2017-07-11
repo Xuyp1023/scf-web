@@ -68,4 +68,15 @@ public class AssetController {
             }
         }, "资产驳回失败", logger);
     } 
+    
+    
+    @RequestMapping(value = "/SaveAssignmentAssetToFactory", method = RequestMethod.POST)
+    public @ResponseBody String SaveAssignmentAssetToFactory( Long assetId) {
+        logger.info("资产转让,入参：  assetId=" +assetId);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return assetService.webSaveAssignmentAssetToFactory(assetId);
+            }
+        }, "资产转让失败", logger);
+    } 
 }
