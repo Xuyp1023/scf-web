@@ -47,6 +47,7 @@
 		com.betterjr.modules.delivery;
 		com.betterjr.modules.asset;
         com.betterjr.modules.businType;
+        com.betterjr.modules.offer;
         com.betterjr.modules.ledger">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />

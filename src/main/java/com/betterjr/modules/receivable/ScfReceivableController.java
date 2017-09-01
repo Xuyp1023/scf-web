@@ -148,7 +148,7 @@ public class ScfReceivableController {
      * @return
      */
     @RequestMapping(value = "/saveAuditReceivable", method = RequestMethod.POST)
-    public @ResponseBody String saveAuditOrder(String refNo,String version) {
+    public @ResponseBody String saveAuditReceivableDO(String refNo,String version) {
         logger.info("应收账款审核,入参：refNo=" + refNo +" : version="+version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {

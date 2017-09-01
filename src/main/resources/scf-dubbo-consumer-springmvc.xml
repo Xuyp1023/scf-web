@@ -31,6 +31,7 @@
     com.betterjr.modules.asset,
     com.betterjr.modules.businType,
 	com.betterjr.modules.test,
+    com.betterjr.modules.offer,
     com.betterjr.modules.ledger" />
 
 </beans>

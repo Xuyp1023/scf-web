@@ -47,7 +47,11 @@ public class AssetController {
         }, "资产查询可用的基础资产信息失败", logger);
     } 
     
-    
+    /**
+     * 查询资产详细信息
+     * @param assetId
+     * @return
+     */
     @RequestMapping(value = "/findAssetById", method = RequestMethod.POST)
     public @ResponseBody String findAssetById( Long assetId) {
         logger.info("资产查询,入参：  assetId=" +assetId);
@@ -58,7 +62,28 @@ public class AssetController {
         }, "资产查询信息失败", logger);
     } 
     
+    /**
+     * 通过应收应付账款新增资产
+     * @param assetId
+     * @return
+     */
+    @RequestMapping(value = "/saveAddAssetByReceivable", method = RequestMethod.POST)
+    public @ResponseBody String saveAddAssetByReceivable( HttpServletRequest request) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("汇票信息查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return assetService.webSaveAddAssetByReceivable(anMap);
+            }
+        }, "资产查询信息失败", logger);
+    } 
     
+    
+    /**
+     * 资产驳回或作废
+     * @param assetId
+     * @return
+     */
     @RequestMapping(value = "/saveRejectOrBreakAsset", method = RequestMethod.POST)
     public @ResponseBody String saveRejectOrBreakAsset( Long assetId) {
         logger.info("资产驳回,入参：  assetId=" +assetId);
@@ -70,6 +95,11 @@ public class AssetController {
     } 
     
     
+    /**
+     * 资产转让
+     * @param assetId
+     * @return
+     */
     @RequestMapping(value = "/SaveAssignmentAssetToFactory", method = RequestMethod.POST)
     public @ResponseBody String SaveAssignmentAssetToFactory( Long assetId) {
         logger.info("资产转让,入参：  assetId=" +assetId);
