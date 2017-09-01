@@ -30,6 +30,9 @@ public class CommissionFileController {
      * 佣金文件上传    
      * @param request
      * @return
+     * FileId()
+     * CustNo()
+     * Signature()
      */
     @RequestMapping(value = "/saveAddFile", method = RequestMethod.POST)
     public @ResponseBody String saveAddFile(HttpServletRequest request) {
@@ -50,6 +53,9 @@ public class CommissionFileController {
      * @param pageNum 当前页数
      * @param pageSize 每页显示的数量
      * @return
+     * custNo
+     * businStatus
+     * importDate
      */
     @RequestMapping(value = "/queryFileList", method = RequestMethod.POST)
     public @ResponseBody String queryFileList(HttpServletRequest request,  String flag, int pageNum, int pageSize) {
@@ -82,11 +88,12 @@ public class CommissionFileController {
      * @return
      */
     @RequestMapping(value = "/saveDeleteFile", method = RequestMethod.POST)
-    public @ResponseBody String saveDeleteFile(String refNo) {
-        logger.info("佣金文件删除,入参：" + refNo);
+    public @ResponseBody String saveDeleteFile(HttpServletRequest request,String refNo) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("佣金文件解析,入参：" + anMap);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return fileService.webSaveDeleteFile(refNo);
+                return fileService.webSaveDeleteFile(refNo,anMap);
             }
         }, "佣金文件删除失败", logger);
     }
@@ -113,11 +120,12 @@ public class CommissionFileController {
      * @return
      */
     @RequestMapping(value = "/saveResolveFile", method = RequestMethod.POST)
-    public @ResponseBody String saveResolveFile(String refNo) {
-        logger.info("佣金文件解析,入参：" + refNo);
+    public @ResponseBody String saveResolveFile(HttpServletRequest request,String refNo) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("佣金文件解析,入参：" + anMap);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return fileService.webSaveResolveFile(refNo);
+                return fileService.webSaveResolveFile(refNo,anMap);
             }
         }, "佣金文件解析失败", logger);
     }
