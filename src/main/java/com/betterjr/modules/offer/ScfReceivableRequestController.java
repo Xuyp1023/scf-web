@@ -330,4 +330,20 @@ public class ScfReceivableRequestController {
         
     }
     
+    
+    /**
+     * 校验是否可以进行融资申请
+     * @param requestNo
+     * @return
+     */
+    @RequestMapping(value = "/checkVerifyReceivable", method = RequestMethod.POST)
+    public @ResponseBody String checkVerifyReceivable(Long receivableId) {
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return requestService.webCheckVerifyReceivable(receivableId);
+            }
+        }, "确认失败", logger);
+        
+    }
+    
 }

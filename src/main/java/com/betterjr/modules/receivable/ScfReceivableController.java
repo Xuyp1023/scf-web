@@ -148,11 +148,12 @@ public class ScfReceivableController {
      * @return
      */
     @RequestMapping(value = "/saveAuditReceivable", method = RequestMethod.POST)
-    public @ResponseBody String saveAuditReceivableDO(String refNo,String version) {
+    public @ResponseBody String saveAuditReceivableDO(String refNo,String version,HttpServletRequest request) {
         logger.info("应收账款审核,入参：refNo=" + refNo +" : version="+version);
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return scfReceivableService.webSaveAuditReceivableByRefNoVersion(refNo, version);
+                return scfReceivableService.webSaveAuditReceivableByRefNoVersion(refNo, version,anMap);
             }
         }, "应收账款审核成功！", logger);
     }
