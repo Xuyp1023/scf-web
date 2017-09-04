@@ -110,4 +110,17 @@ public class ScfSupplierOfferController {
             }
         }, "供应商利率查询失败", logger);
     }
+    
+    
+    @RequestMapping(value = "/queryAllFactoryByCustNo", method = RequestMethod.POST)
+    public @ResponseBody String queryAllFactoryByCustNo(Long custNo){
+        
+        logger.info("供应商利率查询,入参：  custNo=" + custNo);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return offerService.webQueryAllFactoryByCustNo(custNo);
+            }
+        }, "查询失败", logger);
+    }
+    
 }
