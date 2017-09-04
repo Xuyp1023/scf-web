@@ -70,5 +70,18 @@ public class ScfreceivableRequestAgreementController {
         }, "查询申请信息失败", logger);
         
     }
+    
+    @RequestMapping(value = "/queryDictFactory", method = RequestMethod.POST)
+    public @ResponseBody String queryDictFactory(HttpServletRequest request) {
+        
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return agreementService.webQueryDictFactory();
+            }
+        }, "查询失败", logger);
+        
+    }
 
 }
