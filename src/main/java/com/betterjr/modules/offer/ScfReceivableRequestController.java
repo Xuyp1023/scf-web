@@ -552,4 +552,69 @@ public class ScfReceivableRequestController {
         
     }
     
+    
+    /**
+     * 新增融资申请
+     * @param request
+     * @return
+     * 
+     *  receivableId
+     */
+    @RequestMapping(value = "/saveAddRequestTotal", method = RequestMethod.POST)
+    public @ResponseBody String saveAddRequestTotal(HttpServletRequest request) {
+        
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("应付账款申请新增,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return requestService.webSaveAddRequestTotal(anMap);
+            }
+        }, "应付账款提交申请失败", logger);
+        
+    }
+    
+    /**
+     * 供应商确认申请提交
+     * @param anMap
+     * @param anRequestNo
+     * @param anRequestPayDate
+     * @param anDescription
+     * @return
+     * requestProductCode  保理产品productCode
+     * custBankAccount
+     * custBankAccountName
+     * custBankName
+     */
+    @RequestMapping(value = "/saveSubmitRequestTotal", method = RequestMethod.POST)
+    public @ResponseBody String saveSubmitRequestTotal(HttpServletRequest request,String requestNo,String requestPayDate,String description) {
+        
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("应付账款申请新增,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return requestService.webSaveSubmitRequestTotal(anMap,requestNo,requestPayDate,description);
+            }
+        }, "申请提交失败", logger);
+        
+    }
+    
+    
+    /**
+     * 当前申请可用的保理产品列表
+     * @param requestNo
+     * @return
+     */
+    @RequestMapping(value = "/queryProductByRequestNo", method = RequestMethod.POST)
+    public @ResponseBody String queryProductByRequestNo(String requestNo) {
+        
+        
+        logger.info("查询,入参：requestNo=" + requestNo);
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return requestService.webQueryProductByRequestNo(requestNo);
+            }
+        }, "查询失败", logger);
+        
+    }
+    
 }
