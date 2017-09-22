@@ -62,4 +62,22 @@ public class ScfCoreProductCustController {
         }, "产品修改失败", logger);
     }
     
+    /**
+     * 查询核心企业分配给供应商的保理产品
+     * @param request
+     * @param custNo
+     * @param coreCustNo
+     * @return
+     */
+    @RequestMapping(value = "/queryCanUseProduct", method = RequestMethod.POST)
+    public @ResponseBody String queryCanUseProduct(HttpServletRequest request,Long custNo,Long coreCustNo) {
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("产品查询,入参：" + anMap.toString());
+        return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            public String handle() {
+                return productService.webQueryCanUseProduct(custNo, coreCustNo);
+            }
+        }, "产品查询失败", logger);
+    }
+    
 }
