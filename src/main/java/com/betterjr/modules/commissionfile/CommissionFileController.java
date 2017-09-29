@@ -19,20 +19,17 @@ import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
 @Controller
 @RequestMapping(value = "/Scf/Commissionfile")
 public class CommissionFileController {
-    
-    
+
     private static final Logger logger = LoggerFactory.getLogger(CommissionFileController.class);
 
     @Reference(interfaceClass = ICommissionFileService.class)
     private ICommissionFileService fileService;
 
     /**
-     * 佣金文件上传    
+     * 佣金文件上传
+     * 
      * @param request
-     * @return
-     * FileId()
-     * CustNo()
-     * Signature()
+     * @return FileId() CustNo() Signature()
      */
     @RequestMapping(value = "/saveAddFile", method = RequestMethod.POST)
     public @ResponseBody String saveAddFile(HttpServletRequest request) {
@@ -44,21 +41,21 @@ public class CommissionFileController {
             }
         }, "佣金文件登记失败", logger);
     }
-    
-    
+
     /**
      * 查询佣金文件列表
+     * 
      * @param request
-     * @param flag 1：查询文件总的条数
-     * @param pageNum 当前页数
-     * @param pageSize 每页显示的数量
-     * @return
-     * custNo
-     * businStatus
-     * importDate
+     * @param flag
+     *            1：查询文件总的条数
+     * @param pageNum
+     *            当前页数
+     * @param pageSize
+     *            每页显示的数量
+     * @return custNo businStatus importDate
      */
     @RequestMapping(value = "/queryFileList", method = RequestMethod.POST)
-    public @ResponseBody String queryFileList(HttpServletRequest request,  String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryFileList(HttpServletRequest request, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -67,40 +64,45 @@ public class CommissionFileController {
             }
         }, "佣金文件查询失败", logger);
     }
-    
+
     /**
      * 查找佣金文件导出模版
+     * 
      * @return
      */
     @RequestMapping(value = "/findTemplateFile", method = RequestMethod.POST)
     public @ResponseBody String findTemplateFile() {
-        
+
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return fileService.webFindTemplateFile();
             }
         }, "佣金导入模版文件查询失败", logger);
     }
-    
+
     /**
      * 删除文件
-     * @param refNo  凭证编号
+     * 
+     * @param refNo
+     *            凭证编号
      * @return
      */
     @RequestMapping(value = "/saveDeleteFile", method = RequestMethod.POST)
-    public @ResponseBody String saveDeleteFile(HttpServletRequest request,String refNo) {
+    public @ResponseBody String saveDeleteFile(HttpServletRequest request, String refNo) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件解析,入参：" + anMap);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return fileService.webSaveDeleteFile(refNo,anMap);
+                return fileService.webSaveDeleteFile(refNo, anMap);
             }
         }, "佣金文件删除失败", logger);
     }
-    
+
     /**
      * 佣金文件作废
-     * @param fileId  文件id
+     * 
+     * @param fileId
+     *            文件id
      * @return
      */
     @RequestMapping(value = "/saveCannulFile", method = RequestMethod.POST)
@@ -112,20 +114,20 @@ public class CommissionFileController {
             }
         }, "佣金文件作废失败", logger);
     }
-    
-    
+
     /**
      * 佣金文件解析
+     * 
      * @param refNo
      * @return
      */
     @RequestMapping(value = "/saveResolveFile", method = RequestMethod.POST)
-    public @ResponseBody String saveResolveFile(HttpServletRequest request,String refNo) {
+    public @ResponseBody String saveResolveFile(HttpServletRequest request, String refNo) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件解析,入参：" + anMap);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return fileService.webSaveResolveFile(refNo,anMap);
+                return fileService.webSaveResolveFile(refNo, anMap);
             }
         }, "佣金文件解析失败", logger);
     }
