@@ -20,16 +20,15 @@ import com.betterjr.modules.supplieroffer.IScfReceivableRequestAgreementService;
 @Controller
 @RequestMapping("/Scf/ReceivableRequestAgreement")
 public class ScfreceivableRequestAgreementController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(ScfSupplierOfferController.class);
 
-    
-    @Reference(interfaceClass=IScfReceivableRequestAgreementService.class)
+    @Reference(interfaceClass = IScfReceivableRequestAgreementService.class)
     private IScfReceivableRequestAgreementService agreementService;
-    
+
     /**
-     * 供应商查询合同管理列表
-     * custNo","coreCustNo","agreementType
+     * 供应商查询合同管理列表 custNo","coreCustNo","agreementType
+     * 
      * @param request
      * @param flag
      * @param pageNum
@@ -38,7 +37,7 @@ public class ScfreceivableRequestAgreementController {
      */
     @RequestMapping(value = "/queryAgreementWithSupplier", method = RequestMethod.POST)
     public @ResponseBody String queryAgreementWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -46,12 +45,12 @@ public class ScfreceivableRequestAgreementController {
                 return agreementService.webQueryAgreementWithSupplier(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
-     * 核心企业查询合同管理
-     * custNo","coreCustNo
+     * 核心企业查询合同管理 custNo","coreCustNo
+     * 
      * @param request
      * @param flag
      * @param pageNum
@@ -60,7 +59,7 @@ public class ScfreceivableRequestAgreementController {
      */
     @RequestMapping(value = "/queryAgreementWithCore", method = RequestMethod.POST)
     public @ResponseBody String queryAgreementWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -68,12 +67,12 @@ public class ScfreceivableRequestAgreementController {
                 return agreementService.webQueryAgreementWithCore(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     @RequestMapping(value = "/queryDictFactory", method = RequestMethod.POST)
     public @ResponseBody String queryDictFactory(HttpServletRequest request) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -81,7 +80,7 @@ public class ScfreceivableRequestAgreementController {
                 return agreementService.webQueryDictFactory();
             }
         }, "查询失败", logger);
-        
+
     }
 
 }

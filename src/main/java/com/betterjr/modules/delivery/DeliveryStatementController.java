@@ -26,21 +26,19 @@ public class DeliveryStatementController {
 
     @Reference(interfaceClass = IDeliveryStatementService.class)
     private IDeliveryStatementService deliveryStatementService;
-    
+
     /**
      * 青海移动对账单详情列表查询
+     * 
      * @param request
      * @param flag
      * @param pageNum
      * @param pageSize
-     * @return
-     * billMonth  对账月份
-     * 对账企业   ownCustNo
-     * expressStatus   状态
+     * @return billMonth 对账月份 对账企业 ownCustNo expressStatus 状态
      */
     @RequestMapping(value = "/queryDeliveryStatementList", method = RequestMethod.POST)
-    public @ResponseBody String queryDeliveryStatementList(HttpServletRequest request,  String flag, int pageNum, int pageSize) {
-        
+    public @ResponseBody String queryDeliveryStatementList(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+
         Map<String, Object> anMap = replaceMapValueLine(Servlets.getParametersStartingWith(request, ""));
         logger.info("投递账单详情信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -49,23 +47,23 @@ public class DeliveryStatementController {
             }
         }, "投递账单详情查询失败", logger);
     }
-    
-    private Map<String,Object> replaceMapValueLine(Map<String,Object> anMap){
-        
+
+    private Map<String, Object> replaceMapValueLine(Map<String, Object> anMap) {
+
         Map<String, Object> params = new TreeMap<String, Object>();
-        
-        for(String key :anMap.keySet()) {
-            
-            if(anMap.get(key) !=null){
-                String tmpStr =  anMap.get(key).toString();
+
+        for (String key : anMap.keySet()) {
+
+            if (anMap.get(key) != null) {
+                String tmpStr = anMap.get(key).toString();
                 if (BetterStringUtils.isNotBlank(tmpStr)) {
-                     params.put(key, tmpStr.replace("-", ""));
+                    params.put(key, tmpStr.replace("-", ""));
                 }
             }
-            
+
         }
         return params;
-        
+
     }
-    
+
 }
