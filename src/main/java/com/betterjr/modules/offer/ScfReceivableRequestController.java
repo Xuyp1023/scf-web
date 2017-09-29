@@ -20,18 +20,15 @@ import com.betterjr.modules.supplieroffer.IScfReceivableRequestService;
 @Controller
 @RequestMapping("/Scf/ReceivableRequest")
 public class ScfReceivableRequestController {
-    
-    
+
     private static final Logger logger = LoggerFactory.getLogger(ScfSupplierOfferController.class);
 
-    
-    @Reference(interfaceClass =IScfReceivableRequestService.class )
+    @Reference(interfaceClass = IScfReceivableRequestService.class)
     private IScfReceivableRequestService requestService;
-    
+
     /**
-     * 应收账款申请 新增
-     * receivableId
-     *      * @param request
+     * 应收账款申请 新增 receivableId * @param request
+     * 
      * @return
      */
     @RequestMapping(value = "/saveAddRequest", method = RequestMethod.POST)
@@ -43,28 +40,30 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveAddRequest(anMap);
             }
         }, "应付账款申请新增失败", logger);
-        
+
     }
-    
+
     /**
      * 供应商提交申请，正式使申请生效
-     * @param requestNo 
+     * 
+     * @param requestNo
      * @param requestPayDate
      * @param description
      * @return
      */
     @RequestMapping(value = "/saveSubmitRequest", method = RequestMethod.POST)
-    public @ResponseBody String saveSubmitRequest(String requestNo,String requestPayDate,String description) {
+    public @ResponseBody String saveSubmitRequest(String requestNo, String requestPayDate, String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return requestService.webSaveSubmitRequest(requestNo, requestPayDate, description);
             }
         }, "应付账款提交申请失败", logger);
-        
+
     }
-    
+
     /**
      * 供应商签署合同
+     * 
      * @param requestNo
      * @return
      */
@@ -75,29 +74,30 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveSupplierSignAgreement(requestNo);
             }
         }, "供应商签署合同失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 供应商确认申请
+     * 
      * @param requestNo
      * @param requestPayDate
      * @param description
      * @return
      */
     @RequestMapping(value = "/saveSupplierFinishConfirmRequest", method = RequestMethod.POST)
-    public @ResponseBody String saveSupplierFinishConfirmRequest(String requestNo,String requestPayDate,String description) {
+    public @ResponseBody String saveSupplierFinishConfirmRequest(String requestNo, String requestPayDate, String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return requestService.webSaveSupplierFinishConfirmRequest(requestNo, requestPayDate, description);
             }
         }, "供应商确认申请失败", logger);
-        
+
     }
-    
+
     /**
      * 供应商废止申请失败
+     * 
      * @param requestNo
      * @return
      */
@@ -108,12 +108,12 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveAnnulReceivableRequest(requestNo);
             }
         }, "供应商废止申请失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 核心企业签署合同
+     * 
      * @param requestNo
      * @return
      */
@@ -124,28 +124,30 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveCoreSignAgreement(requestNo);
             }
         }, "核心企业签署合同失败", logger);
-        
+
     }
-    
+
     /**
      * 核心企业完成付款
+     * 
      * @param requestNo
      * @param requestPayDate
      * @param description
      * @return
      */
     @RequestMapping(value = "/saveCoreFinishPayRequest", method = RequestMethod.POST)
-    public @ResponseBody String saveCoreFinishPayRequest(String requestNo,String requestPayDate,String description) {
+    public @ResponseBody String saveCoreFinishPayRequest(String requestNo, String requestPayDate, String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return requestService.webSaveCoreFinishPayRequest(requestNo, requestPayDate, description);
             }
         }, "核心企业完成付款失败", logger);
-        
+
     }
-    
+
     /**
      * 查询申请信息
+     * 
      * @param requestNo
      * @return
      */
@@ -156,12 +158,12 @@ public class ScfReceivableRequestController {
                 return requestService.webFindOneByRequestNo(requestNo);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
-     * 供应商查询还有那些融资申请可以再次提交
-     * custNo","coreCustNo","requestNo","GTEregDate","LTEregDate"
+     * 供应商查询还有那些融资申请可以再次提交 custNo","coreCustNo","requestNo","GTEregDate","LTEregDate"
+     * 
      * @param request
      * @param flag
      * @param pageNum
@@ -170,20 +172,20 @@ public class ScfReceivableRequestController {
      */
     @RequestMapping(value = "/queryReceivableRequestWithSupplier", method = RequestMethod.POST)
     public @ResponseBody String queryReceivableRequestWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryReceivableRequestWithSupplier( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryReceivableRequestWithSupplier(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
-     * 供应商查询所有已经完成申请的融资
-     * custNo","coreCustNo","GTEendDate","LTEendDate
+     * 供应商查询所有已经完成申请的融资 custNo","coreCustNo","GTEendDate","LTEendDate
+     * 
      * @param request
      * @param flag
      * @param pageNum
@@ -192,19 +194,20 @@ public class ScfReceivableRequestController {
      */
     @RequestMapping(value = "/queryFinishReceivableRequestWithSupplier", method = RequestMethod.POST)
     public @ResponseBody String queryFinishReceivableRequestWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryFinishReceivableRequestWithSupplier( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryFinishReceivableRequestWithSupplier(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
      * 核心企业查询还可以继续申请的融资
+     * 
      * @param request
      * @param flag
      * @param pageNum
@@ -213,19 +216,20 @@ public class ScfReceivableRequestController {
      */
     @RequestMapping(value = "/queryReceivableRequestWithCore", method = RequestMethod.POST)
     public @ResponseBody String queryReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryReceivableRequestWithCore( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryReceivableRequestWithCore(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
      * 核心企业查询已经完成的申请
+     * 
      * @param request
      * @param flag
      * @param pageNum
@@ -234,33 +238,23 @@ public class ScfReceivableRequestController {
      */
     @RequestMapping(value = "/queryFinishReceivableRequestWithCore", method = RequestMethod.POST)
     public @ResponseBody String queryFinishReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryFinishReceivableRequestWithCore( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryFinishReceivableRequestWithCore(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
      * 模式4 融资申请
+     * 
      * @param request
-     * @return
-     * custNo
-     * coreCustNo
-     * custBankName
-     * custBankAccount
-     * custBankAccountName
-     * factoryNo
-     * invoiceList
-     * agreementList
-     * receivableList
-     * requestBalance
-     * requestPayDate
-     * description
+     * @return custNo coreCustNo custBankName custBankAccount custBankAccountName factoryNo invoiceList agreementList receivableList requestBalance
+     *         requestPayDate description
      */
     @RequestMapping(value = "/saveAddRequestFour", method = RequestMethod.POST)
     public @ResponseBody String saveAddRequestFour(HttpServletRequest request) {
@@ -271,37 +265,35 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveAddRequestFour(anMap);
             }
         }, "应付账款申请新增失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 融资申请查询
+     * 
      * @param request
      * @param flag
      * @param pageNum
      * @param pageSize
      * @param isCust
-     * @return
-     * "custNo","factoryNo","coreCustNo","GTERegDate","LTERegDate","businStatus"
-     * isCust
+     * @return "custNo","factoryNo","coreCustNo","GTERegDate","LTERegDate","businStatus" isCust
      */
     @RequestMapping(value = "/queryReceivableRequestFour", method = RequestMethod.POST)
-    public @ResponseBody String queryReceivableRequestFour(HttpServletRequest request, String flag, int pageNum, int pageSize,boolean isCust) {
-        
+    public @ResponseBody String queryReceivableRequestFour(HttpServletRequest request, String flag, int pageNum, int pageSize, boolean isCust) {
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryReceivableRequestFour( anMap, flag, pageNum, pageSize,isCust);
+                return requestService.webQueryReceivableRequestFour(anMap, flag, pageNum, pageSize, isCust);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 核心企业确认融资申请
+     * 
      * @param requestNo
      * @return
      */
@@ -312,11 +304,12 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveConfirmReceivableRequestFour(requestNo);
             }
         }, "确认失败", logger);
-        
+
     }
-    
+
     /**
      * 核心企业确认融资申请
+     * 
      * @param requestNo
      * @return
      */
@@ -327,12 +320,12 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveRejectReceivableRequestFour(requestNo);
             }
         }, "确认失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 校验是否可以进行融资申请
+     * 
      * @param requestNo
      * @return
      */
@@ -343,11 +336,12 @@ public class ScfReceivableRequestController {
                 return requestService.webCheckVerifyReceivable(receivableId);
             }
         }, "确认失败", logger);
-        
+
     }
-    
+
     /**
      * 模式2 新增申请
+     * 
      * @param request
      * @return
      */
@@ -360,29 +354,30 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveAddRequestTwo(anMap);
             }
         }, "应付账款申请新增失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 模式2 核心企业确认申请行为
+     * 
      * @param anRequestNo
      * @param anRequestPayDate
      * @param anDescription
      * @return
      */
     @RequestMapping(value = "/saveCoreConfrimPayRequest", method = RequestMethod.POST)
-    public @ResponseBody String saveCoreConfrimPayRequest(String requestNo,String requestPayDate,String description) {
+    public @ResponseBody String saveCoreConfrimPayRequest(String requestNo, String requestPayDate, String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return requestService.webSaveCoreConfrimPayRequest(requestNo, requestPayDate, description);
             }
         }, "确认失败", logger);
-        
+
     }
-    
+
     /**
      * 模式2 第六步结算中心签署合同
+     * 
      * @param anRequestNo
      * @return
      */
@@ -393,176 +388,180 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveFactorySignAgreement(requestNo);
             }
         }, "签署合同失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 模式2 结算中心确认付款并完成申请流程
+     * 
      * @param anRequestNo
      * @param anRequestPayDate
      * @param anDescription
      * @return
      */
     @RequestMapping(value = "/saveFactoryConfrimPayRequest", method = RequestMethod.POST)
-    public @ResponseBody String saveFactoryConfrimPayRequest(String requestNo,String requestPayDate,String description) {
+    public @ResponseBody String saveFactoryConfrimPayRequest(String requestNo, String requestPayDate, String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return requestService.webSaveFactoryConfrimPayRequest(requestNo, requestPayDate, description);
             }
         }, "确认付款失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 模式2 供应商查询还有那些融资申请可以再次提交
+     * 
      * @param anMap
      * @param anFlag
      * @param anPageNum
-     * @param anPageSize  
+     * @param anPageSize
      * @return
      */
     @RequestMapping(value = "/queryReceivableRequestTwoWithSupplier", method = RequestMethod.POST)
     public @ResponseBody String queryReceivableRequestTwoWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryReceivableRequestTwoWithSupplier( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryReceivableRequestTwoWithSupplier(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
      * 模式 二供应商查询已经完结的融资信息
+     * 
      * @param anMap
      * @param anFlag
      * @param anPageNum
-     * @param anPageSize  
+     * @param anPageSize
      * @return
      */
     @RequestMapping(value = "/queryTwoFinishReceivableRequestWithSupplier", method = RequestMethod.POST)
     public @ResponseBody String queryTwoFinishReceivableRequestWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryTwoFinishReceivableRequestWithSupplier( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryTwoFinishReceivableRequestWithSupplier(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 模式二核心企业查询可以提交的融资信息
+     * 
      * @param anMap
      * @param anFlag
      * @param anPageNum
-     * @param anPageSize  
+     * @param anPageSize
      * @return
      */
     @RequestMapping(value = "/queryTwoReceivableRequestWithCore", method = RequestMethod.POST)
     public @ResponseBody String queryTwoReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryTwoReceivableRequestWithCore( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryTwoReceivableRequestWithCore(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
      * 模式二 核心企业查询已经融资结束的所有的申请信息
+     * 
      * @param anMap
      * @param anFlag
      * @param anPageNum
-     * @param anPageSize  
+     * @param anPageSize
      * @return
      */
     @RequestMapping(value = "/queryTwoFinishReceivableRequestWithCore", method = RequestMethod.POST)
     public @ResponseBody String queryTwoFinishReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryTwoFinishReceivableRequestWithCore( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryTwoFinishReceivableRequestWithCore(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
      * 模式 2保理公司查询可以申请的申请
+     * 
      * @param anMap
      * @param anFlag
      * @param anPageNum
-     * @param anPageSize  
+     * @param anPageSize
      * @return
      */
     @RequestMapping(value = "/queryTwoReceivableRequestWithFactory", method = RequestMethod.POST)
     public @ResponseBody String queryTwoReceivableRequestWithFactory(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryTwoReceivableRequestWithFactory( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryTwoReceivableRequestWithFactory(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     /**
-     * 模式2  保理公司查询已经融资结束的所有的申请信息
+     * 模式2 保理公司查询已经融资结束的所有的申请信息
+     * 
      * @param anMap
      * @param anFlag
      * @param anPageNum
-     * @param anPageSize  
+     * @param anPageSize
      * @return
      */
     @RequestMapping(value = "/queryTwoFinishReceivableRequestWithFactory", method = RequestMethod.POST)
     public @ResponseBody String queryTwoFinishReceivableRequestWithFactory(HttpServletRequest request, String flag, int pageNum, int pageSize) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webQueryTwoFinishReceivableRequestWithFactory( anMap, flag, pageNum, pageSize);
+                return requestService.webQueryTwoFinishReceivableRequestWithFactory(anMap, flag, pageNum, pageSize);
             }
         }, "查询申请信息失败", logger);
-        
+
     }
-    
+
     @RequestMapping(value = "/saveSubmitRequestTwo", method = RequestMethod.POST)
-    public @ResponseBody String saveSubmitRequestTwo(String requestNo,String requestPayDate,String description,Long factoryNo) {
+    public @ResponseBody String saveSubmitRequestTwo(String requestNo, String requestPayDate, String description, Long factoryNo) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webSaveSubmitRequestTwo(requestNo, requestPayDate, description,factoryNo);
+                return requestService.webSaveSubmitRequestTwo(requestNo, requestPayDate, description, factoryNo);
             }
         }, "应付账款提交申请失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 新增融资申请
+     * 
      * @param request
      * @return
      * 
-     *  receivableId
+     *         receivableId
      */
     @RequestMapping(value = "/saveAddRequestTotal", method = RequestMethod.POST)
     public @ResponseBody String saveAddRequestTotal(HttpServletRequest request) {
-        
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应付账款申请新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
@@ -570,51 +569,47 @@ public class ScfReceivableRequestController {
                 return requestService.webSaveAddRequestTotal(anMap);
             }
         }, "应付账款提交申请失败", logger);
-        
+
     }
-    
+
     /**
      * 供应商确认申请提交
+     * 
      * @param anMap
      * @param anRequestNo
      * @param anRequestPayDate
      * @param anDescription
-     * @return
-     * requestProductCode  保理产品productCode
-     * custBankAccount
-     * custBankAccountName
-     * custBankName
+     * @return requestProductCode 保理产品productCode custBankAccount custBankAccountName custBankName
      */
     @RequestMapping(value = "/saveSubmitRequestTotal", method = RequestMethod.POST)
-    public @ResponseBody String saveSubmitRequestTotal(HttpServletRequest request,String requestNo,String requestPayDate,String description) {
-        
+    public @ResponseBody String saveSubmitRequestTotal(HttpServletRequest request, String requestNo, String requestPayDate, String description) {
+
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应付账款申请新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
-                return requestService.webSaveSubmitRequestTotal(anMap,requestNo,requestPayDate,description);
+                return requestService.webSaveSubmitRequestTotal(anMap, requestNo, requestPayDate, description);
             }
         }, "申请提交失败", logger);
-        
+
     }
-    
-    
+
     /**
      * 当前申请可用的保理产品列表
+     * 
      * @param requestNo
      * @return
      */
     @RequestMapping(value = "/queryProductByRequestNo", method = RequestMethod.POST)
     public @ResponseBody String queryProductByRequestNo(String requestNo) {
-        
-        
+
         logger.info("查询,入参：requestNo=" + requestNo);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
             public String handle() {
                 return requestService.webQueryProductByRequestNo(requestNo);
             }
         }, "查询失败", logger);
-        
+
     }
-    
+
 }
