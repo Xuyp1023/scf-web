@@ -40,7 +40,8 @@ public class ScfElecAgreementController {
     private DataStoreService dtaStoreService;
 
     @RequestMapping(value = "/queryElecAgreement", method = RequestMethod.POST)
-    public @ResponseBody String queryElecAgreement(final HttpServletRequest request, final int pageNum, final int pageSize) {
+    public @ResponseBody String queryElecAgreement(final HttpServletRequest request, final int pageNum,
+            final int pageSize) {
         final Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("分页查询电子合同, 入参:" + anMap.toString());
         try {
@@ -252,7 +253,8 @@ public class ScfElecAgreementController {
      * @return
      */
     @RequestMapping(value = "/sendValidCodeByRequestNo", method = RequestMethod.POST)
-    public @ResponseBody String sendValidCodeByRequestNo(final String requestNo, final String agreeType, final String vCode) {
+    public @ResponseBody String sendValidCodeByRequestNo(final String requestNo, final String agreeType,
+            final String vCode) {
         logger.info("发送并验证签署合同的验证码，requestNo:" + requestNo + " agreeType:" + agreeType + " vCode:" + vCode);
         try {
             return scfElecAgreementService.webSendValidCodeByRequestNo(requestNo, agreeType, vCode);
@@ -327,7 +329,8 @@ public class ScfElecAgreementController {
      * @return
      */
     @RequestMapping(value = "/updateFactorAgree", method = RequestMethod.POST)
-    public @ResponseBody String updateFactorAgreement(final HttpServletRequest request, final String appNo, final String fileList) {
+    public @ResponseBody String updateFactorAgreement(final HttpServletRequest request, final String appNo,
+            final String fileList) {
         final Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("修改保理合同, 入参:" + anMap.toString());
         try {
@@ -350,7 +353,8 @@ public class ScfElecAgreementController {
      * 查询保理合同
      */
     @RequestMapping(value = "/queryFactorAgree", method = RequestMethod.POST)
-    public @ResponseBody String queryFactorAgree(final HttpServletRequest request, final int pageNum, final int pageSize) {
+    public @ResponseBody String queryFactorAgree(final HttpServletRequest request, final int pageNum,
+            final int pageSize) {
         final Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询保理合同, 入参:" + anMap.toString() + "，pageNum：" + pageNum + "，pageSize:" + pageSize);
         try {
@@ -414,7 +418,8 @@ public class ScfElecAgreementController {
     }
 
     @RequestMapping(value = "/downloadAgreeImage", method = { RequestMethod.GET, RequestMethod.POST })
-    public void downloadElecAgreeImage(final HttpServletResponse response, final String appNo, final Long batchNo, final Long id) {
+    public void downloadElecAgreeImage(final HttpServletResponse response, final String appNo, final Long batchNo,
+            final Long id) {
 
         final CustFileItem fileItem = scfElecAgreementService.webFindSignedImage(appNo, batchNo, id);
 

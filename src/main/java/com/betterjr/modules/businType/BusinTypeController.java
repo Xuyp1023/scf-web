@@ -1,6 +1,5 @@
 package com.betterjr.modules.businType;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,22 +20,22 @@ import com.betterjr.modules.order.ScfOrderController;
 @Controller
 @RequestMapping("/Scf/BusinType")
 public class BusinTypeController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(ScfOrderController.class);
-    
-    @Reference(interfaceClass=IScfBusinTypeService.class)
+
+    @Reference(interfaceClass = IScfBusinTypeService.class)
     private IScfBusinTypeService businTypeService;
-    
-    
+
     @RequestMapping(value = "/queryEffectiveBusinType", method = RequestMethod.POST)
     public @ResponseBody String queryEffectiveBusinType(HttpServletRequest request) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-        logger.info("查询业务类型,入参= "+anMap.toString());
+        logger.info("查询业务类型,入参= " + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return businTypeService.webQueryBusinType(anMap);
             }
         }, "查询业务类型失败", logger);
-    } 
+    }
 
 }

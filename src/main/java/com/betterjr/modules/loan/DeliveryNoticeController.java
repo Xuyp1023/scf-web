@@ -21,15 +21,16 @@ import com.betterjr.common.web.Servlets;
 @RequestMapping(value = "/Scf/Delivery")
 public class DeliveryNoticeController {
     private static final Logger logger = LoggerFactory.getLogger(DeliveryNoticeController.class);
-    
+
     @Reference(interfaceClass = IScfDeliveryNoticeService.class)
     private IScfDeliveryNoticeService scfDeliveryNoticeService;
-    
+
     @RequestMapping(value = "/queryDeliveryNoticeList", method = RequestMethod.POST)
-    public @ResponseBody String queryDeliveryNoticeList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryDeliveryNoticeList(HttpServletRequest request, int flag, int pageNum,
+            int pageSize) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("分页查询发货通知单，入参:"+ map.toString());
-        
+        logger.info("分页查询发货通知单，入参:" + map.toString());
+
         try {
             return scfDeliveryNoticeService.webQueryDeliveryNoticeList(map, flag, pageNum, pageSize);
         }
@@ -49,33 +50,33 @@ public class DeliveryNoticeController {
     @RequestMapping(value = "/addDeliveryNotice", method = RequestMethod.POST)
     public @ResponseBody String addDeliveryNotice(HttpServletRequest request) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("添加发货通知单，入参:"+ map.toString());
-        
+        logger.info("添加发货通知单，入参:" + map.toString());
+
         try {
             return scfDeliveryNoticeService.webAddDeliveryNotice(map);
         }
         catch (Exception ex) {
-           logger.error("添加发货通知单：", ex);
+            logger.error("添加发货通知单：", ex);
             return AjaxObject.newError("addDeliveryNotice service failed").toJson();
         }
 
     }
-    
+
     @RequestMapping(value = "/saveModifyEnquiry", method = RequestMethod.POST)
     public @ResponseBody String saveModifyEnquiry(HttpServletRequest request, Long id) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("修改发货通知单，入参:"+ map.toString());
-        
+        logger.info("修改发货通知单，入参:" + map.toString());
+
         try {
             return scfDeliveryNoticeService.webSaveModifyDeliveryNotice(map, id);
         }
         catch (Exception ex) {
-           logger.error("修改发货通知单：" , ex);
+            logger.error("修改发货通知单：", ex);
             return AjaxObject.newError("saveModifyEnquiry service failed").toJson();
         }
 
     }
-    
+
     @RequestMapping(value = "/findDeliveryNoticeList", method = RequestMethod.POST)
     public @ResponseBody String findPayPlan(HttpServletRequest request, String factorNo) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
@@ -88,5 +89,4 @@ public class DeliveryNoticeController {
         }
     }
 
-   
 }

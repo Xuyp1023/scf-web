@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 import com.betterjr.modules.supplieroffer.IScfReceivableRequestService;
 
 @Controller
@@ -36,6 +36,7 @@ public class ScfReceivableRequestController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应付账款申请新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveAddRequest(anMap);
             }
@@ -54,6 +55,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/saveSubmitRequest", method = RequestMethod.POST)
     public @ResponseBody String saveSubmitRequest(String requestNo, String requestPayDate, String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveSubmitRequest(requestNo, requestPayDate, description);
             }
@@ -70,6 +72,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/saveSupplierSignAgreement", method = RequestMethod.POST)
     public @ResponseBody String saveSupplierSignAgreement(String requestNo) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveSupplierSignAgreement(requestNo);
             }
@@ -86,8 +89,10 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/saveSupplierFinishConfirmRequest", method = RequestMethod.POST)
-    public @ResponseBody String saveSupplierFinishConfirmRequest(String requestNo, String requestPayDate, String description) {
+    public @ResponseBody String saveSupplierFinishConfirmRequest(String requestNo, String requestPayDate,
+            String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveSupplierFinishConfirmRequest(requestNo, requestPayDate, description);
             }
@@ -104,6 +109,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/saveAnnulReceivableRequest", method = RequestMethod.POST)
     public @ResponseBody String saveAnnulReceivableRequest(String requestNo) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveAnnulReceivableRequest(requestNo);
             }
@@ -120,6 +126,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/saveCoreSignAgreement", method = RequestMethod.POST)
     public @ResponseBody String saveCoreSignAgreement(String requestNo) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveCoreSignAgreement(requestNo);
             }
@@ -138,6 +145,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/saveCoreFinishPayRequest", method = RequestMethod.POST)
     public @ResponseBody String saveCoreFinishPayRequest(String requestNo, String requestPayDate, String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveCoreFinishPayRequest(requestNo, requestPayDate, description);
             }
@@ -154,6 +162,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/findOneByRequestNo", method = RequestMethod.POST)
     public @ResponseBody String findOneByRequestNo(String requestNo) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webFindOneByRequestNo(requestNo);
             }
@@ -171,11 +180,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryReceivableRequestWithSupplier", method = RequestMethod.POST)
-    public @ResponseBody String queryReceivableRequestWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryReceivableRequestWithSupplier(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryReceivableRequestWithSupplier(anMap, flag, pageNum, pageSize);
             }
@@ -193,11 +204,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryFinishReceivableRequestWithSupplier", method = RequestMethod.POST)
-    public @ResponseBody String queryFinishReceivableRequestWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryFinishReceivableRequestWithSupplier(HttpServletRequest request, String flag,
+            int pageNum, int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryFinishReceivableRequestWithSupplier(anMap, flag, pageNum, pageSize);
             }
@@ -215,11 +228,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryReceivableRequestWithCore", method = RequestMethod.POST)
-    public @ResponseBody String queryReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryReceivableRequestWithCore(anMap, flag, pageNum, pageSize);
             }
@@ -237,11 +252,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryFinishReceivableRequestWithCore", method = RequestMethod.POST)
-    public @ResponseBody String queryFinishReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryFinishReceivableRequestWithCore(HttpServletRequest request, String flag,
+            int pageNum, int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryFinishReceivableRequestWithCore(anMap, flag, pageNum, pageSize);
             }
@@ -261,6 +278,7 @@ public class ScfReceivableRequestController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应付账款申请新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveAddRequestFour(anMap);
             }
@@ -279,11 +297,13 @@ public class ScfReceivableRequestController {
      * @return "custNo","factoryNo","coreCustNo","GTERegDate","LTERegDate","businStatus" isCust
      */
     @RequestMapping(value = "/queryReceivableRequestFour", method = RequestMethod.POST)
-    public @ResponseBody String queryReceivableRequestFour(HttpServletRequest request, String flag, int pageNum, int pageSize, boolean isCust) {
+    public @ResponseBody String queryReceivableRequestFour(HttpServletRequest request, String flag, int pageNum,
+            int pageSize, boolean isCust) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryReceivableRequestFour(anMap, flag, pageNum, pageSize, isCust);
             }
@@ -300,6 +320,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/saveConfirmReceivableRequestFour", method = RequestMethod.POST)
     public @ResponseBody String saveConfirmReceivableRequestFour(String requestNo) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveConfirmReceivableRequestFour(requestNo);
             }
@@ -316,6 +337,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/saveRejectReceivableRequestFour", method = RequestMethod.POST)
     public @ResponseBody String saveRejectReceivableRequestFour(String requestNo) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveRejectReceivableRequestFour(requestNo);
             }
@@ -332,6 +354,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/checkVerifyReceivable", method = RequestMethod.POST)
     public @ResponseBody String checkVerifyReceivable(Long receivableId) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webCheckVerifyReceivable(receivableId);
             }
@@ -350,6 +373,7 @@ public class ScfReceivableRequestController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应付账款申请新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveAddRequestTwo(anMap);
             }
@@ -368,6 +392,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/saveCoreConfrimPayRequest", method = RequestMethod.POST)
     public @ResponseBody String saveCoreConfrimPayRequest(String requestNo, String requestPayDate, String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveCoreConfrimPayRequest(requestNo, requestPayDate, description);
             }
@@ -384,6 +409,7 @@ public class ScfReceivableRequestController {
     @RequestMapping(value = "/saveFactorySignAgreement", method = RequestMethod.POST)
     public @ResponseBody String saveFactorySignAgreement(String requestNo) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveFactorySignAgreement(requestNo);
             }
@@ -400,8 +426,10 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/saveFactoryConfrimPayRequest", method = RequestMethod.POST)
-    public @ResponseBody String saveFactoryConfrimPayRequest(String requestNo, String requestPayDate, String description) {
+    public @ResponseBody String saveFactoryConfrimPayRequest(String requestNo, String requestPayDate,
+            String description) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveFactoryConfrimPayRequest(requestNo, requestPayDate, description);
             }
@@ -419,11 +447,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryReceivableRequestTwoWithSupplier", method = RequestMethod.POST)
-    public @ResponseBody String queryReceivableRequestTwoWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryReceivableRequestTwoWithSupplier(HttpServletRequest request, String flag,
+            int pageNum, int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryReceivableRequestTwoWithSupplier(anMap, flag, pageNum, pageSize);
             }
@@ -441,11 +471,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryTwoFinishReceivableRequestWithSupplier", method = RequestMethod.POST)
-    public @ResponseBody String queryTwoFinishReceivableRequestWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryTwoFinishReceivableRequestWithSupplier(HttpServletRequest request, String flag,
+            int pageNum, int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryTwoFinishReceivableRequestWithSupplier(anMap, flag, pageNum, pageSize);
             }
@@ -463,11 +495,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryTwoReceivableRequestWithCore", method = RequestMethod.POST)
-    public @ResponseBody String queryTwoReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryTwoReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryTwoReceivableRequestWithCore(anMap, flag, pageNum, pageSize);
             }
@@ -485,11 +519,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryTwoFinishReceivableRequestWithCore", method = RequestMethod.POST)
-    public @ResponseBody String queryTwoFinishReceivableRequestWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryTwoFinishReceivableRequestWithCore(HttpServletRequest request, String flag,
+            int pageNum, int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryTwoFinishReceivableRequestWithCore(anMap, flag, pageNum, pageSize);
             }
@@ -507,11 +543,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryTwoReceivableRequestWithFactory", method = RequestMethod.POST)
-    public @ResponseBody String queryTwoReceivableRequestWithFactory(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryTwoReceivableRequestWithFactory(HttpServletRequest request, String flag,
+            int pageNum, int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryTwoReceivableRequestWithFactory(anMap, flag, pageNum, pageSize);
             }
@@ -529,11 +567,13 @@ public class ScfReceivableRequestController {
      * @return
      */
     @RequestMapping(value = "/queryTwoFinishReceivableRequestWithFactory", method = RequestMethod.POST)
-    public @ResponseBody String queryTwoFinishReceivableRequestWithFactory(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryTwoFinishReceivableRequestWithFactory(HttpServletRequest request, String flag,
+            int pageNum, int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryTwoFinishReceivableRequestWithFactory(anMap, flag, pageNum, pageSize);
             }
@@ -542,8 +582,10 @@ public class ScfReceivableRequestController {
     }
 
     @RequestMapping(value = "/saveSubmitRequestTwo", method = RequestMethod.POST)
-    public @ResponseBody String saveSubmitRequestTwo(String requestNo, String requestPayDate, String description, Long factoryNo) {
+    public @ResponseBody String saveSubmitRequestTwo(String requestNo, String requestPayDate, String description,
+            Long factoryNo) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveSubmitRequestTwo(requestNo, requestPayDate, description, factoryNo);
             }
@@ -565,6 +607,7 @@ public class ScfReceivableRequestController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应付账款申请新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveAddRequestTotal(anMap);
             }
@@ -582,11 +625,13 @@ public class ScfReceivableRequestController {
      * @return requestProductCode 保理产品productCode custBankAccount custBankAccountName custBankName
      */
     @RequestMapping(value = "/saveSubmitRequestTotal", method = RequestMethod.POST)
-    public @ResponseBody String saveSubmitRequestTotal(HttpServletRequest request, String requestNo, String requestPayDate, String description) {
+    public @ResponseBody String saveSubmitRequestTotal(HttpServletRequest request, String requestNo,
+            String requestPayDate, String description) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应付账款申请新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webSaveSubmitRequestTotal(anMap, requestNo, requestPayDate, description);
             }
@@ -605,6 +650,7 @@ public class ScfReceivableRequestController {
 
         logger.info("查询,入参：requestNo=" + requestNo);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return requestService.webQueryProductByRequestNo(requestNo);
             }

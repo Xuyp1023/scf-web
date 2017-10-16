@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 import com.betterjr.modules.supplieroffer.IScfCoreProductCustService;
 
 @Controller
@@ -37,6 +37,7 @@ public class ScfCoreProductCustController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("产品查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return productService.webQueryProductConfigByCore(custNo, coreCustNo);
             }
@@ -52,10 +53,12 @@ public class ScfCoreProductCustController {
      * @return
      */
     @RequestMapping(value = "/saveAddAndUpdateProduct", method = RequestMethod.POST)
-    public @ResponseBody String saveAddAndUpdateProduct(HttpServletRequest request, Long custNo, Long coreCustNo, String productCodes) {
+    public @ResponseBody String saveAddAndUpdateProduct(HttpServletRequest request, Long custNo, Long coreCustNo,
+            String productCodes) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("产品修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return productService.webSaveAddAndUpdateProduct(custNo, coreCustNo, productCodes);
             }
@@ -75,6 +78,7 @@ public class ScfCoreProductCustController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("产品查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return productService.webQueryCanUseProduct(custNo, coreCustNo);
             }

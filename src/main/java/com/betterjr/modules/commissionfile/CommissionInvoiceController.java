@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.utils.BetterStringUtils;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 
 @Controller
 @RequestMapping(value = "/Scf/CommissionInvoice")
@@ -43,8 +44,10 @@ public class CommissionInvoiceController {
     @RequestMapping(value = "/saveDemandInvoice", method = RequestMethod.POST)
     public @ResponseBody String saveDemandInvoice(Long custNo, Long coreCustNo, String monthlyIds, String invoiceType) {
 
-        logger.info("发票索取,入参： custNo=" + custNo + " coreCustNo=" + coreCustNo + " monthlyIds=" + monthlyIds + " invoiceType=" + invoiceType);
+        logger.info("发票索取,入参： custNo=" + custNo + " coreCustNo=" + coreCustNo + " monthlyIds=" + monthlyIds
+                + " invoiceType=" + invoiceType);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return commissionInvoiceService.webSaveDemandInvoice(custNo, coreCustNo, monthlyIds, invoiceType);
             }
@@ -64,6 +67,7 @@ public class CommissionInvoiceController {
 
         logger.info("发票确认,入参： invoiceId=" + id + " invoiceContent=" + invoiceContent + " description=" + description);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return commissionInvoiceService.webSaveInvoiceEffective(id, invoiceContent, description);
             }
@@ -81,6 +85,7 @@ public class CommissionInvoiceController {
 
         logger.info("发票作废,入参： invoiceId=" + invoiceId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return commissionInvoiceService.webSaveAnnulInvoice(invoiceId);
             }
@@ -98,6 +103,7 @@ public class CommissionInvoiceController {
 
         logger.info("发票确认,入参： invoiceId=" + invoiceId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return commissionInvoiceService.webSaveConfirmInvoice(invoiceId);
             }
@@ -117,6 +123,7 @@ public class CommissionInvoiceController {
         Map paramMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票提交,入参：" + paramMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return commissionInvoiceService.webSaveAuditInvoice(paramMap, fileList);
             }
@@ -135,11 +142,13 @@ public class CommissionInvoiceController {
      * @return
      */
     @RequestMapping(value = "/queryCommissionInvoice", method = RequestMethod.POST)
-    public @ResponseBody String queryCommissionInvoice(HttpServletRequest request, String flag, int pageNum, int pageSize, boolean isConfirm) {
+    public @ResponseBody String queryCommissionInvoice(HttpServletRequest request, String flag, int pageNum,
+            int pageSize, boolean isConfirm) {
 
         Map paramMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票查询,入参：" + paramMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return commissionInvoiceService.webQueryCommissionInvoice(paramMap, flag, pageNum, pageSize, isConfirm);
             }
@@ -157,6 +166,7 @@ public class CommissionInvoiceController {
 
         logger.info("发票查询,入参：invoiceId=" + invoiceId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return commissionInvoiceService.webFindCommissionInvoiceById(invoiceId);
             }
@@ -179,6 +189,7 @@ public class CommissionInvoiceController {
         Map paramMap = replaceMapValueLine(Servlets.getParametersStartingWith(request, ""));
         logger.info("发票月对账单查询,入参：" + paramMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return commissionInvoiceService.webQueryCanUseMonthly(paramMap, pageNum, pageSize);
             }
@@ -193,7 +204,7 @@ public class CommissionInvoiceController {
 
             if (anMap.get(key) != null) {
                 String tmpStr = anMap.get(key).toString();
-                if (BetterStringUtils.isNotBlank(tmpStr)) {
+                if (StringUtils.isNotBlank(tmpStr)) {
                     params.put(key, tmpStr.replace("-", ""));
                 }
             }

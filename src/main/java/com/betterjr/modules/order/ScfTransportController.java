@@ -30,39 +30,43 @@ public class ScfTransportController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单运输单据录入,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfTransportService.webAddTransport(anMap, fileList);
             }
         }, "订单运输单据录入失败", logger);
     }
 
-    //dateType  0-发货日期 1-收货日期
+    // dateType 0-发货日期 1-收货日期
     @RequestMapping(value = "/queryTransport", method = RequestMethod.POST)
-    public @ResponseBody String queryTransport(HttpServletRequest request, String flag, int pageNum, int pageSize)  {
+    public @ResponseBody String queryTransport(HttpServletRequest request, String flag, int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询订单运输单据,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
-                return scfTransportService.webQueryTransportList(anMap,flag, pageNum, pageSize);
+                return scfTransportService.webQueryTransportList(anMap, flag, pageNum, pageSize);
             }
         }, "查询订单运输单据失败", logger);
     }
-    
+
     @RequestMapping(value = "/saveModifyTransport", method = RequestMethod.POST)
     public @ResponseBody String saveModifyTransport(HttpServletRequest request, Long id, String fileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单运输单据修改,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfTransportService.webSaveModifyTransport(anMap, id, fileList);
             }
         }, "订单运输单据修改失败", logger);
     }
-    
+
     @RequestMapping(value = "/saveDeleteTransport", method = RequestMethod.POST)
     public @ResponseBody String saveDeleteTransport(Long id) {
-        logger.info("订单运输单据删除,入参:id=" + id );
+        logger.info("订单运输单据删除,入参:id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfTransportService.webSaveDeleteTransport(id);
             }

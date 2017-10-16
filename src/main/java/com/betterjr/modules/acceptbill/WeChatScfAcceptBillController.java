@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.utils.UserUtils;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 
 @Controller
 @RequestMapping(value = "/WeChat/Scf/AcceptBill")
@@ -26,45 +26,50 @@ public class WeChatScfAcceptBillController {
     private IScfAcceptBillService scfAcceptBillService;
 
     @RequestMapping(value = "/queryAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String queryAcceptBill(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryAcceptBill(HttpServletRequest request, String isOnlyNormal, String flag,
+            int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo().toString());
         logger.info("汇票信息查询,入参：" + anMap.toString());
         anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo().toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfAcceptBillService.webQueryAcceptBill(anMap, isOnlyNormal, flag, pageNum, pageSize);
             }
         }, "汇票信息查询失败", logger);
     }
 
-
     @RequestMapping(value = "/modifyAcceptBill", method = RequestMethod.POST)
-    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, Long id, String fileList, String otherFileList) {
+    public @ResponseBody String modifyAcceptBill(HttpServletRequest request, Long id, String fileList,
+            String otherFileList) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfAcceptBillService.webSaveModifyAcceptBill(anMap, id, fileList, otherFileList);
             }
         }, "汇票信息编辑失败", logger);
     }
-    
+
     @RequestMapping(value = "/addAcceptBill", method = RequestMethod.POST)
     public @ResponseBody String addAcceptBill(HttpServletRequest request, String fileList, String otherFileList) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息登记,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfAcceptBillService.webAddAcceptBill(anMap, fileList, otherFileList);
             }
         }, "汇票信息登记失败", logger);
     }
-    
+
     @RequestMapping(value = "/saveAduitAcceptBill", method = RequestMethod.POST)
     public @ResponseBody String saveAduitAcceptBill(Long id) {
         logger.info("汇票信息审核,入参：id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfAcceptBillService.webSaveAduitAcceptBill(id);
             }
@@ -75,27 +80,30 @@ public class WeChatScfAcceptBillController {
     public @ResponseBody String findAllFile(Long id) {
         logger.info("汇票所有附件查询,入参：id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfAcceptBillService.webFindAllFile(id);
             }
         }, "汇票所有附件查询", logger);
     }
-    
+
     @RequestMapping(value = "queryFinancedByFactor", method = RequestMethod.POST)
     public @ResponseBody String queryFinancedByFactor(HttpServletRequest request, Long factorNo) {
         Map anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票所有附件查询,入参：factorNo" + factorNo + anMap);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfAcceptBillService.webQueryFinancedByFactor(anMap, factorNo);
             }
         }, "保理公司查询已融资汇票", logger);
     }
-    
+
     @RequestMapping(value = "/findAcceptBillDetailsById", method = RequestMethod.POST)
     public @ResponseBody String findAcceptBillDetailsById(Long id) {
         logger.info("汇票详情,入参：id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfAcceptBillService.webFindAcceptBillDetailsById(id);
             }

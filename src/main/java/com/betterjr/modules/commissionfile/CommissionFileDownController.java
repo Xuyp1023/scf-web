@@ -47,6 +47,7 @@ public class CommissionFileDownController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webQueryFileDownList(anMap, flag, pageNum, pageSize);
             }
@@ -64,10 +65,12 @@ public class CommissionFileDownController {
      * @return
      */
     @RequestMapping(value = "/queryCanAuditFileList", method = RequestMethod.POST)
-    public @ResponseBody String queryCanAuditFileList(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryCanAuditFileList(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webQueryCanAuditFileList(anMap, flag, pageNum, pageSize);
             }
@@ -88,6 +91,7 @@ public class CommissionFileDownController {
 
         logger.info("佣金文件才查询明细信息,入参： fileId=" + fileId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webQueryFileRecordByFileId(fileId, flag, pageNum, pageSize);
             }
@@ -106,6 +110,7 @@ public class CommissionFileDownController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webSaveAuditFileDownById(anMap);
             }

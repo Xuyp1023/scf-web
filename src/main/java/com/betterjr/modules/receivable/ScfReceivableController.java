@@ -26,10 +26,12 @@ public class ScfReceivableController {
     private IScfReceivableService scfReceivableService;
 
     @RequestMapping(value = "/modifyReceivable", method = RequestMethod.POST)
-    public @ResponseBody String modifyReceivable(HttpServletRequest request, Long id, String fileList, String otherFileList) {
+    public @ResponseBody String modifyReceivable(HttpServletRequest request, Long id, String fileList,
+            String otherFileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款编辑,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webSaveModifyReceivable(anMap, id, fileList, otherFileList);
             }
@@ -37,10 +39,12 @@ public class ScfReceivableController {
     }
 
     @RequestMapping(value = "/queryReceivable", method = RequestMethod.POST)
-    public @ResponseBody String queryReceivable(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryReceivable(HttpServletRequest request, String isOnlyNormal, String flag,
+            int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款查询,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webQueryReceivable(anMap, isOnlyNormal, flag, pageNum, pageSize);
             }
@@ -52,6 +56,7 @@ public class ScfReceivableController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款查询,入参:" + anMap + " isOnlyNormal" + isOnlyNormal);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webFindReceivableList(anMap, isOnlyNormal);
             }
@@ -62,6 +67,7 @@ public class ScfReceivableController {
     public @ResponseBody String findReceivableDetailsById(Long id) {
         logger.info("应收账款详情查询,入参:id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webFindReceivableDetailsById(id);
             }
@@ -73,6 +79,7 @@ public class ScfReceivableController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款新增,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webAddReceivable(anMap, fileList, otherFileList);
             }
@@ -83,6 +90,7 @@ public class ScfReceivableController {
     public @ResponseBody String saveAduitReceivable(Long id) {
         logger.info("应收账款审核,入参：id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webSaveAduitReceivable(id);
             }
@@ -104,6 +112,7 @@ public class ScfReceivableController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webAddReceivableDO(anMap, fileList, confirmFlag);
             }
@@ -125,6 +134,7 @@ public class ScfReceivableController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webSaveModifyReceivableDO(anMap, fileList, confirmFlag);
             }
@@ -142,6 +152,7 @@ public class ScfReceivableController {
     public @ResponseBody String saveAnnulReceivable(String refNo, String version) {
         logger.info("应收账款信息作废,入参：refNo=" + refNo + "  version:" + version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webSaveAnnulReceivable(refNo, version);
             }
@@ -160,6 +171,7 @@ public class ScfReceivableController {
         logger.info("应收账款审核,入参：refNo=" + refNo + " : version=" + version);
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webSaveAuditReceivableByRefNoVersion(refNo, version, anMap);
             }
@@ -178,6 +190,7 @@ public class ScfReceivableController {
 
         logger.info("应收账款查询详情,入参：refNo=" + refNo + " : version=" + version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webFindReceivableByRefNoVersion(refNo, version);
             }
@@ -197,10 +210,12 @@ public class ScfReceivableController {
      * @return
      */
     @RequestMapping(value = "/queryIneffectiveReceivable", method = RequestMethod.POST)
-    public @ResponseBody String queryIneffectiveReceivable(HttpServletRequest request, String flag, int pageNum, int pageSize, boolean isAudit) {
+    public @ResponseBody String queryIneffectiveReceivable(HttpServletRequest request, String flag, int pageNum,
+            int pageSize, boolean isAudit) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款未生效信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webQueryIneffectiveReceivable(anMap, flag, pageNum, pageSize, isAudit);
             }
@@ -208,10 +223,12 @@ public class ScfReceivableController {
     }
 
     @RequestMapping(value = "/queryEffectiveReceivable", method = RequestMethod.POST)
-    public @ResponseBody String queryEffectiveReceivable(HttpServletRequest request, String flag, int pageNum, int pageSize, boolean isCust) {
+    public @ResponseBody String queryEffectiveReceivable(HttpServletRequest request, String flag, int pageNum,
+            int pageSize, boolean isCust) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("应收账款已经生效信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfReceivableService.webQueryEffectiveReceivable(anMap, flag, pageNum, pageSize, isCust);
             }

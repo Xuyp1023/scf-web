@@ -26,10 +26,12 @@ public class ScfOrderController {
     private IScfOrderService scfOrderService;
 
     @RequestMapping(value = "/modifyOrder", method = RequestMethod.POST)
-    public @ResponseBody String modifyOrder(HttpServletRequest request, Long id, String fileList, String otherFileList) {
+    public @ResponseBody String modifyOrder(HttpServletRequest request, Long id, String fileList,
+            String otherFileList) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webSaveModifyOrder(anMap, id, fileList, otherFileList);
             }
@@ -44,10 +46,12 @@ public class ScfOrderController {
      * @return
      */
     @RequestMapping(value = "/queryOrder", method = RequestMethod.POST)
-    public @ResponseBody String queryOrder(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryOrder(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum,
+            int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webQueryOrder(anMap, isOnlyNormal, flag, pageNum, pageSize);
             }
@@ -66,6 +70,7 @@ public class ScfOrderController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息查询,入参：" + anMap + " isOnlyNormal=" + isOnlyNormal);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webFindOrderList(anMap, isOnlyNormal);
             }
@@ -84,6 +89,7 @@ public class ScfOrderController {
     public @ResponseBody String findInfoListByRequest(String requestNo, String requestType) {
         logger.info("融资资料信息查询,入参：requestNo=" + requestNo + " requestType=" + requestType);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webFindInfoListByRequest(requestNo, requestType);
             }
@@ -98,6 +104,7 @@ public class ScfOrderController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webAddOrder(anMap, fileList, otherFileList);
             }
@@ -111,6 +118,7 @@ public class ScfOrderController {
     public @ResponseBody String checkCompleteInvoice(String requestType, String idList) {
         logger.info("检查关联发票关系,入参：requestType=" + requestType + "idList=" + idList);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webCheckCompleteInvoice(requestType, idList);
             }
@@ -124,6 +132,7 @@ public class ScfOrderController {
     public @ResponseBody String findRequestBaseInfoFileList(String requestNo) {
         logger.info("查询所有附件,入参：requestNo=" + requestNo);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webFindRequestBaseInfoFileList(requestNo);
             }
@@ -137,6 +146,7 @@ public class ScfOrderController {
     public @ResponseBody String findOrderDetailsById(Long id) {
         logger.info("查询订单详情,入参：id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webFindOrderDetailsById(id);
             }
@@ -149,6 +159,7 @@ public class ScfOrderController {
     @RequestMapping(value = "/checkInfoCompleted", method = RequestMethod.POST)
     public @ResponseBody String checkInfoCompleted(String idList, String requestType) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webCheckInfoCompleted(idList, requestType);
             }
@@ -158,6 +169,7 @@ public class ScfOrderController {
     @RequestMapping(value = "/checkAgreementStatus", method = RequestMethod.POST)
     public @ResponseBody String checkAgreementStatus(Long acceptBillId) {
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webCheckAgreementStatus(acceptBillId);
             }
@@ -171,6 +183,7 @@ public class ScfOrderController {
     public @ResponseBody String findRequestBaseInfoFileList(String orderId, String orderType) {
         logger.info("查询核心企业编号,入参：orderId=" + orderId + "orderType:" + orderType);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webFindCoreCustNo(orderId, orderType);
             }
@@ -188,10 +201,12 @@ public class ScfOrderController {
      * @return
      */
     @RequestMapping(value = "/queryCanAnnulOrder", method = RequestMethod.POST)
-    public @ResponseBody String queryCanAnnulOrder(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryCanAnnulOrder(HttpServletRequest request, String isOnlyNormal, String flag,
+            int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单已经审核然后想废止的信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webQueryCanAnnulOrder(anMap, isOnlyNormal, flag, pageNum, pageSize);
             }
@@ -209,6 +224,7 @@ public class ScfOrderController {
     public @ResponseBody String saveAnnulOrder(String refNo, String version) {
         logger.info("订单信息作废,入参：refNo=" + refNo + "  version:" + version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webSaveAnnulOrder(refNo, version);
             }
@@ -226,6 +242,7 @@ public class ScfOrderController {
     public @ResponseBody String saveAuditOrder(String refNo, String version) {
         logger.info("订单审核,入参：refNo=" + refNo + " : version=" + version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webSaveAuditOrderByRefNoVersion(refNo, version);
             }
@@ -243,6 +260,7 @@ public class ScfOrderController {
     public @ResponseBody String saveAuditOrders(String ids) {
         logger.info("订单批量审核,入参：ids=" + ids);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webSaveAuditOrderByOrderIds(ids);
             }
@@ -262,13 +280,15 @@ public class ScfOrderController {
      * @return
      */
     @RequestMapping(value = "/queryIneffectiveOrder", method = RequestMethod.POST)
-    public @ResponseBody String queryIneffectiveOrder(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize,
-            boolean isAudit) {
+    public @ResponseBody String queryIneffectiveOrder(HttpServletRequest request, String isOnlyNormal, String flag,
+            int pageNum, int pageSize, boolean isAudit) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单未生效信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
-                return scfOrderService.webQueryIneffectiveOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize, isAudit);
+                return scfOrderService.webQueryIneffectiveOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize,
+                        isAudit);
             }
         }, "订单信息查询失败", logger);
     }
@@ -277,6 +297,7 @@ public class ScfOrderController {
     public @ResponseBody String queryExportOrderRecord(Long resolveFileid, String flag, int pageNum, int pageSize) {
         logger.info("订单导入数据查询,入参：" + resolveFileid);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webQueryExportOrderRecordList(resolveFileid, flag, pageNum, pageSize);
             }
@@ -296,11 +317,12 @@ public class ScfOrderController {
      * @return
      */
     @RequestMapping(value = "/queryEffectiveOrder", method = RequestMethod.POST)
-    public @ResponseBody String queryEffectiveOrder(HttpServletRequest request, String isOnlyNormal, String flag, int pageNum, int pageSize,
-            boolean isCust) {
+    public @ResponseBody String queryEffectiveOrder(HttpServletRequest request, String isOnlyNormal, String flag,
+            int pageNum, int pageSize, boolean isCust) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单已经生效信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webQueryEffectiveOrderDO(anMap, isOnlyNormal, flag, pageNum, pageSize, isCust);
             }
@@ -312,6 +334,7 @@ public class ScfOrderController {
 
         logger.info("订单详细信息查询,入参： refNo:" + refNo + "  version: " + version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webfindOrderDetail(refNo, version);
             }
@@ -323,6 +346,7 @@ public class ScfOrderController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webSaveModifyOrderDO(anMap, fileList, confirmFlag);
             }
@@ -337,6 +361,7 @@ public class ScfOrderController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单信息新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webAddOrderDO(anMap, fileList, confirmFlag);
             }
@@ -354,6 +379,7 @@ public class ScfOrderController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("订单解析,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderService.webSaveResolveFile(anMap);
             }

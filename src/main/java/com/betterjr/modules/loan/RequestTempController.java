@@ -19,36 +19,37 @@ import com.betterjr.common.web.Servlets;
 @Controller
 @RequestMapping(value = "/Scf/RequestTemp")
 public class RequestTempController {
-	private static final Logger logger = LoggerFactory.getLogger(RequestController.class);
-	
-	@Reference(interfaceClass = IScfRequestTempService.class)
-	private IScfRequestTempService scfRequestTempService;
+    private static final Logger logger = LoggerFactory.getLogger(RequestController.class);
 
-	@RequestMapping(value = "/addRequestTemp", method = RequestMethod.POST)
-	public @ResponseBody String addRequestTemp(HttpServletRequest request) {
-		Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-		logger.info("添加融资申请，入参:" + map.toString());
-		return exec(() -> scfRequestTempService.webAddRequestTemp(map), "保存融资申请失败", logger);
-	}
+    @Reference(interfaceClass = IScfRequestTempService.class)
+    private IScfRequestTempService scfRequestTempService;
 
-	@RequestMapping(value = "/saveModifyRequestTemp", method = RequestMethod.POST)
-	public @ResponseBody String saveModifyRequestTemp(HttpServletRequest request, String requestNo) {
-		Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-		logger.info("修改融资申请，入参:" + map.toString());
-		return exec(() -> scfRequestTempService.webSaveModifyRequestTemp(map, requestNo), "修改融资申请失败", logger);
-	}
-	
-	@RequestMapping(value = "/saveAnnulRequestTemp", method = RequestMethod.POST)
-	public @ResponseBody String saveModifyRequestTemp(String requestNo) {
-	    //Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-	    logger.info("作废融资申请，入参:requestNo =" + requestNo);
-	    return exec(() -> scfRequestTempService.webSaveAnnulRequestTemp(requestNo), "作废融资申请失败", logger);
-	}
-	
-	@RequestMapping(value = "/queryRequestTempList", method = RequestMethod.POST)
-	public @ResponseBody String queryRequestTempList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
-		Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-		logger.info("分页查询融资申请，入参:" + map.toString());
-		return exec(() -> scfRequestTempService.webQueryRequestTempList(map, flag, pageNum, pageSize), "查询融资信息失败", logger);
-	}
+    @RequestMapping(value = "/addRequestTemp", method = RequestMethod.POST)
+    public @ResponseBody String addRequestTemp(HttpServletRequest request) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("添加融资申请，入参:" + map.toString());
+        return exec(() -> scfRequestTempService.webAddRequestTemp(map), "保存融资申请失败", logger);
+    }
+
+    @RequestMapping(value = "/saveModifyRequestTemp", method = RequestMethod.POST)
+    public @ResponseBody String saveModifyRequestTemp(HttpServletRequest request, String requestNo) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("修改融资申请，入参:" + map.toString());
+        return exec(() -> scfRequestTempService.webSaveModifyRequestTemp(map, requestNo), "修改融资申请失败", logger);
+    }
+
+    @RequestMapping(value = "/saveAnnulRequestTemp", method = RequestMethod.POST)
+    public @ResponseBody String saveModifyRequestTemp(String requestNo) {
+        // Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("作废融资申请，入参:requestNo =" + requestNo);
+        return exec(() -> scfRequestTempService.webSaveAnnulRequestTemp(requestNo), "作废融资申请失败", logger);
+    }
+
+    @RequestMapping(value = "/queryRequestTempList", method = RequestMethod.POST)
+    public @ResponseBody String queryRequestTempList(HttpServletRequest request, int flag, int pageNum, int pageSize) {
+        Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
+        logger.info("分页查询融资申请，入参:" + map.toString());
+        return exec(() -> scfRequestTempService.webQueryRequestTempList(map, flag, pageNum, pageSize), "查询融资信息失败",
+                logger);
+    }
 }

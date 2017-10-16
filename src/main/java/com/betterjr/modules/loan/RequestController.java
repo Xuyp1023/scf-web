@@ -98,7 +98,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/offerScheme", method = RequestMethod.POST)
-    public @ResponseBody String offerScheme(HttpServletRequest request, String approvalResult, String returnNode, String description) {
+    public @ResponseBody String offerScheme(HttpServletRequest request, String approvalResult, String returnNode,
+            String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("保存融资方案，入参:" + map.toString());
 
@@ -164,7 +165,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/confirmScheme", method = RequestMethod.POST)
-    public @ResponseBody String findApprovedDetail(HttpServletRequest request, String requestNo, String approvalResult, String smsCode) {
+    public @ResponseBody String findApprovedDetail(HttpServletRequest request, String requestNo, String approvalResult,
+            String smsCode) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("确认融资方案，入参:" + map);
 
@@ -179,13 +181,14 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/requestTradingBackgrand", method = RequestMethod.POST)
-    public @ResponseBody String requestTradingBackgrand(HttpServletRequest request, String requestNo, String approvalResult, String returnNode,
-            String description, String smsCode) {
+    public @ResponseBody String requestTradingBackgrand(HttpServletRequest request, String requestNo,
+            String approvalResult, String returnNode, String description, String smsCode) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("发起融资背景确认，入参:" + map);
 
         try {
-            return scfRequestService.webRequestTradingBackgrand(requestNo, approvalResult, returnNode, description, smsCode);
+            return scfRequestService.webRequestTradingBackgrand(requestNo, approvalResult, returnNode, description,
+                    smsCode);
         }
         catch (Exception ex) {
             logger.error("发起融资背景确认：", ex);
@@ -195,7 +198,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/confirmTradingBackgrand", method = RequestMethod.POST)
-    public @ResponseBody String confirmTradingBackgrand(HttpServletRequest request, String requestNo, String approvalResult, String smsCode) {
+    public @ResponseBody String confirmTradingBackgrand(HttpServletRequest request, String requestNo,
+            String approvalResult, String smsCode) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("确认融资贸易背景，入参:" + map);
 
@@ -210,8 +214,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/approveRequest", method = RequestMethod.POST)
-    public @ResponseBody String approveRequest(HttpServletRequest request, String requestNo, String approvalResult, String returnNode,
-            String description) {
+    public @ResponseBody String approveRequest(HttpServletRequest request, String requestNo, String approvalResult,
+            String returnNode, String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("审批，入参:" + map);
 
@@ -226,7 +230,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/confirmLoan", method = RequestMethod.POST)
-    public @ResponseBody String confirmLoan(HttpServletRequest request, String approvalResult, String returnNode, String description) {
+    public @ResponseBody String confirmLoan(HttpServletRequest request, String approvalResult, String returnNode,
+            String description) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("确认放款，入参:" + map);
 
@@ -241,7 +246,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/calculatServiceFee", method = RequestMethod.POST)
-    public @ResponseBody String calculatServiceFee(HttpServletRequest request, String requestNo, BigDecimal loanBalance) {
+    public @ResponseBody String calculatServiceFee(HttpServletRequest request, String requestNo,
+            BigDecimal loanBalance) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("计算手续费，入参:" + map);
 
@@ -271,7 +277,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/calculatInsterest", method = RequestMethod.POST)
-    public @ResponseBody String calculatInsterest(HttpServletRequest request, String requestNo, BigDecimal loanBalance, String loanDate, String endDate) {
+    public @ResponseBody String calculatInsterest(HttpServletRequest request, String requestNo, BigDecimal loanBalance,
+            String loanDate, String endDate) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
         logger.info("计算利息，入参:" + map);
 
@@ -286,7 +293,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/queryPendingRequest", method = RequestMethod.POST)
-    public @ResponseBody String queryPendingRequest(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryPendingRequest(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         try {
             return scfRequestService.webQueryPendingRequest(anMap, flag, pageNum, pageSize);
@@ -298,7 +306,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/queryRepaymentRequest", method = RequestMethod.POST)
-    public @ResponseBody String queryRepaymentRequest(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryRepaymentRequest(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         try {
             return scfRequestService.webQueryRepaymentRequest(anMap, flag, pageNum, pageSize);
@@ -310,7 +319,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/queryCompletedRequest", method = RequestMethod.POST)
-    public @ResponseBody String queryCompletedRequest(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryCompletedRequest(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         try {
             return scfRequestService.webQueryCompletedRequest(anMap, flag, pageNum, pageSize);
@@ -322,7 +332,8 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/queryCoreEnterpriseRequest", method = RequestMethod.POST)
-    public @ResponseBody String queryCoreEnterpriseRequest(HttpServletRequest request, String requestType, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryCoreEnterpriseRequest(HttpServletRequest request, String requestType, String flag,
+            int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         try {
             return scfRequestService.webQueryCoreEnterpriseRequest(anMap, requestType, flag, pageNum, pageSize);
@@ -344,7 +355,7 @@ public class RequestController {
             return AjaxObject.newError("用户任务列表查询失败:" + e.getMessage()).toJson();
         }
     }
-    
+
     @RequestMapping(value = "/queryTradeStatus", method = RequestMethod.POST)
     public @ResponseBody String queryTradeStatus(HttpServletRequest request) {
         try {
@@ -355,7 +366,7 @@ public class RequestController {
             return AjaxObject.newError("状态列表").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/findPayPlan", method = RequestMethod.POST)
     public @ResponseBody String findPayPlan(HttpServletRequest request, Long id) {
         try {
@@ -366,12 +377,13 @@ public class RequestController {
             return AjaxObject.newError("还款计划详情:" + e.getMessage()).toJson();
         }
     }
-    
+
     /**
      * 
      */
     @RequestMapping(value = "/querySupplierRequestByCore", method = RequestMethod.POST)
-    public @ResponseBody String querySupplierRequestByCore(HttpServletRequest request,String businStatus, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String querySupplierRequestByCore(HttpServletRequest request, String businStatus, String flag,
+            int pageNum, int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         try {
             return scfRequestService.webQuerySupplierRequestByCore(anMap, businStatus, flag, pageNum, pageSize);
@@ -381,9 +393,10 @@ public class RequestController {
             return AjaxObject.newError("供应商融资查询失败:" + e.getMessage()).toJson();
         }
     }
-    
+
     @RequestMapping(value = "/queryRequest", method = RequestMethod.POST)
-    public @ResponseBody String supplierQueryRequest(HttpServletRequest request,String flag, int pageNum, int pageSize) {
+    public @ResponseBody String supplierQueryRequest(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         try {
             return scfRequestService.webCustQueryRequest(anMap, flag, pageNum, pageSize);
@@ -393,24 +406,24 @@ public class RequestController {
             return AjaxObject.newError("查询融资列表失败:" + e.getMessage()).toJson();
         }
     }
-    
+
     @RequestMapping(value = "/loan", method = RequestMethod.POST)
     public @ResponseBody String loan(HttpServletRequest request) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         try {
             return scfRequestService.webLoan(anMap);
         }
-        catch (Exception e) { 
+        catch (Exception e) {
             logger.error("放款失败", e);
             return AjaxObject.newError("放款成功:" + e.getMessage()).toJson();
         }
     }
-    
+
     @RequestMapping(value = "/addScheme", method = RequestMethod.POST)
     public @ResponseBody String addScheme(HttpServletRequest request) {
-	    Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
-	    logger.info("保存融资批复,入参：" + anMap.toString());
-	    return exec(() -> scfRequestService.webAddScheme(anMap), "修改融资产品信息失败", logger);
+        Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
+        logger.info("保存融资批复,入参：" + anMap.toString());
+        return exec(() -> scfRequestService.webAddScheme(anMap), "修改融资产品信息失败", logger);
     }
-    
+
 }

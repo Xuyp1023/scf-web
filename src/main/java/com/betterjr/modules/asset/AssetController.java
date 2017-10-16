@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
-import com.betterjr.modules.order.IScfOrderService;
+import com.betterjr.common.web.Servlets;
 import com.betterjr.modules.order.ScfOrderController;
 
 @Controller
@@ -41,10 +40,11 @@ public class AssetController {
      * @return
      */
     @RequestMapping(value = "/queryCanUseBaseData", method = RequestMethod.POST)
-    public @ResponseBody String queryCanUseBaseData(Long custNo, Long coreCustNo, String dataType, String ids, String flag, int pageNum,
-            int pageSize) {
+    public @ResponseBody String queryCanUseBaseData(Long custNo, Long coreCustNo, String dataType, String ids,
+            String flag, int pageNum, int pageSize) {
         logger.info("资产查询可用的基础资产信息,入参：  custNo=" + custNo + "  ;dataType=" + dataType);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return assetService.webQueryCanUseBaseData(custNo, coreCustNo, dataType, ids, pageNum, pageSize, flag);
             }
@@ -61,6 +61,7 @@ public class AssetController {
     public @ResponseBody String findAssetById(Long assetId) {
         logger.info("资产查询,入参：  assetId=" + assetId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return assetService.webFindAssetById(assetId);
             }
@@ -78,6 +79,7 @@ public class AssetController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("汇票信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return assetService.webSaveAddAssetByReceivable(anMap);
             }
@@ -94,6 +96,7 @@ public class AssetController {
     public @ResponseBody String saveRejectOrBreakAsset(Long assetId) {
         logger.info("资产驳回,入参：  assetId=" + assetId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return assetService.webSaveRejectOrBreakAsset(assetId);
             }
@@ -110,6 +113,7 @@ public class AssetController {
     public @ResponseBody String SaveAssignmentAssetToFactory(Long assetId) {
         logger.info("资产转让,入参：  assetId=" + assetId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return assetService.webSaveAssignmentAssetToFactory(assetId);
             }

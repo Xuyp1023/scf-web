@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 
 @Controller
 @RequestMapping(value = "/Scf/Commissionfile")
@@ -36,6 +36,7 @@ public class CommissionFileController {
         Map paramMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件登记,入参：" + paramMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webAddCommissionFile(paramMap);
             }
@@ -59,6 +60,7 @@ public class CommissionFileController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webQueryFileList(anMap, flag, pageNum, pageSize);
             }
@@ -74,6 +76,7 @@ public class CommissionFileController {
     public @ResponseBody String findTemplateFile() {
 
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webFindTemplateFile();
             }
@@ -92,6 +95,7 @@ public class CommissionFileController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件解析,入参：" + anMap);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webSaveDeleteFile(refNo, anMap);
             }
@@ -109,6 +113,7 @@ public class CommissionFileController {
     public @ResponseBody String saveCannulFile(Long fileId) {
         logger.info("佣金文件作废,入参：" + fileId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webSaveCannulFile(fileId);
             }
@@ -126,6 +131,7 @@ public class CommissionFileController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("佣金文件解析,入参：" + anMap);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return fileService.webSaveResolveFile(refNo, anMap);
             }
