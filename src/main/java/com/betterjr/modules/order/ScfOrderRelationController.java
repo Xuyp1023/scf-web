@@ -22,8 +22,10 @@ public class ScfOrderRelationController {
 
     @RequestMapping(value = "/addOrderRelation", method = RequestMethod.POST)
     public @ResponseBody String addOrderRelation(String enterType, Long enterId, String infoType, String infoIdList) {
-        logger.info("订单关联关系添加,入参:enterType=" + enterType + " enterId=" + enterId + " infoType=" + infoType + " infoIds=" + infoIdList );
+        logger.info("订单关联关系添加,入参:enterType=" + enterType + " enterId=" + enterId + " infoType=" + infoType + " infoIds="
+                + infoIdList);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderRelationService.webAddOrderRelation(enterType, enterId, infoType, infoIdList);
             }
@@ -33,8 +35,10 @@ public class ScfOrderRelationController {
 
     @RequestMapping(value = "/deleteOrderRelation", method = RequestMethod.POST)
     public @ResponseBody String deleteOrderRelation(String enterType, Long enterId, String infoType, Long infoId) {
-        logger.info("订单关联关系删除,入参:enterType=" + enterType + " enterId=" + enterId + " infoType=" + infoType + " infoId=" + infoId);
+        logger.info("订单关联关系删除,入参:enterType=" + enterType + " enterId=" + enterId + " infoType=" + infoType + " infoId="
+                + infoId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfOrderRelationService.webSaveDeleteOrderRelation(enterType, enterId, infoType, infoId);
             }

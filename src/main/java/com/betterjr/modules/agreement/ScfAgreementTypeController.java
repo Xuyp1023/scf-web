@@ -22,12 +22,12 @@ import com.betterjr.common.web.Servlets;
 @Controller
 @RequestMapping(value = "/Scf/Agreement")
 public class ScfAgreementTypeController {
-    
-    private static final Logger logger = LoggerFactory.getLogger(ScfAgreementTypeController.class); 
 
-    @Reference(interfaceClass=IScfAgreementTypeService.class)
+    private static final Logger logger = LoggerFactory.getLogger(ScfAgreementTypeController.class);
+
+    @Reference(interfaceClass = IScfAgreementTypeService.class)
     private IScfAgreementTypeService agreementTypeService;
-    
+
     /**
      * 合同类型登记
      */
@@ -35,18 +35,21 @@ public class ScfAgreementTypeController {
     public @ResponseBody String addAgreementType(HttpServletRequest request) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("合同类型登记,入参:" + anMap.toString());
-        return ControllerExceptionHandler.exec(()-> agreementTypeService.webAddAgreementType(anMap), "合同类型登记出错！", logger);
+        return ControllerExceptionHandler.exec(() -> agreementTypeService.webAddAgreementType(anMap), "合同类型登记出错！",
+                logger);
     }
-    
+
     /**
      * 登记合同类型查询
      */
     @RequestMapping(value = "/queryRegisteredAgreementType", method = RequestMethod.POST)
     public @ResponseBody String queryRegisteredAgreementType(int pageNum, int pageSize, String flag) {
         logger.info("合同类型登记查询");
-        return ControllerExceptionHandler.exec(() -> agreementTypeService.webQueryRegisteredAgreementType(pageNum, pageSize, flag), "合同类型登记查询失败", logger);
+        return ControllerExceptionHandler.exec(
+                () -> agreementTypeService.webQueryRegisteredAgreementType(pageNum, pageSize, flag), "合同类型登记查询失败",
+                logger);
     }
-    
+
     /**
      * 编辑合同类型
      */
@@ -54,7 +57,8 @@ public class ScfAgreementTypeController {
     public @ResponseBody String saveModifyAgreementType(HttpServletRequest request, Long id) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("编辑合同类型,入参:" + anMap);
-        return ControllerExceptionHandler.exec(() -> agreementTypeService.webSaveModifyAgreementType(anMap, id), "编辑合同类型错误", logger);
+        return ControllerExceptionHandler.exec(() -> agreementTypeService.webSaveModifyAgreementType(anMap, id),
+                "编辑合同类型错误", logger);
     }
 
     /**
@@ -63,36 +67,41 @@ public class ScfAgreementTypeController {
     @RequestMapping(value = "/saveDeleteAgreementType", method = RequestMethod.POST)
     public @ResponseBody String saveDeleteAgreementType(Long id) {
         logger.info("删除合同类型,入参:id=" + id);
-        return ControllerExceptionHandler.exec(() -> agreementTypeService.webSaveDeleteAgreementType(id), "删除合同类型错误", logger);
+        return ControllerExceptionHandler.exec(() -> agreementTypeService.webSaveDeleteAgreementType(id), "删除合同类型错误",
+                logger);
     }
-    
+
     /**
      * 查询待启用合同
      */
     @RequestMapping(value = "/queryUnEnableAgreementType", method = RequestMethod.POST)
     public @ResponseBody String queryUnEnableAgreementType(int pageNum, int pageSize, String flag) {
         logger.info("查询待启用合同类型");
-        return ControllerExceptionHandler.exec(() -> agreementTypeService.webQueryUnEnableAgreementType(pageNum, pageSize, flag), "查询待启用合同类型失败", logger);
+        return ControllerExceptionHandler.exec(
+                () -> agreementTypeService.webQueryUnEnableAgreementType(pageNum, pageSize, flag), "查询待启用合同类型失败",
+                logger);
     }
-    
+
     /**
      * 查询已启用合同
      */
     @RequestMapping(value = "/findEnableAgreementType", method = RequestMethod.POST)
     public @ResponseBody String queryEnableAgreementType() {
         logger.info("查询待启用合同类型");
-        return ControllerExceptionHandler.exec(() -> agreementTypeService.webFindEnableAgreementType(), "查询已启用合同类型失败", logger);
+        return ControllerExceptionHandler.exec(() -> agreementTypeService.webFindEnableAgreementType(), "查询已启用合同类型失败",
+                logger);
     }
-    
+
     /**
      * 启用合同类型
      */
     @RequestMapping(value = "/saveEnableAgreementType", method = RequestMethod.POST)
     public @ResponseBody String saveEnableAgreementType(Long id) {
         logger.info("启用合同类型,入参:id=" + id);
-        return ControllerExceptionHandler.exec(() -> agreementTypeService.webSaveEnableAgreementType(id), "启用合同类型错误", logger);
+        return ControllerExceptionHandler.exec(() -> agreementTypeService.webSaveEnableAgreementType(id), "启用合同类型错误",
+                logger);
     }
-    
+
     /**
      * 查询合同类型
      */
@@ -100,6 +109,7 @@ public class ScfAgreementTypeController {
     public @ResponseBody String queryAgreementType(HttpServletRequest request, int pageNum, int pageSize, String flag) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询合同类型,入参:" + anMap);
-        return ControllerExceptionHandler.exec(() -> agreementTypeService.webQueryAgreementType(anMap, pageNum, pageSize, flag), "查询合同类型失败", logger);
+        return ControllerExceptionHandler.exec(
+                () -> agreementTypeService.webQueryAgreementType(anMap, pageNum, pageSize, flag), "查询合同类型失败", logger);
     }
 }

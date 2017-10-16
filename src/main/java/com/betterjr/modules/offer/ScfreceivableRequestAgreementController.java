@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 import com.betterjr.modules.supplieroffer.IScfReceivableRequestAgreementService;
 
 @Controller
@@ -36,11 +36,13 @@ public class ScfreceivableRequestAgreementController {
      * @return
      */
     @RequestMapping(value = "/queryAgreementWithSupplier", method = RequestMethod.POST)
-    public @ResponseBody String queryAgreementWithSupplier(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryAgreementWithSupplier(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return agreementService.webQueryAgreementWithSupplier(anMap, flag, pageNum, pageSize);
             }
@@ -58,11 +60,13 @@ public class ScfreceivableRequestAgreementController {
      * @return
      */
     @RequestMapping(value = "/queryAgreementWithCore", method = RequestMethod.POST)
-    public @ResponseBody String queryAgreementWithCore(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryAgreementWithCore(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询申请信息,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return agreementService.webQueryAgreementWithCore(anMap, flag, pageNum, pageSize);
             }
@@ -76,6 +80,7 @@ public class ScfreceivableRequestAgreementController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return agreementService.webQueryDictFactory();
             }

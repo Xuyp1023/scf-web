@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 
 @Controller
 @RequestMapping(value = "/Scf/CommissionInvoiceCustInfo")
@@ -37,6 +37,7 @@ public class CommissionInvoiceCustInfoController {
         Map paramMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票抬头新增配置,入参：" + paramMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return custInfoService.webSaveAddInvoiceCustInfo(paramMap);
             }
@@ -53,10 +54,12 @@ public class CommissionInvoiceCustInfoController {
      * @return
      */
     @RequestMapping(value = "/queryInvoiceCustInfoList", method = RequestMethod.POST)
-    public @ResponseBody String queryInvoiceCustInfoList(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryInvoiceCustInfoList(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票抬头配置查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return custInfoService.webQueryInvoiceCustInfoList(anMap, flag, pageNum, pageSize);
             }
@@ -75,6 +78,7 @@ public class CommissionInvoiceCustInfoController {
 
         logger.info("发票抬头查询,入参： custNo=" + custNo + " coreCustNo=" + coreCustNo);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return custInfoService.webFindInvoiceCustInfoEffectiveByCustNo(custNo, coreCustNo);
             }
@@ -95,6 +99,7 @@ public class CommissionInvoiceCustInfoController {
         logger.info("发票抬头修改,入参：" + anMap.toString());
 
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return custInfoService.webSaveUpdateInvoiceCustInfo(anMap);
             }
@@ -112,6 +117,7 @@ public class CommissionInvoiceCustInfoController {
 
         logger.info("佣金发票抬头删除,入参： id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return custInfoService.webSaveDeleteCustInfo(id);
             }

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 import com.betterjr.modules.supplieroffer.IScfSupplierOfferService;
 
 @Controller
@@ -37,6 +37,7 @@ public class ScfSupplierOfferController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("供应商利率新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return offerService.webSaveAddOffer(anMap);
             }
@@ -55,6 +56,7 @@ public class ScfSupplierOfferController {
     public @ResponseBody String saveUpdateOffer(Long custNo, Long coreCustNo, double coreCustRate) {
         logger.info("供应商利率修改,入参： custNo=" + custNo + "  coreCustNo=" + coreCustNo + "  coreCustRate=" + coreCustRate);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return offerService.webSaveUpdateOffer(custNo, coreCustNo, coreCustRate);
             }
@@ -75,6 +77,7 @@ public class ScfSupplierOfferController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("供应商利率查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return offerService.webQueryOfferPage(anMap, flag, pageNum, pageSize);
             }
@@ -85,6 +88,7 @@ public class ScfSupplierOfferController {
     public @ResponseBody String queryAllCust(Long coreCustNo) {
         logger.info("供应商查询,入参 coreCustNo=" + coreCustNo);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return offerService.webQueryAllCust(coreCustNo);
             }
@@ -102,6 +106,7 @@ public class ScfSupplierOfferController {
     public @ResponseBody String findOffer(Long coreCustNo, Long custNo) {
         logger.info("供应商利率查询,入参 coreCustNo=" + coreCustNo + "custNo=" + custNo);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return offerService.webFindOffer(custNo, coreCustNo);
             }
@@ -113,6 +118,7 @@ public class ScfSupplierOfferController {
 
         logger.info("供应商利率查询,入参：  custNo=" + custNo);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return offerService.webQueryAllFactoryByCustNo(custNo);
             }

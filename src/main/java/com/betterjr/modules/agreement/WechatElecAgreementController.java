@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.rpc.RpcException;
-import com.betterjr.common.config.ParamNames;
 import com.betterjr.common.exception.BytterException;
 import com.betterjr.common.utils.UserUtils;
 import com.betterjr.common.web.AjaxObject;
@@ -33,8 +32,8 @@ import com.betterjr.modules.document.utils.FileWebClientUtils;
 @RequestMapping(value = "/Wechat/Scf/ElecAgree")
 public class WechatElecAgreementController {
     private static final Logger logger = LoggerFactory.getLogger(WechatElecAgreementController.class);
-    
-    @Reference(interfaceClass=IScfElecAgreementService.class)
+
+    @Reference(interfaceClass = IScfElecAgreementService.class)
     private IScfElecAgreementService scfElecAgreementService;
 
     @Autowired
@@ -60,16 +59,16 @@ public class WechatElecAgreementController {
             return AjaxObject.newError("分页查询电子合同失败").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/cancelElecAgreement", method = RequestMethod.POST)
-    public @ResponseBody String cancelElecAgreePage(String appNo,String describe) {
+    public @ResponseBody String cancelElecAgreePage(String appNo, String describe) {
         logger.info("取消电子合同的流水号：" + appNo);
         try {
-            return scfElecAgreementService.webCancelElecAgreement(appNo,describe);
+            return scfElecAgreementService.webCancelElecAgreement(appNo, describe);
         }
         catch (RpcException btEx) {
-            logger.error("取消电子合同异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+            logger.error("取消电子合同异常：" + btEx.getMessage());
+            if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
             return AjaxObject.newError("取消电子合同失败，请检查").toJson();
@@ -79,7 +78,7 @@ public class WechatElecAgreementController {
             return AjaxObject.newError("取消电子合同的流水号失败，请检查").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/findAgreePage", method = { RequestMethod.GET, RequestMethod.POST })
     public @ResponseBody String findElecAgreePage(String appNo) {
         logger.info("生成电子合同的静态页面，流水号：" + appNo);
@@ -87,8 +86,8 @@ public class WechatElecAgreementController {
             return scfElecAgreementService.webFindElecAgreePage(appNo);
         }
         catch (RpcException btEx) {
-            logger.error("生成电子合同的静态页面异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+            logger.error("生成电子合同的静态页面异常：" + btEx.getMessage());
+            if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
             return AjaxObject.newError("生成静态页面失败").toJson();
@@ -98,16 +97,16 @@ public class WechatElecAgreementController {
             return AjaxObject.newError("生成通知书的静态页面失败，请检查").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/findValidCode", method = RequestMethod.POST)
     public @ResponseBody String findValidCode(String appNo, String custType) {
         logger.info("获取签署合同的验证码，流水号:" + appNo + " custType:" + custType);
         try {
-            return scfElecAgreementService.webFindValidCode(appNo,custType);
+            return scfElecAgreementService.webFindValidCode(appNo, custType);
         }
         catch (RpcException btEx) {
-            logger.error("获取签署合同的验证码异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+            logger.error("获取签署合同的验证码异常：" + btEx.getMessage());
+            if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
             return AjaxObject.newError("获取签署合同的验证码失败").toJson();
@@ -116,16 +115,17 @@ public class WechatElecAgreementController {
             return AjaxObject.newError("获取签署合同的验证码失败，请检查").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/sendValidCode", method = RequestMethod.POST)
-    public @ResponseBody String sendValidCode(String appNo, String custType, String vCode,String tradePwd) {
-        logger.info("发送并验证签署合同的验证码，流水号:" + appNo + " custType:" + custType + " vCode:" + vCode+",tradePwd:"+tradePwd);
+    public @ResponseBody String sendValidCode(String appNo, String custType, String vCode, String tradePwd) {
+        logger.info(
+                "发送并验证签署合同的验证码，流水号:" + appNo + " custType:" + custType + " vCode:" + vCode + ",tradePwd:" + tradePwd);
         try {
-            return scfElecAgreementService.webSendValidCode(appNo,custType,vCode);
+            return scfElecAgreementService.webSendValidCode(appNo, custType, vCode);
         }
         catch (RpcException btEx) {
-            logger.error("验证签署合同的验证码异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+            logger.error("验证签署合同的验证码异常：" + btEx.getMessage());
+            if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
             return AjaxObject.newError("验证签署合同的验证码失败").toJson();
@@ -134,33 +134,33 @@ public class WechatElecAgreementController {
             return AjaxObject.newError("发送并验证签署合同的验证码失败，请检查").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/findElecAgreeByRequestNo", method = RequestMethod.POST)
-    public @ResponseBody String findElecAgreeByRequestNo(String requestNo,String signType) {
-        logger.info("入参： 申请单号:" + requestNo+"，类型："+signType);
+    public @ResponseBody String findElecAgreeByRequestNo(String requestNo, String signType) {
+        logger.info("入参： 申请单号:" + requestNo + "，类型：" + signType);
         try {
-           return scfElecAgreementService.webFindElecAgreeByOrderNo(requestNo, signType);
+            return scfElecAgreementService.webFindElecAgreeByOrderNo(requestNo, signType);
         }
         catch (RpcException btEx) {
-            logger.error("查询电子合同异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+            logger.error("查询电子合同异常：" + btEx.getMessage());
+            if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
             return AjaxObject.newError("失败").toJson();
         }
         catch (Exception ex) {
-            logger.error(ex.getMessage(),ex);
+            logger.error(ex.getMessage(), ex);
             return AjaxObject.newError("查询电子合同异常").toJson();
         }
     }
-    
+
     @RequestMapping(value = "/downloadAgreePDF", method = { RequestMethod.GET, RequestMethod.POST })
     public void downloadElecAgreePDF(HttpServletResponse response, String appNo) {
         logger.info("下载电子合同的PDF格式文件，流水号：" + appNo);
         CustFileItem fileItem = scfElecAgreementService.webFindPdfFileInfo(appNo);
         FileWebClientUtils.fileDownload(dataStoreService, response, fileItem);
     }
-    
+
     /**
      * 查询详情
      * @param appNo
@@ -170,31 +170,30 @@ public class WechatElecAgreementController {
     public @ResponseBody String findElecAgreeInfo(String appNo) {
         logger.info("入参：appno:" + appNo);
         try {
-           return scfElecAgreementService.webFindElecAgreementInfo(appNo);
+            return scfElecAgreementService.webFindElecAgreementInfo(appNo);
         }
         catch (RpcException btEx) {
-            logger.error("查询电子合同详情异常："+btEx.getMessage());
-            if(btEx.getCause()!=null && btEx.getCause() instanceof BytterException){
+            logger.error("查询电子合同详情异常：" + btEx.getMessage());
+            if (btEx.getCause() != null && btEx.getCause() instanceof BytterException) {
                 return AjaxObject.newError(btEx.getCause().getMessage()).toJson();
             }
             return AjaxObject.newError("查询电子合同详情失败").toJson();
         }
         catch (Exception ex) {
-            logger.error(ex.getMessage(),ex);
+            logger.error(ex.getMessage(), ex);
             return AjaxObject.newError("查询电子合同详情异常").toJson();
         }
     }
-    
+
     /***
      * 获取当前登录客户号
      * @param anMap
      */
     private void fillLoginCustNo(Map<String, Object> anMap) {
-        if(UserUtils.supplierUser() || UserUtils.sellerUser()){
+        if (UserUtils.supplierUser() || UserUtils.sellerUser()) {
             anMap.put("custNo", UserUtils.getDefCustInfo().getCustNo());
-        }
-        else if(UserUtils.factorUser()){
+        } else if (UserUtils.factorUser()) {
             anMap.put("factorNo", UserUtils.getDefCustInfo().getCustNo());
         }
-    } 
+    }
 }

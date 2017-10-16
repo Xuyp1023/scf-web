@@ -6,7 +6,6 @@ import com.betterjr.modules.order.entity.ScfInvoiceDOItem;
 
 public class InvoiceVO {
 
-    
     private List<ScfInvoiceDOItem> invoiceItemList;
 
     public List<ScfInvoiceDOItem> getInvoiceItemList() {
@@ -16,6 +15,5 @@ public class InvoiceVO {
     public void setInvoiceItemList(List<ScfInvoiceDOItem> anInvoiceItemList) {
         this.invoiceItemList = anInvoiceItemList;
     }
-    
-    
+
 }

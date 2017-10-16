@@ -70,7 +70,8 @@ public class ScfCreditController {
     }
 
     @RequestMapping(value = "/queryCreditDetail", method = RequestMethod.POST)
-    public @ResponseBody String queryCreditDetail(HttpServletRequest request, Long creditId, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryCreditDetail(HttpServletRequest request, Long creditId, String flag, int pageNum,
+            int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("授信额度变动信息查询,入参：" + anMap.toString());
         try {

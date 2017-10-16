@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.betterjr.common.web.ControllerExceptionHandler;
-import com.betterjr.common.web.Servlets;
 import com.betterjr.common.web.ControllerExceptionHandler.ExceptionHandler;
+import com.betterjr.common.web.Servlets;
 import com.betterjr.modules.supplieroffer.IScfAgreementTemplateService;
 
 @Controller
@@ -41,6 +41,7 @@ public class ScfAgreementTemplateController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("合同模版新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webSaveAddTemplate(anMap, isOperator);
             }
@@ -60,6 +61,7 @@ public class ScfAgreementTemplateController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("合同模版删除,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webSaveDeleteTemplate(id);
             }
@@ -79,6 +81,7 @@ public class ScfAgreementTemplateController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("合同模版激活,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webSaveActiveTemplate(id);
             }
@@ -99,6 +102,7 @@ public class ScfAgreementTemplateController {
     public @ResponseBody String findTemplateWithStatus(Long coreCustNo, String businStatus) {
         logger.info("合同模版查找,入参： coreCustNo=" + coreCustNo + "  businStatus= " + businStatus);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webFindTemplateWithStatus(coreCustNo, businStatus);
             }
@@ -118,6 +122,7 @@ public class ScfAgreementTemplateController {
     public @ResponseBody String saveUploadFtlAgreement(Long id, Long fileId) {
         logger.info("合同模版上传Ftl模版,入参： id=" + id + "  fileId= " + fileId);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webSaveUploadFtlAgreement(id, fileId);
             }
@@ -135,6 +140,7 @@ public class ScfAgreementTemplateController {
     public @ResponseBody String saveDeleteFtlAgreement(Long id) {
         logger.info("合同模版删除Ftl模版,入参： id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webSaveDeleteFtlAgreement(id);
             }
@@ -151,6 +157,7 @@ public class ScfAgreementTemplateController {
     public @ResponseBody String findTemplate(Long coreCustNo) {
         logger.info("合同模版查找,入参： coreCustNo=" + coreCustNo);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webFindTemplate(coreCustNo);
             }
@@ -175,6 +182,7 @@ public class ScfAgreementTemplateController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("合同模版查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webQueryTemplatePage(anMap, flag, pageNum, pageSize);
             }

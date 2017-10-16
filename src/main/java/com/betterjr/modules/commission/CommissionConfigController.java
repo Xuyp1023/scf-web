@@ -44,16 +44,25 @@ public class CommissionConfigController {
     public @ResponseBody String queryConfig(final HttpServletRequest request) {
         if (UserUtils.platformUser()) {
             final String operOrg = UserUtils.getOperatorInfo().getOperOrg();
-            final BigDecimal interestRate = domainAttributeDubboClientService.findMoney(operOrg, "PLAT_COMMISSION_INTEREST_RATE");
+            final BigDecimal interestRate = domainAttributeDubboClientService.findMoney(operOrg,
+                    "PLAT_COMMISSION_INTEREST_RATE");
             final BigDecimal taxRate = domainAttributeDubboClientService.findMoney(operOrg, "PLAT_COMMISSION_TAX_RATE");
-            final String custName = domainAttributeDubboClientService.findString(operOrg, "PLAT_COMMISSION_MAKE_CUSTNAME");
-            final String operator = domainAttributeDubboClientService.findString(operOrg, "PLAT_COMMISSION_MAKE_OPERATOR");
-            final Long confirmDays = domainAttributeDubboClientService.findNumber(operOrg, "PLAT_COMMISSION_CONFIRM_DAYS");
-            final String importTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_IMPORT_TEMPLATE");
-            final String exportTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_EXPORT_TEMPLATE");
-            final String dailyTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_DAILY_TEMPLATE");
-            final String monthlyTemplate = domainAttributeDubboClientService.findString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE");
-            final Map<String, Object> certLicenseObj = (Map<String, Object>) domainAttributeDubboClientService.findObject("GLOBAL_TIANWEI_CERT_LICENSE");
+            final String custName = domainAttributeDubboClientService.findString(operOrg,
+                    "PLAT_COMMISSION_MAKE_CUSTNAME");
+            final String operator = domainAttributeDubboClientService.findString(operOrg,
+                    "PLAT_COMMISSION_MAKE_OPERATOR");
+            final Long confirmDays = domainAttributeDubboClientService.findNumber(operOrg,
+                    "PLAT_COMMISSION_CONFIRM_DAYS");
+            final String importTemplate = domainAttributeDubboClientService
+                    .findString("GLOBAL_COMMISSION_IMPORT_TEMPLATE");
+            final String exportTemplate = domainAttributeDubboClientService
+                    .findString("GLOBAL_COMMISSION_EXPORT_TEMPLATE");
+            final String dailyTemplate = domainAttributeDubboClientService
+                    .findString("GLOBAL_COMMISSION_DAILY_TEMPLATE");
+            final String monthlyTemplate = domainAttributeDubboClientService
+                    .findString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE");
+            final Map<String, Object> certLicenseObj = (Map<String, Object>) domainAttributeDubboClientService
+                    .findObject("GLOBAL_TIANWEI_CERT_LICENSE");
 
             final String certLicense = certLicenseObj != null ? (String) certLicenseObj.get("certLicense") : null;
 
@@ -76,7 +85,8 @@ public class CommissionConfigController {
 
     @RequestMapping(value = "/findCertLicense", method = RequestMethod.POST, produces = "application/json")
     public @ResponseBody String findCertLicense(final HttpServletRequest request) {
-        final Map<String, Object> certLicenseObj = (Map<String, Object>) domainAttributeDubboClientService.findObject("GLOBAL_TIANWEI_CERT_LICENSE");
+        final Map<String, Object> certLicenseObj = (Map<String, Object>) domainAttributeDubboClientService
+                .findObject("GLOBAL_TIANWEI_CERT_LICENSE");
 
         final String certLicense = (String) certLicenseObj.get("certLicense");
 
@@ -84,13 +94,14 @@ public class CommissionConfigController {
     }
 
     @RequestMapping(value = "/saveConfig", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody String saveConfig(final HttpServletRequest request, final BigDecimal interestRate, final BigDecimal taxRate,
-            final String custName, final String operator, final Long confirmDays,
-            final String importTemplate, final String exportTemplate, final String dailyTemplate, final String monthlyTemplate, final String certLicense) {
+    public @ResponseBody String saveConfig(final HttpServletRequest request, final BigDecimal interestRate,
+            final BigDecimal taxRate, final String custName, final String operator, final Long confirmDays,
+            final String importTemplate, final String exportTemplate, final String dailyTemplate,
+            final String monthlyTemplate, final String certLicense) {
         if (UserUtils.platformUser()) {
             final Map<String, Object> param = Servlets.getParametersStartingWith(request, "");
             logger.info("参数设置,入参：" + param.toString());
-            final String operOrg  = UserUtils.getOperatorInfo().getOperOrg();
+            final String operOrg = UserUtils.getOperatorInfo().getOperOrg();
             return exec(() -> {
 
                 domainAttributeDubboClientService.saveMoney(operOrg, "PLAT_COMMISSION_INTEREST_RATE", interestRate);

@@ -37,7 +37,8 @@ public class ScfAgreementStandardController {
     public @ResponseBody String addAgreementStandard(HttpServletRequest request) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("标准合同登记,入参:" + anMap.toString());
-        return ControllerExceptionHandler.exec(() -> agreementStandardService.webAddAgreementStandard(anMap), "标准合同登记失败！", logger);
+        return ControllerExceptionHandler.exec(() -> agreementStandardService.webAddAgreementStandard(anMap),
+                "标准合同登记失败！", logger);
     }
 
     /**
@@ -46,7 +47,8 @@ public class ScfAgreementStandardController {
     @RequestMapping(value = "/queryRegisteredAgreementStandard", method = RequestMethod.POST)
     public @ResponseBody String queryRegisteredAgreementStandard(int pageNum, int pageSize, String flag) {
         logger.info("登记标准合同查询");
-        return ControllerExceptionHandler.exec(() -> agreementStandardService.webQueryRegisteredAgreementStandard(pageNum, pageSize, flag),
+        return ControllerExceptionHandler.exec(
+                () -> agreementStandardService.webQueryRegisteredAgreementStandard(pageNum, pageSize, flag),
                 "登记标准合同查询失败！", logger);
     }
 
@@ -57,7 +59,8 @@ public class ScfAgreementStandardController {
     public @ResponseBody String saveModifyAgreementStandard(HttpServletRequest request, Long id) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("标准合同编辑,入参:" + anMap.toString());
-        return ControllerExceptionHandler.exec(() -> agreementStandardService.webSaveModifyAgreementStandard(anMap, id), "标准合同编辑失败！", logger);
+        return ControllerExceptionHandler.exec(() -> agreementStandardService.webSaveModifyAgreementStandard(anMap, id),
+                "标准合同编辑失败！", logger);
     }
 
     /**
@@ -66,16 +69,20 @@ public class ScfAgreementStandardController {
     @RequestMapping(value = "/saveDeleteAgreementStandard", method = RequestMethod.POST)
     public @ResponseBody String saveDeleteAgreementStandard(Long id) {
         logger.info("标准合同删除,入参:" + id);
-        return ControllerExceptionHandler.exec(() -> agreementStandardService.webSaveDeleteAgreementStandard(id), "标准合同删除失败！", logger);
+        return ControllerExceptionHandler.exec(() -> agreementStandardService.webSaveDeleteAgreementStandard(id),
+                "标准合同删除失败！", logger);
     }
 
     /**
      * 审核标准合同查询
      */
     @RequestMapping(value = "/queryAgreementStandardByStatus", method = RequestMethod.POST)
-    public @ResponseBody String queryAgreementStandardByStatus(String businStatus,int pageNum, int pageSize, String flag) {
+    public @ResponseBody String queryAgreementStandardByStatus(String businStatus, int pageNum, int pageSize,
+            String flag) {
         logger.info("审核标准合同查询");
-        return ControllerExceptionHandler.exec(() -> agreementStandardService.webQueryAgreementStandardByStatus(businStatus,pageNum, pageSize, flag), "审核标准合同查询失败！", logger);
+        return ControllerExceptionHandler.exec(
+                () -> agreementStandardService.webQueryAgreementStandardByStatus(businStatus, pageNum, pageSize, flag),
+                "审核标准合同查询失败！", logger);
     }
 
     /**
@@ -84,7 +91,8 @@ public class ScfAgreementStandardController {
     @RequestMapping(value = "/saveEnableAgreementStandard", method = RequestMethod.POST)
     public @ResponseBody String saveEnableAgreementStandard(Long id) {
         logger.info("标准合同启用,入参:id=" + id);
-        return ControllerExceptionHandler.exec(() -> agreementStandardService.webSaveEnableAgreementStandard(id), "标准合同启用失败！", logger);
+        return ControllerExceptionHandler.exec(() -> agreementStandardService.webSaveEnableAgreementStandard(id),
+                "标准合同启用失败！", logger);
     }
 
     /**
@@ -93,16 +101,20 @@ public class ScfAgreementStandardController {
     @RequestMapping(value = "/saveDisableAgreementStandard", method = RequestMethod.POST)
     public @ResponseBody String saveDisableAgreementStandard(Long id) {
         logger.info("标准合同停用,入参:id=" + id);
-        return ControllerExceptionHandler.exec(() -> agreementStandardService.webSaveDisableAgreementStandard(id), "标准合同停用失败！", logger);
+        return ControllerExceptionHandler.exec(() -> agreementStandardService.webSaveDisableAgreementStandard(id),
+                "标准合同停用失败！", logger);
     }
 
     /**
      * 标准合同查询
      */
     @RequestMapping(value = "/queryAgreementStandard", method = RequestMethod.POST)
-    public @ResponseBody String queryAgreementStandard(HttpServletRequest request, int pageNum, int pageSize, String flag) {
+    public @ResponseBody String queryAgreementStandard(HttpServletRequest request, int pageNum, int pageSize,
+            String flag) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("标准合同查询,入参:" + anMap.toString());
-        return ControllerExceptionHandler.exec(() -> agreementStandardService.webQueryAgreementStandard(anMap, pageNum, pageSize, flag), "标准合同查询失败！", logger);
+        return ControllerExceptionHandler.exec(
+                () -> agreementStandardService.webQueryAgreementStandard(anMap, pageNum, pageSize, flag), "标准合同查询失败！",
+                logger);
     }
 }

@@ -48,15 +48,15 @@ public class AccessWebServiceController {
             try {
                 map.put("data", new String(Base64.decode(map.get("data")), "UTF-8"));
             }
-            catch (final UnsupportedEncodingException e) {
-            }
+            catch (final UnsupportedEncodingException e) {}
         }
         logger.info("入参:" + map.toString());
         try {
             final X509Certificate cert = Servlets.findCertificate(anRequest);
             if (cert != null) {
 
-                final CustCertInfo certInfo= certService.checkValidityWithBase64(Encodes.encodeBase64(cert.getEncoded()));
+                final CustCertInfo certInfo = certService
+                        .checkValidityWithBase64(Encodes.encodeBase64(cert.getEncoded()));
                 if (certInfo.validCertInfo()) {
                     map.put("cert", certInfo.getSerialNo());
                     return RemoteInvokeUtils.getWebServiceClient().process(map);
@@ -66,7 +66,8 @@ public class AccessWebServiceController {
             } else {
                 return "内部调用失败";
             }
-        } catch (final Exception ex) {
+        }
+        catch (final Exception ex) {
             logger.error(ex.getMessage(), ex);
             return "内部调用失败";
         }

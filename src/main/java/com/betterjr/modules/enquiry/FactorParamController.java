@@ -22,15 +22,15 @@ import com.betterjr.modules.param.IScfFactorParamService;
 @RequestMapping(value = "/Scf/FactorParam")
 public class FactorParamController {
     private static final Logger logger = LoggerFactory.getLogger(FactorParamController.class);
-    
+
     @Reference(interfaceClass = IScfFactorParamService.class)
     private IScfFactorParamService scfFactorParamService;
-    
+
     @RequestMapping(value = "/saveFactorParam", method = RequestMethod.POST)
     public @ResponseBody String saveFactorParam(HttpServletRequest request) {
         Map<String, Object> map = Servlets.getParametersStartingWith(request, "");
-        logger.info("保理公司参数保存，入参:"+ map.toString());
-        
+        logger.info("保理公司参数保存，入参:" + map.toString());
+
         try {
             return scfFactorParamService.webSaveFactorParam(map);
         }
@@ -41,17 +41,16 @@ public class FactorParamController {
             return AjaxObject.newError("saveFactorParam service failed").toJson();
         }
         catch (Exception ex) {
-            logger.error("保理公司参数保存:" , ex);
+            logger.error("保理公司参数保存:", ex);
             return AjaxObject.newError("saveFactorParam service failed").toJson();
         }
 
     }
 
-
     @RequestMapping(value = "/loadFactorParam", method = RequestMethod.POST)
     public @ResponseBody String loadFactorParam(HttpServletRequest request, String custNo) {
-        logger.info("理公司参数查询，入参:"+ custNo);
-        
+        logger.info("理公司参数查询，入参:" + custNo);
+
         try {
             return scfFactorParamService.webLoadFactorParam(custNo);
         }
@@ -60,7 +59,5 @@ public class FactorParamController {
             return AjaxObject.newError("loadFactorParam service failed").toJson();
         }
     }
-    
-  
 
 }

@@ -33,6 +33,7 @@ public class ScfContractTemplateController {
         logger.info("合同模板保存:" + param);
 
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webSaveTemplate(param);
             }
@@ -46,6 +47,7 @@ public class ScfContractTemplateController {
         logger.info("合同模板修改:" + param);
 
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webSaveModifyTemplate(param, id);
             }
@@ -83,6 +85,7 @@ public class ScfContractTemplateController {
         Map<String, Object> param = Servlets.getParametersStartingWith(request, "");
         logger.info("查询合同模板列表:" + param);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return templateService.webQueryTemplate(param, flag, pageNum, pageSize);
             }

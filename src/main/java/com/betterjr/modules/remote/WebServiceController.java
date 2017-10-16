@@ -21,7 +21,6 @@ import com.betterjr.common.web.Servlets;
 import com.betterjr.modules.document.ICustFileService;
 import com.betterjr.modules.document.data.DownloadFileInfo;
 import com.betterjr.modules.document.service.DataStoreService;
-import com.betterjr.modules.document.utils.CustFileUtils;
 import com.betterjr.modules.document.utils.DownloadFileService;
 import com.betterjr.modules.document.utils.FileWebClientUtils;
 import com.betterjr.modules.remote.utils.RemoteInvokeUtils;
@@ -58,8 +57,7 @@ public class WebServiceController {
             try {
                 map.put("data", new String(Base64.decode(map.get("data")), "UTF-8"));
             }
-            catch (final UnsupportedEncodingException e) {
-            }
+            catch (final UnsupportedEncodingException e) {}
         }
         logger.info("入参:" + map.toString());
         try {
@@ -72,17 +70,18 @@ public class WebServiceController {
     }
 
     @RequestMapping(value = "/webservice/fileDownload")
-    public void fileDownload(String fileToken, int dataType, HttpServletResponse response) throws UnsupportedEncodingException {
+    public void fileDownload(String fileToken, int dataType, HttpServletResponse response)
+            throws UnsupportedEncodingException {
         DownloadFileInfo fileInfo = DownloadFileService.exactDownloadFile(fileToken);
         String msg = "";
         boolean isText = true;
         if (fileInfo != null) {
-            logger.debug("file download:fileToken=" + fileToken + "dataType=" + dataType + ";file=" + fileInfo.toString());
+            logger.debug(
+                    "file download:fileToken=" + fileToken + "dataType=" + dataType + ";file=" + fileInfo.toString());
             if (dataType == 0) {
-                 FileWebClientUtils.fileDownloadWithOpenType(dataStoreService, response, fileInfo, "attachment");
+                FileWebClientUtils.fileDownloadWithOpenType(dataStoreService, response, fileInfo, "attachment");
                 isText = false;
-            }
-            else {
+            } else {
                 try {
                     msg = RemoteInvokeUtils.getWebServiceClient().signFile(fileInfo.getPartnerCode(), fileToken);
                 }
@@ -91,8 +90,7 @@ public class WebServiceController {
                     msg = "内部调用失败";
                 }
             }
-        }
-        else {
+        } else {
             msg = "file not find or file invalid";
         }
         if (isText) {

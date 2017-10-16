@@ -31,6 +31,7 @@ public class ScfInvoiceController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息录入,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webAddInvoice(anMap, invoiceItemIds, fileList);
             }
@@ -43,6 +44,7 @@ public class ScfInvoiceController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("查询订单发票信息,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webQueryInvoiceList(anMap, flag, pageNum, pageSize);
             }
@@ -55,6 +57,7 @@ public class ScfInvoiceController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息编辑,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webSaveModifyInvoice(anMap, invoiceItemIds, fileList);
             }
@@ -67,6 +70,7 @@ public class ScfInvoiceController {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息详情录入,入参:" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webAddInvoiceItem(anMap);
             }
@@ -78,6 +82,7 @@ public class ScfInvoiceController {
     public @ResponseBody String saveDeleteInvoice(Long id) {
         logger.info("发票信息删除,入参:id=" + id);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webSaveDeleteInvoice(id);
             }
@@ -86,10 +91,12 @@ public class ScfInvoiceController {
     }
 
     @RequestMapping(value = "/queryIncompletedInvoice", method = RequestMethod.POST)
-    public @ResponseBody String queryIncompletedInvoice(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryIncompletedInvoice(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息查询,入参" + anMap);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webQueryIncompletedInvoice(anMap, flag, pageNum, pageSize);
             }
@@ -105,10 +112,12 @@ public class ScfInvoiceController {
      * @return
      */
     @RequestMapping(value = "/addInvoiceDO", method = RequestMethod.POST)
-    public @ResponseBody String addInvoiceDO(HttpServletRequest request, String fileList, boolean confirmFlag, InvoiceVO invoice) {
+    public @ResponseBody String addInvoiceDO(HttpServletRequest request, String fileList, boolean confirmFlag,
+            InvoiceVO invoice) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息新增,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webAddInvoiceDO(anMap, fileList, confirmFlag, invoice.getInvoiceItemList());
             }
@@ -124,12 +133,15 @@ public class ScfInvoiceController {
      * @return
      */
     @RequestMapping(value = "/modifyInvoiceDO", method = RequestMethod.POST)
-    public @ResponseBody String modifyInvoiceDO(HttpServletRequest request, String fileList, boolean confirmFlag, InvoiceVO invoice) {
+    public @ResponseBody String modifyInvoiceDO(HttpServletRequest request, String fileList, boolean confirmFlag,
+            InvoiceVO invoice) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票信息修改,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
-                return scfInvoiceService.webSaveModifyInvoiceDO(anMap, fileList, confirmFlag, invoice.getInvoiceItemList());
+                return scfInvoiceService.webSaveModifyInvoiceDO(anMap, fileList, confirmFlag,
+                        invoice.getInvoiceItemList());
             }
         }, "发票信息编辑失败", logger);
     }
@@ -138,6 +150,7 @@ public class ScfInvoiceController {
     public @ResponseBody String saveAnnulInvoice(String refNo, String version) {
         logger.info("发票信息作废,入参：refNo=" + refNo + "  version:" + version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webSaveAnnulInvoice(refNo, version);
             }
@@ -148,6 +161,7 @@ public class ScfInvoiceController {
     public @ResponseBody String saveAuditInvoice(String refNo, String version) {
         logger.info("发票审核,入参：refNo=" + refNo + " : version=" + version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webSaveAuditInvoiceByRefNoVersion(refNo, version);
             }
@@ -165,10 +179,12 @@ public class ScfInvoiceController {
      * @return
      */
     @RequestMapping(value = "/queryIneffectiveInvoice", method = RequestMethod.POST)
-    public @ResponseBody String queryIneffectiveInvoice(HttpServletRequest request, String flag, int pageNum, int pageSize, boolean isAudit) {
+    public @ResponseBody String queryIneffectiveInvoice(HttpServletRequest request, String flag, int pageNum,
+            int pageSize, boolean isAudit) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票未生效信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webQueryIneffectiveInvoice(anMap, flag, pageNum, pageSize, isAudit);
             }
@@ -186,10 +202,12 @@ public class ScfInvoiceController {
      * @return
      */
     @RequestMapping(value = "/queryEffectiveInvoice", method = RequestMethod.POST)
-    public @ResponseBody String queryEffectiveInvoice(HttpServletRequest request, String flag, int pageNum, int pageSize, boolean isCust) {
+    public @ResponseBody String queryEffectiveInvoice(HttpServletRequest request, String flag, int pageNum,
+            int pageSize, boolean isCust) {
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票已经生效信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webQueryEffectiveInvoice(anMap, flag, pageNum, pageSize, isCust);
             }
@@ -208,6 +226,7 @@ public class ScfInvoiceController {
 
         logger.info("发票详细信息查询,入参： refNo:" + refNo + "  version: " + version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webFindInvoiceDO(refNo, version);
             }
@@ -224,11 +243,13 @@ public class ScfInvoiceController {
      * @return
      */
     @RequestMapping(value = "/queryRecycleInvoiceDO", method = RequestMethod.POST)
-    public @ResponseBody String queryRecycleInvoiceDO(HttpServletRequest request, String flag, int pageNum, int pageSize) {
+    public @ResponseBody String queryRecycleInvoiceDO(HttpServletRequest request, String flag, int pageNum,
+            int pageSize) {
 
         Map<String, Object> anMap = Servlets.getParametersStartingWith(request, "");
         logger.info("发票回收信息查询,入参：" + anMap.toString());
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webQueryRecycleInvoice(anMap, flag, pageNum, pageSize);
             }
@@ -239,6 +260,7 @@ public class ScfInvoiceController {
     public @ResponseBody String saveAnnulEffectiveInvoice(String refNo, String version) {
         logger.info("发票信息作废,入参：refNo=" + refNo + "  version:" + version);
         return ControllerExceptionHandler.exec(new ExceptionHandler() {
+            @Override
             public String handle() {
                 return scfInvoiceService.webSaveAnnulEffectiveInvoice(refNo, version);
             }

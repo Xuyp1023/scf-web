@@ -47,7 +47,8 @@ public class ScfProductController {
     @RequestMapping(value = "/findProductByCode", method = RequestMethod.POST)
     public @ResponseBody String findProductByCode(Long coreCustNo, Long factorNo, String productCode) {
         logger.info("融资产品信息查询入参,coreCustNo= " + coreCustNo + ", factorNo= " + factorNo + ",productId= " + productCode);
-        return exec(() -> scfProductService.webFindProductByCode(coreCustNo, factorNo, productCode), "融资产品信息查询失败", logger);
+        return exec(() -> scfProductService.webFindProductByCode(coreCustNo, factorNo, productCode), "融资产品信息查询失败",
+                logger);
     }
 
     @RequestMapping(value = "/findProductById", method = RequestMethod.POST)
