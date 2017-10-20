@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,10 @@ public class CommissionConfigController {
                     .findString("GLOBAL_COMMISSION_DAILY_TEMPLATE");
             final String monthlyTemplate = domainAttributeDubboClientService
                     .findString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE");
+            final String payOrderImportTemplate = domainAttributeDubboClientService
+                    .findString("GLOBAL_PAYORDER_IMPORT_TEMPLATE");
+            final String payOrderExportTemplate = domainAttributeDubboClientService
+                    .findString("GLOBAL_PAYORDER_EXPORT_TEMPLATE");
             final Map<String, Object> certLicenseObj = (Map<String, Object>) domainAttributeDubboClientService
                     .findObject("GLOBAL_TIANWEI_CERT_LICENSE");
 
@@ -76,6 +81,9 @@ public class CommissionConfigController {
             param.put("exportTemplate", exportTemplate);
             param.put("dailyTemplate", dailyTemplate);
             param.put("monthlyTemplate", monthlyTemplate);
+            param.put("payOrderImportTemplate", 
+                    null==payOrderImportTemplate || StringUtils.isBlank(payOrderImportTemplate) ? "{}" : payOrderImportTemplate);
+            param.put("payOrderExportTemplate", null==payOrderExportTemplate || StringUtils.isBlank(payOrderExportTemplate) ? "{}" : payOrderExportTemplate);
             param.put("certLicense", certLicense);
             return AjaxObject.newOk("参数查询成功！", param).toJson();
         } else {
@@ -97,7 +105,7 @@ public class CommissionConfigController {
     public @ResponseBody String saveConfig(final HttpServletRequest request, final BigDecimal interestRate,
             final BigDecimal taxRate, final String custName, final String operator, final Long confirmDays,
             final String importTemplate, final String exportTemplate, final String dailyTemplate,
-            final String monthlyTemplate, final String certLicense) {
+            final String monthlyTemplate, final String certLicense, final String payOrderImportTemplate, final String payOrderExportTemplate) {
         if (UserUtils.platformUser()) {
             final Map<String, Object> param = Servlets.getParametersStartingWith(request, "");
             logger.info("参数设置,入参：" + param.toString());
@@ -114,6 +122,8 @@ public class CommissionConfigController {
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_EXPORT_TEMPLATE", exportTemplate);
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_DAILY_TEMPLATE", dailyTemplate);
                 domainAttributeDubboClientService.saveString("GLOBAL_COMMISSION_MONTHLY_TEMPLATE", monthlyTemplate);
+                domainAttributeDubboClientService.saveString("GLOBAL_PAYORDER_IMPORT_TEMPLATE", payOrderImportTemplate);
+                domainAttributeDubboClientService.saveString("GLOBAL_PAYORDER_EXPORT_TEMPLATE", payOrderExportTemplate);
                 final Map<String, Object> certLicenseObj = new HashMap<>();
                 certLicenseObj.put("certLicense", certLicense);
                 domainAttributeDubboClientService.saveObject("GLOBAL_TIANWEI_CERT_LICENSE", certLicenseObj);
